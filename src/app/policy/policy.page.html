@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Daftar Polis</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-card *ngFor="let item of [1,2,3,4,5,6]">
+    <ion-card-header>
+      <img src="https://www.asuransiku.id/produk-asuransi/support/images/logo/insurer/SAP001-SMALL.PNG"
+        class="insurer-logo">
+      <ion-card-title>PR/BINAGRIYA/ABB/2018/001</ion-card-title>
+      <ion-card-subtitle>Asuransi Binagriya Upakara</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-card-subtitle>Nama Tertanggung : <span style="font-weight: 700;">Bang Rozak</span></ion-card-subtitle>
+      <hr />
+      <hr />
+      <ion-card-subtitle>Okupasi : </ion-card-subtitle>
+      <div>PR/BINAGRIYA/ABB/2018/001<br>Kios, Kedai, Warung Makan dan sejenisnya<br>kampung ambon, KOTA JAKARTA BARAT
+      </div>
+      <hr />
+      <ion-card-subtitle>Masa Berlaku : </ion-card-subtitle>
+      <div>13-September-2023 s/d 13-September-2024</div>
+      <hr />
+      <hr />
+
+      <ion-grid fixed="true">
+        <ion-row>
+          <ion-col>
+            <ion-button shape="round" expand="block" fill="clear" style="background-color: rgba(40, 65, 227, 0.779); border-radius: 16px;">
+              <ion-icon color="light" slot="icon-only" name="cloud-download-outline" style="margin-right: 8px;"></ion-icon>
+              <ion-label color="light" style="text-transform: capitalize;">Unduh</ion-label>
+            </ion-button>
+          </ion-col>
+
+          <ion-col>
+            <ion-button shape="round" expand="block" fill="clear">
+              <ion-icon  slot="icon-only" name="document-outline" style="margin-right: 8px; color:rgba(40, 65, 227, 0.779);"></ion-icon>
+              <ion-label style="text-transform: capitalize; color:rgba(40, 65, 227, 0.779);">Klaim</ion-label>
+            </ion-button>
+          </ion-col>
+
+          <!-- <ion-col size="4">
+            <ion-button fill="clear">
+              <ion-icon slot="icon-only" name="documents-outline"></ion-icon>
+            </ion-button>
+            <ion-label color="primary" style="text-transform: capitalize;">Perpanjang</ion-label>
+          </ion-col> -->
+
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

@@ -1,0 +1,68 @@
+<!-- <ion-content> -->
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tabs (ionTabsDidChange)="selectedTabs($event)">
+    <ion-tab-bar slot="bottom">
+
+      <ion-tab-button tab="home">
+        <ion-icon [name]="tab_name === 'home' ? 'home' : 'home-outline' "></ion-icon>
+        Beranda
+      </ion-tab-button>
+
+      <ion-tab-button tab="policy">
+        <ion-icon [name]="tab_name === 'policy' ? 'shield-checkmark' : 'shield-checkmark-outline' "></ion-icon>
+        Polis
+      </ion-tab-button>
+
+      <ion-tab-button tab="cart">
+        <ion-icon [name]="tab_name === 'cart' ? 'cart' : 'cart-outline' "></ion-icon>
+        Keranjang
+      </ion-tab-button>
+
+      <ion-tab-button tab="claim">
+        <ion-icon [name]="tab_name === 'claim' ? 'document' : 'document-outline' "></ion-icon>
+        Klaim
+      </ion-tab-button>
+
+      <ion-tab-button tab="logout">
+        <ion-icon [name]="tab_name === 'logout' ? 'log-out' : 'log-out-outline' "></ion-icon>
+        Logout
+      </ion-tab-button>
+
+    </ion-tab-bar>
+  </ion-tabs>
+
+  <!-- <ion-tabs (ionTabsDidChange)="selectedTabs($event)">
+    <ion-tab-bar class="ion-padding-top ion-padding-bottom ion-no-border" slot="bottom"> -->
+      <!-- <div class="tabs-btn"> -->
+        <!-- <app-bottombar route_tabs="home" route_name="Beranda" [inactive_route]="tab_name === 'home' ? home : home_i">
+          >
+        </app-bottombar> -->
+      <!-- </div> -->
+      <!-- <div class="tabs-btn"> -->
+        <!-- <div class="cart-notification">
+          <div class="quotation">9</div>
+        </div> -->
+        <!-- <app-bottombar route_tabs="cart" route_name="Keranjang" [inactive_route]="tab_name === 'cart' ? cart : cart_i">
+          >
+        </app-bottombar> -->
+      <!-- </div> -->
+
+      <!-- <div class="tabs-btn"> -->
+        <!-- <app-bottombar route_tabs="policy" route_name="Polis" [inactive_route]="tab_name === 'policy' ? policy : policy_i">
+          >
+        </app-bottombar> -->
+      <!-- </div> -->
+
+      <!-- <app-bottombar route_tabs="claim" route_name="Klaim" [inactive_route]="tab_name === 'claim' ? claim : claim_i">
+        >
+      </app-bottombar> -->
+
+      <!-- <div class="tabs-btn"> -->
+        <!-- <app-bottombar route_tabs="account" route_name="Account" [inactive_route]="tab_name === 'account' ? account : account_i">
+          >
+        </app-bottombar> -->
+      <!-- </div> -->
+
+    <!-- </ion-tab-bar> -->
+  <!-- </ion-tabs> -->
+<!-- </ion-content> -->

@@ -1,0 +1,7 @@
+{
+  "name": "my-super-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

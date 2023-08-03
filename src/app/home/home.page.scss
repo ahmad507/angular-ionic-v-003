@@ -1,0 +1,141 @@
+
+ion-toolbar {
+  --ion-padding-top: 8px;
+  --ion-padding-bottom: 8px;
+}
+
+.company-name{
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  font-family: 'Fjalla One', sans-serif;
+  margin: 8px 16px 8px 16px;
+  color: var(--ion-color-dark);
+  display: inline;
+  padding: 8px;
+}
+
+#main-menu {
+  background-color: var(--ion-color-light-tint);
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.indicator_i{
+  width: 8px;
+  height: 8px;
+  background-color: grey;
+  opacity: 0.5;
+  border-radius: 50%;
+  transition: 0.5s;
+}
+
+.indicator_a{
+  width: 24px;
+  height: 8px;
+  background-color: #0068b9;
+  opacity: 1;
+  border-radius: 8px;
+  transition: 0.5s;
+}
+
+
+.theme-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  margin: 8px;
+  // box-shadow: 0 3px 6px 0 rgba(31, 70, 153, 0.81);
+}
+
+.ion-button-search {
+  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border-radius: 8px;
+  text-transform: capitalize;
+  background-color: #ffffff;
+  text-align: left;
+}
+
+ion-toolbar{
+  --min-height: 68px;
+  --background: transparent !important;
+}
+
+.badge {
+  min-width: 20px;
+  min-height: 20px;
+  color: var(--NN0,#FFFFFF);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  background-color: var(--RN600,#E02954);
+  border: 2px solid var(--NN0,#FFFFFF);
+  border-radius: 18px;
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  padding: 0px 4px;
+  transform: translate(10%, -8%);
+}
+
+.menu-button {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  margin: 8px;
+  box-shadow: 0 3px 6px 0 rgba(104, 169, 234, 0.338);
+}
+.menu-button-text {
+  font-family: 'Montserrat', sans-serif;
+  text-align: center; 
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ion-color-primary);
+}
+
+*{
+  transition: all 333ms ease-out;
+  // font-family: 'Montserrat', sans-serif;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+}
+
+ion-toast.custom-toast {
+  --background: rgba(0, 47, 255, 0.576);
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #ffffff;
+}
+
+ion-avatar {
+  --border-radius: 4px;
+}
+
+ion-thumbnail {
+  --size: 46px;
+  --border-radius: 8px;
+}
+
+.image-container {
+  /* Set the container's dimensions as needed */
+  width: 46px;
+  height: 46px;
+  /* Center the image horizontally and vertically */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Optional: Add a border to visualize the container */
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.image-container img {
+  /* Set the image to fill the container while preserving its aspect ratio */
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  object-fit: cover; /* or 'cover' if you want to cover the entire container */
+}

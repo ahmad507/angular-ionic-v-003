@@ -1,0 +1,56 @@
+ion-tab-button {
+  // --padding-start:25px;
+  // --padding-end:25px;
+  // --padding-top:25px;
+  // --padding-bottom:25px;
+  width: 48dp;
+  height: 48dp;
+  --ripple-color: transparent !important;
+}
+
+ion-tab-button.tab-selected {
+  .active {
+    visibility: visible;
+    position: absolute;
+    padding: 0;
+    z-index: 1;
+  }
+}
+
+.badge {
+  min-width: 20px;
+  min-height: 20px;
+  color: var(--NN0,#FFFFFF);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.6;
+  text-align: center;
+  background-color: var(--RN600,#E02954);
+  border: 2px solid var(--NN0,#FFFFFF);
+  border-radius: 18px;
+  position: absolute;
+  top: -2px;
+  right: -5px;
+  padding: 0px 4px;
+  transform: translate(10%, -8%);
+}
+
+ion-tab-button.tab-selected .inactive {
+  display: none;
+}
+
+ion-tab-button:active {
+  .active{
+    visibility: visible;
+  }
+}
+
+.route-name{
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  font-size: 12px;
+  line-height: 1.6;
+  font-weight: 700;
+  color: var(--ion-color-primary);
+}
+

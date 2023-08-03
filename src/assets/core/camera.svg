@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="46" height="46" viewBox="0 0 46 46">
+  <g id="camera" transform="translate(-45 -179)">
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="46" height="46" rx="8" transform="translate(45 179)" fill="#428cff"/>
+    <path id="iconmonstr-photo-camera-1" d="M5,4H2V3H5ZM24,5V21H0V5ZM8,8H3v2H8Zm12,5a4,4,0,1,0-4,4A4,4,0,0,0,20,13Zm-4-2a2,2,0,1,0,2,2A2,2,0,0,0,16,11Z" transform="translate(56 190)" fill="#fff"/>
+  </g>
+</svg>

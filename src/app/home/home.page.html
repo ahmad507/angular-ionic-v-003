@@ -243,15 +243,38 @@
     <ion-card *ngFor="let item of articlesArray let idx = index">
       <ion-card-title>
         <ion-item>
-          <ion-thumbnail>
-            <ion-img [src]="item.image_thumbnail" ></ion-img>
-          </ion-thumbnail>
+          <ion-col size="9" style="margin-right: 8px;">{{item.title_article}}</ion-col>
+          <ion-col size="3">
+            <ion-thumbnail>
+              <ion-img [src]="item.image_thumbnail"></ion-img>
+            </ion-thumbnail>
+          </ion-col>
         </ion-item>
       </ion-card-title>
+      <!-- <ion-card-content>
+        <ion-text [innerHTML]="item.content"></ion-text>
+      </ion-card-content> -->
     </ion-card>
+
   </section>
 
   <section #news_2>
+
+    <ion-card *ngFor="let item of articlesNewArray let idx = index">
+      <ion-card-title>
+        <ion-item>
+          <ion-col size="9" style="margin-right: 8px;">{{item.title_article}}</ion-col>
+          <ion-col size="3">
+            <ion-thumbnail>
+              <ion-img [src]="item.image_thumbnail"></ion-img>
+            </ion-thumbnail>
+          </ion-col>
+        </ion-item>
+      </ion-card-title>
+      <!-- <ion-card-content>
+        <ion-text [innerHTML]="item.content"></ion-text>
+      </ion-card-content> -->
+    </ion-card>
 
   </section>
 

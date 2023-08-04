@@ -43,6 +43,7 @@ export class HomePage {
   bannerArray: Banner['r_data'] = [];
   mediaPartnerArray: MediaPartner['r_data'] = [];
   articlesArray: Articles['r_data'] = [];
+  articlesNewArray: Articles['r_data'] = [];
 
   optionsSlideBanner = {
     autoPlay: true,
@@ -369,6 +370,13 @@ export class HomePage {
       .subscribe((data: Articles) => {
         this.articlesArray = data.r_data;
         console.log('DATA ARTICLES', this.articlesArray);
+      });
+
+    this.globalService
+      .getDataArticles({ limit: 5 })
+      .subscribe((data: Articles) => {
+        this.articlesNewArray = data.r_data;
+        console.log('DATA NEW ARTICLES', this.articlesNewArray);
       });
   }
 }

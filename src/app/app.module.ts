@@ -9,6 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { HttpClientModule } from '@angular/common/http';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     FileOpener,

@@ -14,6 +14,9 @@ import { Banner } from '../interfaces/global/banner';
 import { MediaPartner } from '../interfaces/global/media-partner';
 import { Articles } from '../interfaces/global/articles';
 
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 const IMAGE_DIR = 'stored-images';
 const PDF_DIR = 'stored-pdf';
 
@@ -44,6 +47,7 @@ export class HomePage {
   mediaPartnerArray: MediaPartner['r_data'] = [];
   articlesArray: Articles['r_data'] = [];
   articlesNewArray: Articles['r_data'] = [];
+  articlesNewArray2: Articles['r_data'] = [];
 
   optionsSlideBanner = {
     autoPlay: true,
@@ -341,7 +345,8 @@ export class HomePage {
     private toastCtrl: ToastController,
     private http: HttpClient,
     private fileOpener: FileOpener,
-    private globalService: GlobalService
+    private globalService: GlobalService,
+    private store: Store
   ) {}
 
   async ngOnInit() {

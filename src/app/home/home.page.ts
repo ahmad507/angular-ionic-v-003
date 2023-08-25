@@ -13,9 +13,12 @@ import { GlobalService } from '../services/utils/global.service';
 import { Banner } from '../interfaces/global/banner';
 import { MediaPartner } from '../interfaces/global/media-partner';
 import { Articles } from '../interfaces/global/articles';
+import { ArticlesState } from '../components/articles-list/state/articles.state';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { selectArticles } from '../components/articles-list/selectors/articles.selector';
+import { retrievedArticles } from '../components/articles-list/actions/articles.actions';
 
 const IMAGE_DIR = 'stored-images';
 const PDF_DIR = 'stored-pdf';
@@ -52,6 +55,9 @@ export class HomePage {
   optionsSlideBanner = {
     autoPlay: true,
   };
+
+  public ArticlesState: Observable<Articles['r_data']> =
+    this.store.select(selectArticles);
 
   toggleTheme() {
     this.lightTheme = !this.lightTheme;
@@ -356,32 +362,41 @@ export class HomePage {
     this.loadPdfFiles();
     this.activeSlide = 0;
 
+    console.log(this.ArticlesState);
+
     this.globalService
       .getBanner({ category: 'slider' })
       .subscribe((data: Banner) => {
         this.bannerArray = data.r_data;
-        console.log('DATA BANNER IMAGE', this.bannerArray);
+        // console.log('DATA BANNER IMAGE', this.bannerArray);
       });
 
     this.globalService
       .getPartnerMedia({ category: 'partner' })
       .subscribe((data: MediaPartner) => {
         this.mediaPartnerArray = data.r_data;
-        console.log('DATA PARTNER', this.mediaPartnerArray);
+        // console.log('DATA PARTNER', this.mediaPartnerArray);
       });
 
     this.globalService
       .getDataArticles({ limit: 'unlimited', category: 9 })
       .subscribe((data: Articles) => {
         this.articlesArray = data.r_data;
-        console.log('DATA ARTICLES', this.articlesArray);
+        // console.log('DATA ARTICLES', this.articlesArray);
       });
 
     this.globalService
       .getDataArticles({ limit: 5 })
       .subscribe((data: Articles) => {
         this.articlesNewArray = data.r_data;
-        console.log('DATA NEW ARTICLES', this.articlesNewArray);
+        // console.table(this.articlesNewArray);
       });
+
+    this.globalService
+      .getDataArticles({ limit: 5 })
+      .subscribe((articles) =>
+        // console.table(articles.r_data)
+        this.store.dispatch(retrievedArticles({ articles: articles.r_data }))
+      );
   }
 }

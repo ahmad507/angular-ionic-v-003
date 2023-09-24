@@ -13,12 +13,9 @@ import { GlobalService } from '../../services/utils/global.service';
 import { Banner } from '../../interfaces/global/banner';
 import { MediaPartner } from '../../interfaces/global/media-partner';
 import { Articles } from '../../interfaces/global/articles';
-import { ArticlesState } from '../components/articles-list/state/articles.state';
 
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { selectArticles } from '../components/articles-list/selectors/articles.selector';
-import { retrievedArticles } from '../components/articles-list/actions/articles.actions';
 
 const IMAGE_DIR = 'stored-images';
 const PDF_DIR = 'stored-pdf';
@@ -56,8 +53,6 @@ export class HomePage {
     autoPlay: true,
   };
 
-  public ArticlesState: Observable<Articles['r_data']> =
-    this.store.select(selectArticles);
 
   toggleTheme() {
     this.lightTheme = !this.lightTheme;
@@ -382,8 +377,6 @@ export class HomePage {
     this.swiperRef?.nativeElement.swiper.autoplay.start();
     this.activeSlide = 0;
 
-    console.log(this.ArticlesState);
-
     this.globalService
       .getBanner({ category: 'slider' })
       .subscribe((data: Banner) => {
@@ -412,11 +405,5 @@ export class HomePage {
         // console.table(this.articlesNewArray);
       });
 
-    this.globalService
-      .getDataArticles({ limit: 5 })
-      .subscribe((articles) =>
-        // console.table(articles.r_data)
-        this.store.dispatch(retrievedArticles({ articles: articles.r_data }))
-      );
   }
 }

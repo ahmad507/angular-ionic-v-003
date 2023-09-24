@@ -1,3 +1,16 @@
 .header-name{
+  font-family: 'Montserrat', sans-serif;
   @apply mx-3 font-bold text-[16px] text-blue-500
+}
+
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 0.5px;
+  border-bottom: 1px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ion-color-primary);
+  @apply my-1 font-semibold;
+  //--border-color: var(--ion-color-primary);
+  --border-radius: 8px;
+  //--background: transparent;
 }

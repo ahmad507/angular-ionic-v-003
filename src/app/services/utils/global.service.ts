@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, take, tap } from 'rxjs';
+import { Observable, map, take, tap } from 'rxjs';
 import apiConfig from 'src/config/apiConfig';
 import { Banner } from 'src/app/interfaces/global/banner';
 import { MediaPartner } from 'src/app/interfaces/global/media-partner';
@@ -42,7 +42,6 @@ export class GlobalService {
 
   // Get Data Articles
   getDataArticles(options: any): Observable<Articles> {
-    console.log(options);
     return this.http
       .get<Articles>(this.endPointArticles, {
         headers: this.headers,
@@ -50,7 +49,8 @@ export class GlobalService {
       })
       .pipe(
         take(1),
-        tap((res) => res.r_data)
+        map((articles)=>articles),
+        tap((articles) => articles.r_data)
       );
   }
 

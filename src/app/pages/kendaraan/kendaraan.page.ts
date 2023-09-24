@@ -80,4 +80,8 @@ export class KendaraanPage implements OnInit {
     this.TAHUN_KENDARAAN = $event;
     this.inputDetail_2[1].label = 'Tahun Produksi : ' + $event.toString();
   }
+
+  handlePlatKendaraanSelected($event: string) {
+    this.inputDetail_2[3].label = $event;
+  }
 }

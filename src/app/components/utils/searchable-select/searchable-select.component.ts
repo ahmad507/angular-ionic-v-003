@@ -2,9 +2,11 @@ import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {CarInsuranceState} from "../../../pages/kendaraan/store-kendaraan/kendaraan.state";
-import {updateKendaraanData} from "../../../pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {Store} from "@ngrx/store";
+import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {DataServiceKendaraan} from "@src/app/components/utils/searchable-select/shared/data.service";
 
 @Component({
   standalone: true,
@@ -25,22 +27,27 @@ export class SearchableSelectComponent  implements OnChanges {
   @Output() tipePenggunaSelected = new EventEmitter<string>(); // Event emitter untuk tipe pengguna
   @Output() tipeKendaraanSelected = new EventEmitter<string>(); // Event emitter untuk tipe pengguna
   @Output() tahunKendaraanSelected = new EventEmitter<string>(); // Event emitter untuk tahun pengguna
+  @Output() platKendaraanSelected = new EventEmitter<string>(); // Event emitter untuk plat kendaraan
 
   listTahun: any = [];
   listNasabah: any = [];
   listPenggunaan: any = [];
   listTipeKendaraan: any = [];
   listTahunKendaraan: any = [];
+  listDataPlat: any = [];
 
   TIPE_NASABAH_SELECTED: string = '';
   PENGGUNAAN_KENDARAAN_SELECTED: string = '';
   TIPE_KENDARAAN_SELECTED: string = '';
   TAHUN_KENDARAAN_SELECTED: string = '';
+  PLAT_KENDARAAN_SELECTED: string = '';
+
 
   constructor(
     private modalController : ModalController,
-    private store : Store
-  ) {  }
+    private store : Store,
+    private dataServiceKendaraan : DataServiceKendaraan
+  ) {}
 
   dismissModal() {
     this.modalController.dismiss(null, 'cancel');
@@ -155,6 +162,7 @@ export class SearchableSelectComponent  implements OnChanges {
   }
 
   private callApiForKodePlatKendaraan() {
+    this.getPlatKendaraan();
   }
 
   updateKendaraanPayload(property: string, value: any) {
@@ -178,8 +186,6 @@ export class SearchableSelectComponent  implements OnChanges {
       vyear: 0,
       year_period: "",
       [property]: value };
-
-    console.log('DATA PAYLOAD TO CALL API MEREK MODEL', newData);
     this.store.dispatch(updateKendaraanData({ newData }));
   }
 
@@ -227,29 +233,50 @@ export class SearchableSelectComponent  implements OnChanges {
       if (item.id !== selectedItem.id) {
         item.checked = false;
         this.dismissModal();
+      } else{
+        item.checked = true;
       }
     });
     this.TAHUN_KENDARAAN_SELECTED = selectedItem.id;
     this.tahunKendaraanSelected.emit(this.TAHUN_KENDARAAN_SELECTED);
     this.updateKendaraanPayload('vyear', this.TAHUN_KENDARAAN_SELECTED);
+    this.getMerekModelKendaraan();
     // console.log('TAHUN KENDARAAN', this.TAHUN_KENDARAAN_SELECTED);
+  }
+
+  handlePlatChange(selectedItem:any) {
+    this.listDataPlat.forEach((item:any) => {
+      if (item.id !== selectedItem.id) {
+        item.checked = false;
+        this.dismissModal();
+      }
+    });
+    this.PLAT_KENDARAAN_SELECTED = selectedItem.id;
+    this.platKendaraanSelected.emit(selectedItem.text);
+    this.updateKendaraanPayload('license', this.PLAT_KENDARAAN_SELECTED);
   }
 
 
 
   private getMerekModelKendaraan() {
-    if(this.TIPE_KENDARAAN_SELECTED === '' && this.TAHUN_KENDARAAN_SELECTED === ''){
-      console.log('NO CALL API');
-      console.log({
-        tipe: this.TIPE_KENDARAAN_SELECTED,
-        tahun: this.TAHUN_KENDARAAN_SELECTED
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+        console.log({...res})
+      }
+    )
+  }
+
+  private getPlatKendaraan() {
+    this.dataServiceKendaraan.getListLicense().pipe().subscribe((res) => {
+      const responseData = res.r_data
+      let arrDataPlat: any  = []
+      responseData.forEach((res)=>{
+        arrDataPlat.push({
+          id: res.license_code,
+          text: res.license_code + ' - ' + res.license_description,
+          checked: false
+        })
       })
-    }else {
-      console.log('CALL API');
-      console.log({
-        tipe: this.TIPE_KENDARAAN_SELECTED,
-        tahun: this.TAHUN_KENDARAAN_SELECTED
-      })
-    }
+      this.listDataPlat = arrDataPlat;
+    })
   }
 }

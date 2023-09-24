@@ -7,7 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { MainPageRoutingModule } from './main-routing.module';
 
 import { MainPage } from './main.page';
-import { BottombarComponent } from '../components/core/bottombar/bottombar.component';
+import { BottombarComponent } from '../../components/core/bottombar/bottombar.component';
 
 @NgModule({
   imports: [

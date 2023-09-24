@@ -49,7 +49,7 @@ ion-toolbar {
 }
 
 .ion-button-search {
-  border: 1px solid rgba(255, 255, 255, 0.5); 
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   text-transform: capitalize;
   background-color: #ffffff;
@@ -58,7 +58,7 @@ ion-toolbar {
 
 ion-toolbar{
   --min-height: 68px;
-  --background: transparent !important;
+  --background: white;
 }
 
 .badge {
@@ -88,7 +88,7 @@ ion-toolbar{
 }
 .menu-button-text {
   font-family: 'Montserrat', sans-serif;
-  text-align: center; 
+  text-align: center;
   font-size: 10px;
   font-weight: 600;
   color: var(--ion-color-primary);
@@ -139,3 +139,10 @@ ion-thumbnail {
   border-radius: 8px;
   object-fit: cover; /* or 'cover' if you want to cover the entire container */
 }
+
+.rotate_icon{
+  @apply transform rotate-12;
+}
+
+
+

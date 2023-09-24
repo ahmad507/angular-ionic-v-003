@@ -1,0 +1,55 @@
+<ion-modal [trigger]="modal_id">
+  <ng-template>
+    <ion-header class="ion-no-border">
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="dismissModal()">
+            <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <span class="header-name">{{modal_title}}</span>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content>
+
+      <div *ngIf="modal_id === 'open-nasabah' then this.showNasabahList"></div>
+      <ng-template #showNasabahList>
+        <ion-item *ngFor="let item of listNasabah">
+          <div>{{item.text}}</div>
+          <ion-checkbox [id]="item.id" slot="start" [(ngModel)]="item.checked"
+                        (ionChange)="handleTipeNasabagChange(item)"></ion-checkbox>
+        </ion-item>
+      </ng-template>
+
+      <div *ngIf="modal_id === 'open-penggunaan' then this.showPenggunaanList"></div>
+      <ng-template #showPenggunaanList>
+        <ion-item *ngFor="let item of listPenggunaan">
+          <div>{{item.text}}</div>
+          <ion-checkbox [id]="item.id" slot="start" [(ngModel)]="item.checked"
+                        (ionChange)="handlePenggunaanKendaraanChange(item)"></ion-checkbox>
+        </ion-item>
+      </ng-template>
+
+      <div *ngIf="modal_id === 'open-tipe-kendaraan' then this.showTipeKendaraanList"></div>
+      <ng-template #showTipeKendaraanList>
+        <ion-item *ngFor="let item of listTipeKendaraan">
+          <div>{{item.text}}</div>
+          <ion-checkbox [id]="item.id" slot="start" [(ngModel)]="item.checked"
+                        (ionChange)="handleTipeKendaraanChange(item)"></ion-checkbox>
+        </ion-item>
+      </ng-template>
+
+      <div *ngIf="modal_id === 'open-tahun-kendaraan' then this.showTahunList"></div>
+      <ng-template #showTahunList>
+        <ion-item *ngFor="let item of listTahunKendaraan">
+          <div>{{item.text}}</div>
+          <ion-checkbox [id]="item.id" slot="start" [(ngModel)]="item.checked"
+                        (ionChange)="handleTahunProduksiChange(item)"></ion-checkbox>
+        </ion-item>
+      </ng-template>
+
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+

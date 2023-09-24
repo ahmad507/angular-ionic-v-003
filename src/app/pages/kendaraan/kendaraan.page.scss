@@ -1,0 +1,21 @@
+.header-name{
+  @apply mx-3 font-bold text-sm text-blue-500
+}
+
+.input-lable {
+  color: var(--ion-color-primary);
+}
+
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 1px;
+  --border-color: var(--ion-color-primary);
+  --border-radius: 8px;
+  --background: transparent;
+}
+
+.ripple-parent {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+}

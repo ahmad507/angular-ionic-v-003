@@ -1,3 +1,11 @@
 .spacer-component {
-    height: 8px;
+   @apply h-8;
+}
+
+.spacer-component-name{
+  font-family: 'Montserrat', sans-serif;
+  font-size: 12px;
+  margin-left: 24px;
+  font-weight: 600;
+  color: var(--ion-color-primary);
 }

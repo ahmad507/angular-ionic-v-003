@@ -10,7 +10,22 @@ ion-item {
   font-family: 'Montserrat', sans-serif;
   color: var(--ion-color-primary);
   @apply my-1 font-semibold;
-  //--border-color: var(--ion-color-primary);
   --border-radius: 8px;
-  //--background: transparent;
+}
+
+ion-checkbox {
+  --size: 24px;
+  padding: 8px;
+  --checkbox-background-checked: var(--ion-color-primary);
+}
+
+ion-toast.custom-toast {
+  --background: rgba(0, 47, 255, 0.576);
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #ffffff;
+}
+
+ion-checkbox::part(mark) {
+  --checkmark-width: 1.5px;
+  padding: 2px;
 }

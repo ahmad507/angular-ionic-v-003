@@ -9,13 +9,10 @@ import { Directory, Filesystem } from '@capacitor/filesystem';
 import { LoadingController, Platform, ToastController } from '@ionic/angular';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 import { HttpClient, HttpEventType } from '@angular/common/http';
-import { GlobalService } from '../../services/utils/global.service';
-import { Banner } from '../../interfaces/global/banner';
-import { MediaPartner } from '../../interfaces/global/media-partner';
-import { Articles } from '../../interfaces/global/articles';
-
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {GlobalService} from "@src/app/services/utils/global.service";
+import {Banner} from "@src/app/interfaces/global/banner";
+import {MediaPartner} from "@src/app/interfaces/global/media-partner";
+import {Articles} from "@src/app/interfaces/global/articles";
 
 const IMAGE_DIR = 'stored-images';
 const PDF_DIR = 'stored-pdf';
@@ -48,11 +45,9 @@ export class HomePage {
   articlesArray: Articles['r_data'] = [];
   articlesNewArray: Articles['r_data'] = [];
   articlesNewArray2: Articles['r_data'] = [];
-
   optionsSlideBanner = {
     autoPlay: true,
   };
-
 
   toggleTheme() {
     this.lightTheme = !this.lightTheme;
@@ -322,16 +317,12 @@ export class HomePage {
   }
 
   async loadPdfFilesData(fileNames: any[]) {
-    //  console.log('File Names', fileNames);
     for (let f of fileNames) {
       const filePath = `${PDF_DIR}/${f.name}`;
       const readFile = await Filesystem.readFile({
         directory: Directory.Data,
         path: filePath,
       });
-
-      //  console.log("PDF FILE : ", readFile);
-      //  console.log('PDF FILE : ', filePath);
       this.documents.push({
         name: f.name,
         path: filePath,
@@ -362,7 +353,6 @@ export class HomePage {
     private http: HttpClient,
     private fileOpener: FileOpener,
     private globalService: GlobalService,
-    private store: Store
   ) {}
 
   ngAfterViewInit(): void {

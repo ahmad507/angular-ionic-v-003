@@ -1,12 +1,18 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {IonicModule, ModalController} from "@ionic/angular";
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {IonicModule, LoadingController, ModalController, ToastController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {DataServiceKendaraan} from "@src/app/components/utils/searchable-select/shared/data.service";
+import {
+  DataMerekKendaraan,
+  DataServiceKendaraan,
+} from "@src/app/components/utils/searchable-select/shared/data.service";
+import {
+  MerekModelKendaraanComponent
+} from "@src/app/components/utils/merek-model-kendaraan/merek-model-kendaraan.component";
 
 @Component({
   standalone: true,
@@ -19,7 +25,7 @@ import {DataServiceKendaraan} from "@src/app/components/utils/searchable-select/
   templateUrl: './searchable-select.component.html',
   styleUrls: ['./searchable-select.component.scss'],
 })
-export class SearchableSelectComponent  implements OnChanges {
+export class SearchableSelectComponent  implements OnInit {
   @Input() modal_id: string = '';
   @Input() modal_title: string = '';
 
@@ -35,6 +41,7 @@ export class SearchableSelectComponent  implements OnChanges {
   listTipeKendaraan: any = [];
   listTahunKendaraan: any = [];
   listDataPlat: any = [];
+  listDataMerekKendaraan: any = [];
 
   TIPE_NASABAH_SELECTED: string = '';
   PENGGUNAAN_KENDARAAN_SELECTED: string = '';
@@ -42,27 +49,37 @@ export class SearchableSelectComponent  implements OnChanges {
   TAHUN_KENDARAAN_SELECTED: string = '';
   PLAT_KENDARAAN_SELECTED: string = '';
 
+  toastIsOpen: boolean = false;
+
+
 
   constructor(
     private modalController : ModalController,
+    private toastController : ToastController,
+    private loadingController : LoadingController,
     private store : Store,
-    private dataServiceKendaraan : DataServiceKendaraan
+    private dataServiceKendaraan : DataServiceKendaraan,
   ) {}
 
   dismissModal() {
     this.modalController.dismiss(null, 'cancel');
   }
 
+  async toast(param: any) {
+    const toast = await this.toastController.create({
+      message: param.message,
+      position: 'top',
+      duration: 2000,
+      cssClass: param.additionalClass
+    });
+    await toast.present();
+  }
 
   initialData(){
     console.log(this.modal_id);
   }
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
     switch (this.modal_id) {
       case 'open-nasabah':
         this.callApiForNasabah();
@@ -159,6 +176,7 @@ export class SearchableSelectComponent  implements OnChanges {
   }
 
   private callApiForMerekModelKendaraan() {
+    this.getMerekModelKendaraan();
   }
 
   private callApiForKodePlatKendaraan() {
@@ -190,6 +208,7 @@ export class SearchableSelectComponent  implements OnChanges {
   }
 
   handleTipeNasabagChange(selectedItem:any) {
+    console.log(selectedItem.id)
     this.listNasabah.forEach((item:any) => {
       if (item.id !== selectedItem.id) {
         item.checked = false;
@@ -199,7 +218,6 @@ export class SearchableSelectComponent  implements OnChanges {
     this.TIPE_NASABAH_SELECTED = selectedItem.id;
     this.tipeNasabahSelected.emit(this.TIPE_NASABAH_SELECTED);
     this.updateKendaraanPayload('ctype', this.TIPE_NASABAH_SELECTED);
-    // console.log('TIPE NASABAH', this.TIPE_NASABAH_SELECTED);
   }
 
   handlePenggunaanKendaraanChange(selectedItem:any) {
@@ -212,7 +230,6 @@ export class SearchableSelectComponent  implements OnChanges {
     this.PENGGUNAAN_KENDARAAN_SELECTED = selectedItem.id;
     this.tipePenggunaSelected.emit(this.PENGGUNAAN_KENDARAAN_SELECTED);
     this.updateKendaraanPayload('vfunction', this.PENGGUNAAN_KENDARAAN_SELECTED);
-    // console.log('PENGGUNAAN KENDARAAN', this.PENGGUNAAN_KENDARAAN_SELECTED);
   }
 
   handleTipeKendaraanChange(selectedItem:any) {
@@ -225,7 +242,6 @@ export class SearchableSelectComponent  implements OnChanges {
     this.TIPE_KENDARAAN_SELECTED = selectedItem.id;
     this.tipeKendaraanSelected.emit(this.TIPE_KENDARAAN_SELECTED);
     this.updateKendaraanPayload('vtype', this.TIPE_KENDARAAN_SELECTED);
-    // console.log('TIPE KENDARAAN', this.TIPE_KENDARAAN_SELECTED);
   }
 
   handleTahunProduksiChange(selectedItem:any) {
@@ -241,7 +257,6 @@ export class SearchableSelectComponent  implements OnChanges {
     this.tahunKendaraanSelected.emit(this.TAHUN_KENDARAAN_SELECTED);
     this.updateKendaraanPayload('vyear', this.TAHUN_KENDARAAN_SELECTED);
     this.getMerekModelKendaraan();
-    // console.log('TAHUN KENDARAAN', this.TAHUN_KENDARAAN_SELECTED);
   }
 
   handlePlatChange(selectedItem:any) {
@@ -256,27 +271,93 @@ export class SearchableSelectComponent  implements OnChanges {
     this.updateKendaraanPayload('license', this.PLAT_KENDARAAN_SELECTED);
   }
 
-
-
   private getMerekModelKendaraan() {
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
-        console.log({...res})
+      const V_YEAR = res.vyear;
+      const V_TYPE = res.vtype;
+
+      if(V_YEAR !== 0 && V_TYPE !== ''){
+        this.dataServiceKendaraan.getMerekModelKendaraan({ type: V_TYPE }).pipe().subscribe((res)=>{
+          const responseData = res.r_data;
+          let arrDataMerek: any = [];
+          responseData.forEach((res)=>{
+            arrDataMerek.push({
+              merk_code: res.merk_code,
+              name: res.name,
+              type: res.type
+            });
+          });
+          this.listDataMerekKendaraan = arrDataMerek;
+        });
+        }else {
+        if(V_YEAR === 0){
+          this.toast({ message: 'Lengkapi Tahun Produksi Kendaraan !', additionalClass: 'ion-toast.custom-toast' });
+        }
+        if(V_TYPE === ''){
+          this.toast({ message: 'Lengkapi Jenis Kendaraan !', additionalClass: 'ion-toast.custom-toast' });
+        }
+      }
       }
     )
   }
 
   private getPlatKendaraan() {
     this.dataServiceKendaraan.getListLicense().pipe().subscribe((res) => {
-      const responseData = res.r_data
+      const responseData = res.r_data;
       let arrDataPlat: any  = []
       responseData.forEach((res)=>{
         arrDataPlat.push({
           id: res.license_code,
           text: res.license_code + ' - ' + res.license_description,
           checked: false
-        })
-      })
+        });
+      });
       this.listDataPlat = arrDataPlat;
+    });
+  }
+
+  async getModelKendaraan(merk_code: any) {
+    const loading = await this.loadingController.create({
+      message: 'Mohon Tunggu...',
+      spinner: 'circles'
     })
+    await loading.present();
+    this.store.select(selectKendaraanData).pipe().subscribe((payload) => {
+      const params = {
+        unit_type: payload.vtype,
+        merk_code: merk_code,
+        unit_year: payload.vyear,
+      };
+      this.dataServiceKendaraan.getMerekModelKendaraanV2(params).subscribe((res) => {
+        const responseData: DataMerekKendaraan[] = res.r_data;
+        if (responseData){
+          loading.dismiss();
+        }
+        let arrDataMerekKendaraan: any = [];
+        let merekKendaraan: string = '';
+        responseData.forEach((detail) => {
+          merekKendaraan = detail.merk
+          arrDataMerekKendaraan = detail.model
+        });
+        // this.dismissModal();
+        this.showModalListMerekModel(merekKendaraan, arrDataMerekKendaraan);
+        console.log(arrDataMerekKendaraan)
+      });
+    })
+  }
+
+  openModalMerekKendaraanList(openMerekKendaraanList: string) {
+    console.log(openMerekKendaraanList);
+  }
+
+  private async showModalListMerekModel(merekKendaraan: string, arrDataMerekKendaraan: any) {
+    const modal = await this.modalController.create({
+      component: MerekModelKendaraanComponent,
+      componentProps: {
+        DataMerekKendaraan: merekKendaraan,
+        DataarrDataMerekKendaraan: arrDataMerekKendaraan,
+      }
+    });
+    await modal.present();
   }
 }

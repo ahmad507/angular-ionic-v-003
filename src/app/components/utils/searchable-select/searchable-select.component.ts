@@ -128,7 +128,6 @@ export class SearchableSelectComponent  implements OnInit {
   }
 
   private callApiForPenggunaan() {
-    // console.log('DATA UNTUK', this.modal_id);
     const tipePengguna = [
       {
         id: 'P',

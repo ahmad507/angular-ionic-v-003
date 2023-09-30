@@ -9,6 +9,11 @@ import { KendaraanPageRoutingModule } from './kendaraan-routing.module';
 import {KendaraanPage} from './kendaraan.page';
 import {HomePageModule} from "../home/home.module";
 import {SearchableSelectComponent} from "../../components/utils/searchable-select/searchable-select.component";
+import {NasabahComponent} from "../../components/core/nasabah/nasabah.component";
+import {MvFunctionComponent} from "../../components/core/mv/mv-function/mv-function.component";
+import {MvTypeComponent} from "@src/app/components/core/mv/mv-type/mv-type.component";
+import {MvYearsComponent} from "@src/app/components/core/mv/mv-years/mv-years.component";
+import {MvModelBrandComponent} from "@src/app/components/core/mv/mv-model-brand/mv-model-brand.component";
 
 @NgModule({
     imports: [
@@ -17,8 +22,12 @@ import {SearchableSelectComponent} from "../../components/utils/searchable-selec
         IonicModule,
         KendaraanPageRoutingModule,
         HomePageModule,
-        SearchableSelectComponent
+        SearchableSelectComponent,
+        NasabahComponent,
+        MvFunctionComponent,
+        MvYearsComponent,
+        MvModelBrandComponent
     ],
-  declarations: [KendaraanPage]
+    declarations: [KendaraanPage, MvTypeComponent]
 })
 export class KendaraanPageModule {}

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
-import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'app-kendaraan',
@@ -20,8 +19,7 @@ export class KendaraanPage implements OnInit {
 
 
   constructor(
-    private router : Router,
-    private store: Store
+    private router : Router
   ) {}
 
   ngOnInit() {
@@ -101,5 +99,21 @@ export class KendaraanPage implements OnInit {
     this.inputDetail_2[3].label = $event;
     this.inputDetail_2[3].iconR = 'checkmark-circle-sharp'
     this.inputDetail_2[3].color = 'success'
+  }
+
+  async getDataNasabah($event: string) {
+    console.log("INCOMING FROM MODAL NASABAH COMPONENT, YANG SUDAH MELEWATI NASABAH COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+  }
+
+  async getDataMvFunction($event: string) {
+    console.log("INCOMING FROM MODAL MV FUNCTION COMPONENT, YANG SUDAH MELEWATI MV FUNCTION COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+  }
+
+  async getDataMvType($event: string) {
+    console.log("INCOMING FROM MODAL MV TYPE COMPONENT, YANG SUDAH MELEWATI MV TYPE COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+  }
+
+  getDataMvYear($event: number) {
+    console.log("INCOMING FROM MODAL MV YEARS COMPONENT, YANG SUDAH MELEWATI MV YEARS COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
   }
 }

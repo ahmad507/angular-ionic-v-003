@@ -1,3 +1,7 @@
-<p>
-  mv-model-brand works!
-</p>
+<div class="my-3">
+  <ion-item (click)="openModalBrand()">
+    <ion-icon slot="start" [name]="iconLeft" color="primary"></ion-icon>
+    <div class="mx-2 text-sm font-bold input-label">{{selectedMVBrandModel}}</div>
+    <ion-icon slot="end" [name]="iconRight" [color]="iconColorRight"></ion-icon>
+  </ion-item>
+</div>

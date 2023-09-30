@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {IonicModule} from "@ionic/angular";
+import {IonicModule, ModalController} from "@ionic/angular";
 import {FormsModule} from "@angular/forms";
+import {
+  ModalMvModelBrandComponent
+} from "@src/app/components/core/mv/mv-model-brand/modal-mv-model-brand/modal-mv-model-brand.component";
 
 @Component({
   standalone: true,
@@ -11,9 +14,21 @@ import {FormsModule} from "@angular/forms";
   styleUrls: ['./mv-model-brand.component.scss'],
 })
 export class MvModelBrandComponent  implements OnInit {
+  @Input() iconLeft: string = 'ribbon';
+  @Input() iconColorRight: string = 'primary';
+  @Input() iconRight: string = 'caret-forward';
 
-  constructor() { }
+  selectedMVBrandModel: string =  'Merek - Model Kendaraan';
+
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {}
 
+  async openModalBrand() {
+    const modalMvModelBrand = await this.modalController.create({
+      component: ModalMvModelBrandComponent
+    });
+    await modalMvModelBrand.present();
+
+  }
 }

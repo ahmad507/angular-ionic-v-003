@@ -1,0 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">Pilih Penggunaan Kendaraan</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="relative" *ngFor="let item of listMvFunction">
+    <ion-list class="custom-ion-list">
+      <ion-item class="custom-ion-item">
+        <ion-icon class="icon-only" slot="start" [name]="getIconName(item.id)" color="primary"></ion-icon>
+        <div class="text-blue-600 text-[14px] font-semibold">{{item.text}}</div>
+        <ion-buttons slot="end">
+          <app-button
+            ButtonType="primary"
+            [ButtonBlock]="false"
+            ButtonText="Pilih"
+            (buttonClick)="getDataMvFunction(item)"
+          />
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </div>
+  <div class="my-2 relative bg-gray-50 p-0 mt-[10px] rounded-[16px] shadow-2xl h-full">
+  </div>
+</ion-content>

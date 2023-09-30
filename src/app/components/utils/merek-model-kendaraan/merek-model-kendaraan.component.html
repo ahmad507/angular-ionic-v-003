@@ -1,0 +1,43 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">{{DataMerekKendaraan}}</span>
+  </ion-toolbar>
+</ion-header>
+
+<!--merk_code:"HON"-->
+<!--model_number:"76859"-->
+<!--unit_name:"ADV 160 Abs"-->
+<!--unit_price:"39400000"-->
+<!--unit_type:"D"-->
+<!--unit_year:"2023"-->
+
+<ion-content class="ion-padding">
+  <ion-card *ngFor="let item of DATA_LIST let i = index">
+    <ion-card-header>
+      <ion-card-title class="card-title">{{i}} {{item.unit_name}}</ion-card-title>
+      <ion-card-subtitle>{{DataMerekKendaraan}} {{item.unit_year}}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="flex flex-col gap-1">
+        <div>Harga-Max<span class="float-right">: Rp {{ (+item.unit_price_max).toLocaleString() }}</span></div>
+        <div>Harga-Min<span class="float-right">: Rp {{ (+item.unit_price_min).toLocaleString() }}</span></div>
+        <div class="my-1 flex gap-2 justify-between items-center">
+          <button class="my-4 bg-blue-600 p-2 w-[66px] h-[46px] rounded-[8px] shadow-lg button-text">Pilih</button>
+<!--          <ion-input class="custom" label="Harga Kendaraan Rp : " (input)="validatePrice(DATA_LIST[i].unit_price)" [(ngModel)]="DATA_LIST[i].unit_price"></ion-input>-->
+          <ion-input class="custom" label="Harga Kendaraan Rp : " (keyup)="validateAndFormatPrice($event, i)" [(ngModel)]="DATA_LIST[i].unit_price"></ion-input>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
+
+
+
+

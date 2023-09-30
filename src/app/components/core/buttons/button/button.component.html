@@ -1,0 +1,7 @@
+<button
+  class="button-text"
+  [class]="getButtonClasses()"
+  (click)="onButtonClick()"
+  [ngClass]="{'block': ButtonBlock, 'shadow-lg': ButtonType === 'primary'}">
+  {{ ButtonText }}
+</button>

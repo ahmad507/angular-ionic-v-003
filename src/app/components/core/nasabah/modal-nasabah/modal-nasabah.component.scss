@@ -1,0 +1,31 @@
+.button-text {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: capitalize;
+  @apply text-[14px] text-blue-50;
+}
+
+.header-name{
+  font-family: 'Montserrat', sans-serif;
+  @apply mx-3 font-bold text-[14px] text-blue-500
+}
+
+ion-item {
+  font-family: 'Montserrat', sans-serif;
+  --inner-border-width: 0;
+  --border-width: 0;
+  --border-color: var(--ion-color-primary);
+  --border-radius: 8px;
+  --background: transparent;
+}
+
+.custom-ion-item {
+  @apply mx-4 p-1 rounded shadow;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-ion-list .custom-ion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+
+

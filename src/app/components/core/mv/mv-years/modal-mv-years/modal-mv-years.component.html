@@ -1,0 +1,29 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">Pilih Tahun Kendaraan</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="relative">
+    <ion-list class="custom-ion-list">
+      <ion-item class="custom-ion-item" *ngFor="let item of listMvYear">
+        <ion-icon class="icon-only" slot="start" name="calendar" color="primary"></ion-icon>
+        <div class="text-blue-600 text-[16px] font-semibold text-center">{{item.text}}</div>
+        <ion-buttons slot="end">
+          <app-button
+            ButtonType="primary"
+            [ButtonBlock]="false"
+            ButtonText="Pilih"
+            (buttonClick)="getDataMvYear(item)"
+          />
+        </ion-buttons>
+      </ion-item>
+    </ion-list>
+  </div>
+</ion-content>

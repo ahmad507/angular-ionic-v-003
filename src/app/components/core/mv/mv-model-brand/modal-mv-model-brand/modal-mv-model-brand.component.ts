@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -16,10 +16,12 @@ import {FormsModule} from "@angular/forms";
 })
 export class ModalMvModelBrandComponent  implements OnInit {
   selectedMvModelBrand: string = '';
+  @Input() DataMerekKendaraan : any = [];
 
   constructor(private modalController: ModalController) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   async dismissModal() {
     await this.modalController.dismiss(this.selectedMvModelBrand, 'confirm');

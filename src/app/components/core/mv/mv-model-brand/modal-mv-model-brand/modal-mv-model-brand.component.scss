@@ -1,28 +1,55 @@
-.button-text {
+.header-name{
+  font-family: 'Montserrat', sans-serif;
+  @apply mx-3 font-bold text-[16px] text-blue-500
+}
+
+.card-title{
+  font-family: 'Montserrat', sans-serif;
+}
+
+.price{
+  font-family: 'Montserrat', sans-serif;
+}
+
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 0.5px;
+  border-bottom: 1px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ion-color-primary);
+  @apply my-1 font-semibold;
+  --border-radius: 8px;
+}
+
+ion-checkbox {
+  --size: 24px;
+  padding: 8px;
+  --checkbox-background-checked: var(--ion-color-primary);
+}
+
+ion-toast.custom-toast {
+  --background: rgba(0, 47, 255, 0.576);
+  --box-shadow: 3px 3px 10px 0 rgba(0, 0, 0, 0.2);
+  --color: #ffffff;
+}
+
+ion-checkbox::part(mark) {
+  --checkmark-width: 1.5px;
+  padding: 2px;
+}
+
+.button-text{
   font-family: 'Montserrat', sans-serif;
   text-transform: capitalize;
   @apply text-[14px] text-blue-50;
 }
 
-.header-name{
+ion-input.custom {
   font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[14px] text-blue-500
+  text-transform: capitalize;
+  @apply font-semibold;
+  --color: var(--ion-color-primary);
+  --highlight-color: var(--ion-color-primary);
+  text-align: right;
 }
 
-ion-item {
-  font-family: 'Montserrat', sans-serif;
-  --inner-border-width: 0;
-  --border-width: 0;
-  --border-color: var(--ion-color-primary);
-  --border-radius: 8px;
-  --background: transparent;
-}
-
-.custom-ion-item {
-  @apply mx-4 p-1 rounded shadow;
-  border-bottom: 1px solid #ddd;
-}
-
-.custom-ion-list .custom-ion-item {
-  border-bottom: 1px solid #ddd;
-}

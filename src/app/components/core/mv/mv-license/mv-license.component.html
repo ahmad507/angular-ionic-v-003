@@ -1,3 +1,8 @@
-<p>
-  mv-license works!
-</p>
+<div class="my-3">
+  <ion-item (click)="openModalMVLicense()">
+    <ion-icon slot="start" [name]="iconLeft" color="primary"></ion-icon>
+    <div class="mx-2 text-sm font-bold input-label truncate">{{selectedMVLicense}}</div>
+    <ion-icon slot="end" [name]="iconRight" [color]="iconColorRight"></ion-icon>
+  </ion-item>
+</div>
+

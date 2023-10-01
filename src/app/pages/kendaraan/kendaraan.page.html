@@ -105,26 +105,14 @@
       <app-spacer SECTION_NAME="Nasabah & Penggunaan"></app-spacer>
       <app-nasabah (setDataTipeNasabah)="getDataNasabah($event)"/>
       <app-mv-function (setDataMvFunction)="getDataMvFunction($event)"/>
+      <app-spacer SECTION_NAME="Plat Wilayah Kendaraan"></app-spacer>
+      <app-mv-license (setDataMvLicense)="getDataMvLicense($event)"/>
       <app-spacer SECTION_NAME="Data Kendaraan"></app-spacer>
       <app-mv-type (setDataMvType)="getDataMvType($event)"/>
       <app-mv-years (setDataMvYear)="getDataMvYear($event)"/>
-      <app-mv-model-brand/>
-
-<!--      <div class="my-3 ion-activatable ripple-parent" *ngFor="let item of inputDetail_2">-->
-<!--        <ion-ripple-effect></ion-ripple-effect>-->
-<!--        <ion-item [id]="item.id">-->
-<!--          <ion-icon slot="start" [name]="item.iconL" color="primary"></ion-icon>-->
-<!--          <div class="mx-2 text-sm font-bold input-lable">{{item.label}}</div>-->
-<!--          <ion-icon slot="end" [name]="item.iconR" [color]="item.color"></ion-icon>-->
-<!--        </ion-item>-->
-<!--        <app-searchable-select-->
-<!--          [modal_id]="item.id"-->
-<!--          [modal_title]="item.label"-->
-<!--          (tipeKendaraanSelected)="handleTipeKendaraanSelected($event)"-->
-<!--          (tahunKendaraanSelected)="handleTahunKendaraanSelected($event)"-->
-<!--          (platKendaraanSelected)="handlePlatKendaraanSelected($event)"-->
-<!--        ></app-searchable-select>-->
-<!--      </div>-->
+      <div [class]="CheckParamMV()">
+        <app-mv-model-brand/>
+      </div>
 
       <app-spacer SECTION_NAME="Harga Kendaraan Dan Aksesoris"></app-spacer>
       <div class="my-3 ion-activatable ripple-parent hidden" *ngFor="let item of inputDetail_2">

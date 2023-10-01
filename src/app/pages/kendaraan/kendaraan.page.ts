@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
+import {Store} from "@ngrx/store";
+import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 
 @Component({
   selector: 'app-kendaraan',
@@ -10,16 +13,18 @@ import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 export class KendaraanPage implements OnInit {
   inputDetail: any = informasiNasabah;
   inputDetail_2: any = informasiKendaraan;
-  //  DATA MODEL
   TIPE_NASABAH: string = '';
   PENGGUNAAN_KENDARAAN: string = '';
   JENIS_KENDARAAN: string = '';
   TAHUN_KENDARAAN: string = '';
   KODE_PLAT_KENDARAAN: string = '';
+  MV_TYPE: string = '';
+  MV_YEAR: number = 0;
 
 
   constructor(
-    private router : Router
+    private router : Router,
+    private store : Store,
   ) {}
 
   ngOnInit() {
@@ -29,91 +34,61 @@ export class KendaraanPage implements OnInit {
     this.router.navigate(['/main/home']);
   }
 
-  handleTipeNasabahSelected($event: string) {
-    if ($event === '1'){
-      this.TIPE_NASABAH = 'Perorangan'
-      this.inputDetail[0].iconL = 'person'
-      this.inputDetail[0].iconR = 'checkmark-circle-sharp'
-      this.inputDetail[0].color = 'success'
-    } else {
-      this.TIPE_NASABAH = 'Perusahaan'
-      this.inputDetail[0].iconL = 'business-outline'
-      this.inputDetail[0].iconR = 'checkmark-circle-sharp'
-      this.inputDetail[0].color = 'success'
-    }
-    this.inputDetail[0].label = this.TIPE_NASABAH;
-  }
-
-  handleTipePenggunaSelected($event: string) {
-    if ($event === 'P'){
-      this.PENGGUNAAN_KENDARAAN = 'Pribadi'
-      this.inputDetail[1].iconL = 'key'
-      this.inputDetail[1].iconR = 'checkmark-circle-sharp'
-      this.inputDetail[1].color = 'success'
-    } else {
-      this.PENGGUNAAN_KENDARAAN = 'Disewakan'
-      this.inputDetail[1].iconL = 'calculator'
-      this.inputDetail[1].iconR = 'checkmark-circle-sharp'
-      this.inputDetail[1].color = 'success'
-    }
-    this.inputDetail[1].label = this.PENGGUNAAN_KENDARAAN;
-  }
-
-  handleTipeKendaraanSelected($event: string) {
-    switch ($event){
-      case 'A':
-        this.JENIS_KENDARAAN = 'Sedan, Minibus, Jeep, City Car';
-        this.inputDetail_2[0].iconL = 'car';
-        this.inputDetail_2[0].iconR = 'checkmark-circle-sharp'
-        this.inputDetail_2[0].color = 'success'
-        break;
-      case 'B':
-        this.JENIS_KENDARAAN = 'Bus';
-        this.inputDetail_2[0].iconL = 'bus';
-        this.inputDetail_2[0].iconR = 'checkmark-circle-sharp'
-        this.inputDetail_2[0].color = 'success'
-        break;
-      case 'D':
-        this.JENIS_KENDARAAN = 'Sepeda Motor';
-        this.inputDetail_2[0].iconL = 'bicycle';
-        this.inputDetail_2[0].iconR = 'checkmark-circle-sharp'
-        this.inputDetail_2[0].color = 'success'
-        break;
-      default:
-        this.JENIS_KENDARAAN = 'Sedan, Minibus, Jeep, Citi Car';
-        this.inputDetail_2[0].iconL = 'car';
-        this.inputDetail_2[0].iconR = 'checkmark-circle-sharp'
-        this.inputDetail_2[0].color = 'success'
-    }
-    this.inputDetail_2[0].label = this.JENIS_KENDARAAN;
-  }
-
-  handleTahunKendaraanSelected($event: string) {
-    this.TAHUN_KENDARAAN = $event;
-    this.inputDetail_2[1].label = 'Tahun Produksi : ' + $event.toString();
-    this.inputDetail_2[1].iconR = 'checkmark-circle-sharp'
-    this.inputDetail_2[1].color = 'success'
-  }
-
-  handlePlatKendaraanSelected($event: string) {
-    this.inputDetail_2[3].label = $event;
-    this.inputDetail_2[3].iconR = 'checkmark-circle-sharp'
-    this.inputDetail_2[3].color = 'success'
+  updateKendaraanPayload(property: string, value: any) {
+    const newData: Partial<CarInsuranceState> = {
+      accesories_detail: [],
+      accesories_si: 0,
+      addrisk: [],
+      addrisk_all: [],
+      addsi: [],
+      addsi_all: [],
+      ctype: "",
+      license: "",
+      mainrisk: "",
+      mainsi: 0,
+      reg_no: "",
+      sortby: "",
+      total_passenger: "",
+      vcode: "",
+      vfunction: "",
+      vtype: "",
+      vyear: 0,
+      year_period: "",
+      [property]: value };
+    this.store.dispatch(updateKendaraanData({ newData }));
   }
 
   async getDataNasabah($event: string) {
-    console.log("INCOMING FROM MODAL NASABAH COMPONENT, YANG SUDAH MELEWATI NASABAH COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+    this.updateKendaraanPayload('ctype', $event);
   }
 
   async getDataMvFunction($event: string) {
-    console.log("INCOMING FROM MODAL MV FUNCTION COMPONENT, YANG SUDAH MELEWATI MV FUNCTION COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+    this.updateKendaraanPayload('vfunction', $event);
   }
 
   async getDataMvType($event: string) {
-    console.log("INCOMING FROM MODAL MV TYPE COMPONENT, YANG SUDAH MELEWATI MV TYPE COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+    this.MV_TYPE = $event;
+    this.updateKendaraanPayload('vtype', $event);
   }
 
-  getDataMvYear($event: number) {
-    console.log("INCOMING FROM MODAL MV YEARS COMPONENT, YANG SUDAH MELEWATI MV YEARS COMPONENT SAMPAI JUGA MENGGUNAKAN EMIT NILAINYA : ", $event);
+  async getDataMvYear($event: number) {
+    this.MV_YEAR = $event;
+    this.updateKendaraanPayload('vyear', $event);
+  }
+
+  async getDataMvLicense($event: any) {
+    const dataLicense = [];
+    dataLicense.push($event);
+    dataLicense.forEach((res)=>{
+      this.updateKendaraanPayload('license', res.id);
+    })
+  }
+
+  CheckParamMV() {
+    if (this.MV_TYPE === '' || this.MV_YEAR === 0){
+      return 'hidden';
+    } else{
+      return 'block';
+    }
   }
 }

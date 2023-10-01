@@ -274,7 +274,6 @@ export class SearchableSelectComponent  implements OnInit {
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       const V_YEAR = res.vyear;
       const V_TYPE = res.vtype;
-
       if(V_YEAR !== 0 && V_TYPE !== ''){
         this.dataServiceKendaraan.getMerekModelKendaraan({ type: V_TYPE }).pipe().subscribe((res)=>{
           const responseData = res.r_data;
@@ -338,7 +337,6 @@ export class SearchableSelectComponent  implements OnInit {
           merekKendaraan = detail.merk
           arrDataMerekKendaraan = detail.model
         });
-        // this.dismissModal();
         this.showModalListMerekModel(merekKendaraan, arrDataMerekKendaraan);
         console.log(arrDataMerekKendaraan)
       });

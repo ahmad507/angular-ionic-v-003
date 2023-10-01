@@ -14,6 +14,7 @@ import {MvFunctionComponent} from "../../components/core/mv/mv-function/mv-funct
 import {MvTypeComponent} from "@src/app/components/core/mv/mv-type/mv-type.component";
 import {MvYearsComponent} from "@src/app/components/core/mv/mv-years/mv-years.component";
 import {MvModelBrandComponent} from "@src/app/components/core/mv/mv-model-brand/mv-model-brand.component";
+import {MvLicenseComponent} from "@src/app/components/core/mv/mv-license/mv-license.component";
 
 @NgModule({
     imports: [
@@ -26,7 +27,8 @@ import {MvModelBrandComponent} from "@src/app/components/core/mv/mv-model-brand/
         NasabahComponent,
         MvFunctionComponent,
         MvYearsComponent,
-        MvModelBrandComponent
+        MvModelBrandComponent,
+        MvLicenseComponent
     ],
     declarations: [KendaraanPage, MvTypeComponent]
 })

@@ -1,0 +1,45 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">{{DataMerekKendaraan}}&nbsp;&nbsp;-&nbsp;&nbsp;{{DataMvYears}}&nbsp;&nbsp;:&nbsp;&nbsp;{{DATA_LIST.length}} units</span>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let item of DATA_LIST let i = index">
+    <ion-card-content>
+      <ion-chip color="success">
+        <ion-icon name="ribbon"></ion-icon>
+        <ion-label>
+          <div class="font-bold">{{item.unit_name}}</div>
+        </ion-label>
+      </ion-chip>
+      <ion-chip color="primary">
+        <ion-icon name="cash-outline"></ion-icon>
+        <ion-label>
+          <div class="font-semibold text-xs">Rp {{ (+item.unit_price_min).toLocaleString() }} s/d  {{ (+item.unit_price_max).toLocaleString() }}</div>
+        </ion-label>
+      </ion-chip>
+          <div class="flex flex-col gap-1">
+            <ion-input class="custom" label="Harga Kendaraan Rp : " (keyup)="validateAndFormatPrice($event, i)" [(ngModel)]="DATA_LIST[i].unit_price"></ion-input>
+            <ion-label>
+              <div class="font-semibold text-xs">Harga Aksesoris : </div>
+            </ion-label>
+            <div class="mt-[8px] flex gap-2 justify-between items-center">
+              <button class="my-1 bg-blue-600 p-2 w-[66px] h-[46px] rounded-[8px] shadow-lg button-text">Pilih</button>
+              <button class="my-1 bg-green-700 p-2 w-auto h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
+            </div>
+          </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+
+
+
+
+

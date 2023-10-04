@@ -19,7 +19,7 @@ ion-item {
 }
 
 .custom-ion-item {
-  @apply mx-4 p-1 rounded shadow;
+  @apply mx-4 p-1;
   border-bottom: 1px solid #ddd;
 }
 
@@ -28,5 +28,6 @@ ion-item {
 }
 
 .plat-id{
-  border: 1px solid black;
+  @apply h-[32px] w-[46px] p-1 mx-1 bg-blue-600 text-center;
+  border: 1px solid grey;
 }

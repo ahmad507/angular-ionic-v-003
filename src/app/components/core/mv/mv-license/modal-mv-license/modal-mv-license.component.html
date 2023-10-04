@@ -11,21 +11,12 @@
 
 <ion-content>
   <div class="relative" *ngFor="let item of listMvLicense">
-    <ion-list class="custom-ion-list">
-      <ion-item class="custom-ion-item">
-        <ion-buttons slot="start">
-          <div class="plat-id p-2 w-[56px] rounded-[4px] bg-white font-bold text-center items-center">{{item.id}}</div>
-        </ion-buttons>
-        <div class="text-blue-600 text-[12px] font-semibold">{{item.desc}}</div>
-        <ion-buttons slot="end">
-          <app-button
-            ButtonType="primary"
-            [ButtonBlock]="false"
-            ButtonText="Pilih"
-            (buttonClick)="getDataMvLicense(item)"
-          />
-        </ion-buttons>
-      </ion-item>
-    </ion-list>
+    <ion-item class="custom-ion-item" (click)="getDataMvLicense(item)">
+      <ion-buttons slot="start">
+      <div class="p-2 bg-blue-600 rounded text-white text-center w-[66px] font-bold">{{item.id}}</div>
+      </ion-buttons>
+      <div class="p-0 text-blue-600 text-[13px] font-semibold truncate">{{item.desc}}</div>
+      <hr/>
+    </ion-item>
   </div>
 </ion-content>

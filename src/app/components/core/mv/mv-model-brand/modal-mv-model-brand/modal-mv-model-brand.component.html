@@ -10,7 +10,7 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item *ngFor="let item of DataMerekKendaraan">
+  <ion-item *ngFor="let item of DataMerekKendaraan" (click)="getDataMvModel(item)">
     <div>{{item.name}}</div>
     <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
   </ion-item>

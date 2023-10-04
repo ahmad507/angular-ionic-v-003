@@ -28,7 +28,7 @@ export class ButtonComponent  implements OnInit {
     if(this.ButtonBlock){
       return `bg-${this.getButtonColor()} p-2 w-full h-[46px] rounded-[8px] block`;
     } else{
-      return `bg-${this.getButtonColor()} p-2 w-fit h-[46px] rounded-[8px]`;
+      return `bg-${this.getButtonColor()} p-0 w-[66px] h-[46px] rounded-[8px]`;
     }
 
   }

@@ -36,7 +36,7 @@ export class MvModelBrandComponent  implements OnInit {
   async openModalBrand() {
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.MV_TYPE = res.vtype;
-    })
+    });
     this.dataServiceKendaraan.getMerekModelKendaraan({ type: this.MV_TYPE }).pipe().subscribe((res)=>{
       const responseData = res.r_data;
       let arrDataMerek: any = [];

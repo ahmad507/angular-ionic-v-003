@@ -356,12 +356,18 @@ export class HomePage {
   ) {}
 
   ngAfterViewInit(): void {
+    this.activeSlide = 0;
     this.swiperRef?.nativeElement.swiper.autoplay.start();
   }
 
+  ionViewWillEnter() {
+    this.activeSlide = 0;
+    this.swiperRef?.nativeElement.swiper.autoplay.start();
+  }
+
+
+
   async ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
     await this.loadImageFiles();
     await this.loadPdfFiles();
     this.swiperRef?.nativeElement.swiper.autoplay.start();
@@ -371,28 +377,24 @@ export class HomePage {
       .getBanner({ category: 'slider' })
       .subscribe((data: Banner) => {
         this.bannerArray = data.r_data;
-        // console.log('DATA BANNER IMAGE', this.bannerArray);
       });
 
     this.globalService
       .getPartnerMedia({ category: 'partner' })
       .subscribe((data: MediaPartner) => {
         this.mediaPartnerArray = data.r_data;
-        // console.log('DATA PARTNER', this.mediaPartnerArray);
       });
 
     this.globalService
       .getDataArticles({ limit: 'unlimited', category: 9 })
       .subscribe((data: Articles) => {
         this.articlesArray = data.r_data;
-        // console.log('DATA ARTICLES', this.articlesArray);
       });
 
     this.globalService
       .getDataArticles({ limit: 5 })
       .subscribe((data: Articles) => {
         this.articlesNewArray = data.r_data;
-        // console.table(this.articlesNewArray);
       });
 
   }

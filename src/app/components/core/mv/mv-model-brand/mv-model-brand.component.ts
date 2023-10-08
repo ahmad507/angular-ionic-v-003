@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {IonicModule, ModalController} from "@ionic/angular";
 import {FormsModule} from "@angular/forms";
@@ -6,8 +6,12 @@ import {DataServiceKendaraan} from "@src/app/components/core/mv/data/mv.data.ser
 import {
   ModalMvModelBrandComponent
 } from "@src/app/components/core/mv/mv-model-brand/modal-mv-model-brand/modal-mv-model-brand.component";
-import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {Store} from "@ngrx/store";
+import {
+  selectKendaraanDataVtype
+} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {select, Store} from "@ngrx/store";
+import {take} from "rxjs";
+import {MvModalService} from "@src/app/components/core/mv/mv-model-brand/services/mv.modal.service";
 
 @Component({
   standalone: true,
@@ -21,6 +25,8 @@ export class MvModelBrandComponent  implements OnInit {
   @Input() iconColorRight: string = 'primary';
   @Input() iconRight: string = 'caret-forward';
 
+  @Output() setDataMvDetail = new EventEmitter<object>();
+
   selectedMVBrandModel: string =  'Merek - Model Kendaraan';
   listDataMerekKendaraan: any = [];
   private MV_TYPE: string = 'A';
@@ -28,14 +34,15 @@ export class MvModelBrandComponent  implements OnInit {
   constructor(
     private store: Store,
     private modalController: ModalController,
-    private dataServiceKendaraan: DataServiceKendaraan
-    ) { }
+    private dataServiceKendaraan: DataServiceKendaraan,
+    private mvModalService: MvModalService,
+    ) { this.getDataMvSelected() }
 
   ngOnInit() {}
 
   async openModalBrand() {
-    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
-      this.MV_TYPE = res.vtype;
+    this.store.pipe(select(selectKendaraanDataVtype), take(1)).subscribe((vtype) => {
+      this.MV_TYPE = vtype;
     });
     this.dataServiceKendaraan.getMerekModelKendaraan({ type: this.MV_TYPE }).pipe().subscribe((res)=>{
       const responseData = res.r_data;
@@ -60,5 +67,18 @@ export class MvModelBrandComponent  implements OnInit {
       }
     });
     await modalMvModelBrand.present();
+  }
+
+  private getDataMvSelected() {
+    this.mvModalService.getData().subscribe((res)=>{
+      this.setDataMvDetail.emit(res);
+      let mvInfo = [];
+      mvInfo.push({...res});
+      mvInfo.map((res)=>{
+        this.selectedMVBrandModel = `${res.merek} - ${res.unit_name}`
+        this.iconRight = 'checkmark-circle-sharp';
+        this.iconColorRight = 'success';
+      })
+    })
   }
 }

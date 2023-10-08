@@ -111,7 +111,7 @@
       <app-mv-type (setDataMvType)="getDataMvType($event)"/>
       <app-mv-years (setDataMvYear)="getDataMvYear($event)"/>
       <div [class]="CheckParamMV()">
-        <app-mv-model-brand/>
+        <app-mv-model-brand (setDataMvDetail)="getDataMvMerekModel($event)"/>
       </div>
 
       <app-spacer SECTION_NAME="Harga Kendaraan Dan Aksesoris"></app-spacer>

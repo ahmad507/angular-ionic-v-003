@@ -12,6 +12,7 @@ export interface DetailMerek {
   unit_price: string;
   unit_price_min: string;
   unit_type: string;
+  acc_price?: number; // Properti acc_price bersifat opsional (?)
 }
 
 @Component({

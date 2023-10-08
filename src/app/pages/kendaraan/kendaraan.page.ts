@@ -91,4 +91,18 @@ export class KendaraanPage implements OnInit {
       return 'block';
     }
   }
+
+  async getDataMvMerekModel($event: any) {
+    const mvInfo = [];
+    mvInfo.push({...$event});
+    mvInfo.map((res)=>{
+      this.updateKendaraanPayload('vcode', res.vcode);
+      this.updateKendaraanPayload('mainsi', res.mainsi);
+      if (res.accesories_si === undefined){
+        this.updateKendaraanPayload('accesories_si', 0);
+      } else {
+        this.updateKendaraanPayload('accesories_si', res.accesories_si);
+      }
+    });
+  }
 }

@@ -1,15 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {
+  selectKendaraanDataVTypeVYear
+} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {Store} from "@ngrx/store";
 import {DataMerekKendaraan} from "@src/app/components/utils/searchable-select/shared/data.service";
 import {DataServiceKendaraan} from "@src/app/components/core/mv/data/mv.data.service";
-import {
-  MerekModelKendaraanComponent
-} from "@src/app/components/utils/merek-model-kendaraan/merek-model-kendaraan.component";
 import {MvModelListComponent} from "@src/app/components/core/mv/mv-model-brand/mv-model-list/mv-model-list.component";
+import {take} from "rxjs";
 
 export interface Mv_Brand {
   merk_code: string
@@ -45,15 +45,13 @@ export class ModalMvModelBrandComponent  implements OnInit {
   }
 
   getDataMvModel(item: Mv_Brand) {
-    let mvYears: number = 0;
-    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
-      mvYears = res.vyear
+    this.store.select(selectKendaraanDataVTypeVYear).pipe(take(1)).subscribe((res)=>{
       const params = {
-        unit_type: res.vtype,
+        unit_type: res.mv_type,
         merk_code: item.merk_code,
-        unit_year: res.vyear,
+        unit_year: res.mv_year,
       };
-      this.dataServiceKendaraan.getMerekModelKendaraanV2(params).subscribe((res) => {
+      this.dataServiceKendaraan.getMerekModelKendaraanV2(params).subscribe( (res) => {
         const responseData: DataMerekKendaraan[] = res.r_data;
         let arrDataMerekKendaraan: any = [];
         let merekKendaraan: string = '';
@@ -61,20 +59,22 @@ export class ModalMvModelBrandComponent  implements OnInit {
           merekKendaraan = detail.merk
           arrDataMerekKendaraan = detail.model
         });
-        this.showModalListMerekModel(merekKendaraan, arrDataMerekKendaraan, mvYears);
+        this.showModalListMerekModel(merekKendaraan, arrDataMerekKendaraan, params.unit_year, params.unit_type);
+        this.dismissModal();
       });
     });
   }
 
-  private async showModalListMerekModel(merekKendaraan: string, arrDataMerekKendaraan: any, mvYears: number) {
-    const modal = await this.modalController.create({
+  private async showModalListMerekModel(merekKendaraan: string, arrDataMerekKendaraan: any, mvYears: number, mvType: string) {
+    const modalListMvBrand = await this.modalController.create({
       component: MvModelListComponent,
       componentProps: {
         DataMerekKendaraan: merekKendaraan,
         DataMvYears: mvYears,
+        DataMvType: mvType,
         DataarrDataMerekKendaraan: arrDataMerekKendaraan,
       }
     });
-    await modal.present();
+    await modalListMvBrand.present();
   }
 }

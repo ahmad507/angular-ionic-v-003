@@ -1,0 +1,18 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">Aksesoris Kendaraan</span>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="p-2 mx-2 my-2">
+    <div *ngFor="let item of DATA_LIST let i = index">
+    <input class="mv-price" (keyup)="validateAndFormatPrice($event, i)" [(ngModel)]="DATA_LIST[i].price">
+    </div>
+    <app-button ButtonText="Tambahkan" [ButtonBlock]="true" (buttonClick)="getDataAccessories(DATA_LIST)"></app-button>
+  </div>
+</ion-content>

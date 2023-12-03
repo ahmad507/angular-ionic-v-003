@@ -21,8 +21,10 @@ const reducers = {
   carInsurance: carInsuranceReducer
 };
 
+const keys = ['carInsurance']
+
 export function localStorageSyncReducer(reducer: any) {
-  return localStorageSync({ keys: ['carInsurance'], rehydrate: true })(reducer);
+  return localStorageSync({ keys: keys, rehydrate: true })(reducer);
 }
 
 @NgModule({

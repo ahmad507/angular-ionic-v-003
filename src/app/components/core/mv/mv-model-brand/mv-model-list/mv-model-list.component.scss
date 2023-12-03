@@ -11,15 +11,15 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-//ion-item {
-//  --inner-border-width: 0;
-//  --border-width: 0.5px;
-//  border-bottom: 1px;
-//  font-family: 'Montserrat', sans-serif;
-//  color: var(--ion-color-primary);
-//  @apply my-1 font-semibold;
-//  --border-radius: 8px;
-//}
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 0.5px;
+  border-bottom: 1px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ion-color-primary);
+  @apply my-1 font-semibold;
+  --border-radius: 8px;
+}
 
 ion-checkbox {
   --size: 24px;

@@ -10,7 +10,44 @@
 <!--unit_type:"A"-->
 <!--unit_year:"2023"-->
 <ion-content [fullscreen]="true">
-  <div class="p-2 mx-2 my-2">
-  <input class="mv-price" placeholder="Harga Kendaraan" />
-  </div>
+<!--  <div class="p-2 mx-2 my-2">-->
+<!--  <input class="mv-price" placeholder="Harga Kendaraan" />-->
+<!--  </div>-->
+<!--  <div>-->
+<!--    <ion-card>-->
+<!--      <img alt="Silhouette of mountains" src="assets/cars.jpg" />-->
+<!--      <ion-card-header>-->
+<!--        <ion-card-title class="font-bold font-lato">Model Kendaraan</ion-card-title>-->
+<!--        <ion-card-subtitle class="font-semibold font-lato">Model Kendaraan Belum Tersedia</ion-card-subtitle>-->
+<!--      </ion-card-header>-->
+<!--      <ion-card-content>-->
+<!--        <p class="font-bold">Model kendaraan anda belum tersedia, <br> silahkan tambahkan model kendaraan anda</p>-->
+<!--        <div class="my-3">-->
+<!--          <app-button [ButtonBlock]="true" ButtonText="Tambah Model"></app-button>-->
+<!--        </div>-->
+<!--      </ion-card-content>-->
+<!--    </ion-card>-->
+<!--  </div>-->
+
+  <ion-content class="ion-padding">
+    <ion-item>
+      <div class="bg-blue-600 text-center p-2 mr-2 w-[42px] h-[42px] rounded text-white font-bold">A</div>
+      <div class="text-xs truncate font-semibold">BANTEN</div>
+      <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <div class="flex items-center justify-between">
+      <div class="bg-blue-600 text-center p-2 mr-2 w-[62px] h-[42px] rounded text-white font-bold">B</div>
+      <div class="text-xs break-all font-semibold">DKI Jakarta - Depok - Tangerang - Bekasi (JaDeTaBek)</div>
+      </div>
+      <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
+    </ion-item>
+    <ion-item>
+      <div class="flex items-center justify-between">
+        <div class="bg-blue-600 text-center p-2 mr-2 w-[42px] h-[42px] rounded text-white font-bold">DK</div>
+        <div class="text-xs truncate font-semibold">BALI</div>
+      </div>
+      <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
+    </ion-item>
+  </ion-content>
 </ion-content>

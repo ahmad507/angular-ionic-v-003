@@ -10,14 +10,14 @@
 }
 
 ion-item {
-  font-family: 'Montserrat', sans-serif;
   --inner-border-width: 0;
-  --border-width: 0;
-  --border-color: var(--ion-color-primary);
+  --border-width: 0.5px;
+  border-bottom: 1px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ion-color-primary);
+  @apply my-1 font-semibold;
   --border-radius: 8px;
-  --background: transparent;
 }
-
 .custom-ion-item {
   @apply mx-4 p-1;
   border-bottom: 1px solid #ddd;

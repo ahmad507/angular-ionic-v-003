@@ -44,6 +44,13 @@ ion-checkbox::part(mark) {
   @apply text-[14px] text-blue-50;
 }
 
+.model-text{
+  font-family: 'Montserrat', sans-serif;
+  text-transform: capitalize;
+  color: var(--ion-color-primary);
+  @apply text-[14px] font-semibold;
+}
+
 ion-input.custom {
   font-family: 'Montserrat', sans-serif;
   text-transform: capitalize;

@@ -10,46 +10,78 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let item of DATA_LIST let i = index">
-    <ion-card-content>
-      <ion-chip color="success">
-        <ion-icon name="ribbon"></ion-icon>
-        <ion-label>
-          <div class="font-bold">{{item.unit_name}}&nbsp;&nbsp;</div>
-        </ion-label>
-      </ion-chip>
-      <ion-chip color="primary">
-        <ion-icon name="cash-outline"></ion-icon>
-        <ion-label>
-          <div class="font-light text-xs">Rp {{ (+item.unit_price_min).toLocaleString() }} s/d  {{ (+item.unit_price_max).toLocaleString() }}</div>
-        </ion-label>
-      </ion-chip>
-          <div class="flex flex-col gap-1">
-            <div class="mb-2">
-            <ion-item>
-            <ion-input class="custom" label="Harga Kendaraan Rp :" labelPlacement="stacked" placeholder="Masukan Harga kendaraan" (keyup)="validateAndFormatPrice($event, i)" [(ngModel)]="DATA_LIST[i].unit_price" ></ion-input>
-            </ion-item>
-            </div>
-            <div class="my-2">
-            <ion-item>
-              <ion-label>
-                <div [class]="checkParamMVType(DataMvType)">
-                  <div class="font-light text-xs text-green-700">Harga Aksesoris &nbsp;&nbsp;Rp : {{item.acc_price}} &nbsp;&nbsp;</div>
-                </div>
-              </ion-label>
-              <ion-icon slot="end" name="close"></ion-icon>
-            </ion-item>
-            </div>
-            <div class="mt-[8px] flex gap-2 justify-between items-center">
-              <button class="my-1 bg-blue-600 p-2 w-[66px] h-[46px] rounded-[8px] shadow-lg button-text" (click)="selectMvModel(i)">Pilih</button>
-              <div [class]="checkParamMVType(DataMvType)">
-                <button class="my-1 bg-green-700 p-2 w-auto h-[46px] rounded-[8px] shadow-lg button-text" (click)="openModalAksesories(i)">Tambah Aksesoris</button>
-              </div>
-            </div>
-          </div>
-    </ion-card-content>
-  </ion-card>
+  <div *ngIf="DATA_LIST.length > 0 then this.showList else this.noList"></div>
+  <ng-template #showList>
+    <ion-list>
+      <ion-item *ngFor="let item of DATA_LIST let i = index" (click)="selectMvModel(i)">
+<!--        <ion-chip color="success">-->
+<!--          <ion-icon name="ribbon"></ion-icon>-->
+<!--          <ion-label>-->
+<!--            <div class="font-bold">{{item.unit_name}}&nbsp;&nbsp;</div>-->
+<!--          </ion-label>-->
+<!--        </ion-chip>-->
+        <ion-icon slot="start" name="ribbon" color="primary"></ion-icon>
+        <div class="model-text">{{item.unit_name}}</div>
+      </ion-item>
+    </ion-list>
+  </ng-template>
+
+  <ng-template #noList>
+    <ion-card>
+      <img alt="Silhouette of mountains" src="assets/cars.jpg" />
+      <ion-card-header>
+        <ion-card-title class="font-bold font-lato">Model Kendaraan</ion-card-title>
+        <ion-card-subtitle class="font-semibold font-lato">Model Kendaraan Belum Tersedia</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p class="font-bold">Model kendaraan anda belum tersedia, <br> silahkan tambahkan model kendaraan anda</p>
+        <div class="my-3">
+          <app-button [ButtonBlock]="true" ButtonText="Tambah Model"></app-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
 </ion-content>
+<!--  <ion-card *ngFor="let item of DATA_LIST let i = index" (click)="selectMvModel(i)">-->
+<!--    <ion-card-content>-->
+<!--      <ion-chip color="success">-->
+<!--        <ion-icon name="ribbon"></ion-icon>-->
+<!--        <ion-label>-->
+<!--          <div class="font-bold">{{item.unit_name}}&nbsp;&nbsp;</div>-->
+<!--        </ion-label>-->
+<!--      </ion-chip>-->
+<!--    </ion-card-content>-->
+<!--  </ion-card>-->
+<!--      <ion-chip color="primary">-->
+<!--        <ion-icon name="cash-outline"></ion-icon>-->
+<!--        <ion-label>-->
+<!--          <div class="font-light text-xs">Rp {{ (+item.unit_price_min).toLocaleString() }} s/d  {{ (+item.unit_price_max).toLocaleString() }}</div>-->
+<!--        </ion-label>-->
+<!--      </ion-chip>-->
+<!--        <div class="flex flex-col gap-1">-->
+<!--          <div class="mb-2">-->
+<!--          <ion-item>-->
+<!--          <ion-input class="custom" label="Harga Kendaraan Rp :" labelPlacement="stacked" placeholder="Masukan Harga kendaraan" (keyup)="validateAndFormatPrice($event, i)" [(ngModel)]="DATA_LIST[i].unit_price" ></ion-input>-->
+<!--          </ion-item>-->
+<!--          </div>-->
+<!--          <div class="my-2">-->
+<!--          <ion-item>-->
+<!--            <ion-label>-->
+<!--              <div [class]="checkParamMVType(DataMvType)">-->
+<!--                <div class="font-light text-xs text-green-700">Harga Aksesoris &nbsp;&nbsp;Rp : {{item.acc_price}} &nbsp;&nbsp;</div>-->
+<!--              </div>-->
+<!--            </ion-label>-->
+<!--            <ion-icon slot="end" name="close"></ion-icon>-->
+<!--          </ion-item>-->
+<!--          </div>-->
+<!--          <div class="mt-[8px] flex gap-2 justify-between items-center">-->
+<!--            <button class="my-1 bg-blue-600 p-2 w-[66px] h-[46px] rounded-[8px] shadow-lg button-text" (click)="selectMvModel(i)">Pilih</button>-->
+<!--            <div [class]="checkParamMVType(DataMvType)">-->
+<!--              <button class="my-1 bg-green-700 p-2 w-auto h-[46px] rounded-[8px] shadow-lg button-text" (click)="openModalAksesories(i)">Tambah Aksesoris</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
 
 
 

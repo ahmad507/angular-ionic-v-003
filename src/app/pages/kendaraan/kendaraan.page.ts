@@ -1,9 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+
+export interface MvInfo {
+  mainsi: string;
+  vcode: string;
+  unit_name: string;
+  merek: string;
+}
 
 @Component({
   selector: 'app-kendaraan',
@@ -11,6 +18,8 @@ import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kend
   styleUrls: ['./kendaraan.page.scss'],
 })
 export class KendaraanPage implements OnInit {
+  @Input() mv_price: string = '0';
+
   inputDetail: any = informasiNasabah;
   inputDetail_2: any = informasiKendaraan;
   TIPE_NASABAH: string = '';
@@ -20,6 +29,12 @@ export class KendaraanPage implements OnInit {
   KODE_PLAT_KENDARAAN: string = '';
   MV_TYPE: string = '';
   MV_YEAR: number = 0;
+  MV_INFO_DATA: any = [];
+  MV_CODE: string = '';
+  private mv_price_max: number = 0;
+  private mv_price_min: number = 0;
+  isButtonDisabled: boolean = true;
+  isMVCAR: boolean = true;
 
 
   constructor(
@@ -28,6 +43,9 @@ export class KendaraanPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.mv_price);
+    this.isButtonDisabled = false;
+    this.isButtonDisabled = false;
   }
 
   gotoHome() {
@@ -68,7 +86,13 @@ export class KendaraanPage implements OnInit {
 
   async getDataMvType($event: string) {
     this.MV_TYPE = $event;
+    if(this.MV_TYPE === 'A'){
+      this.isMVCAR = true;
+    } else {
+      this.isMVCAR = false;
+    }
     this.updateKendaraanPayload('vtype', $event);
+    this.MV_YEAR = 0;
   }
 
   async getDataMvYear($event: number) {
@@ -92,17 +116,64 @@ export class KendaraanPage implements OnInit {
     }
   }
 
+  CheckParamMV2() {
+    if (this.MV_INFO_DATA.length === 0){
+      return 'hidden';
+    } else{
+      return 'block';
+    }
+  }
+
   async getDataMvMerekModel($event: any) {
+    this.extractDataMv($event);
     const mvInfo = [];
     mvInfo.push({...$event});
     mvInfo.map((res)=>{
       this.updateKendaraanPayload('vcode', res.vcode);
-      this.updateKendaraanPayload('mainsi', res.mainsi);
-      if (res.accesories_si === undefined){
-        this.updateKendaraanPayload('accesories_si', 0);
-      } else {
-        this.updateKendaraanPayload('accesories_si', res.accesories_si);
-      }
+      this.MV_CODE = res.vcode;
     });
+  }
+
+  checkInput($event: any) {
+    const inputValue = $event.target.value;
+    return this.validatePrice(inputValue);
+  }
+
+  validatePrice(unit_price: any) {
+    let dataPrice = parseInt(unit_price.replace(/,/g, ''), 10);
+    this.isButtonDisabled = isNaN(dataPrice) || dataPrice > this.mv_price_max || dataPrice < this.mv_price_min || (dataPrice !== 0 && (dataPrice > this.mv_price_max || dataPrice < this.mv_price_min));
+    this.mv_price = isNaN(dataPrice) ? unit_price : dataPrice.toLocaleString();
+    this.updateKendaraanPayload('mainsi', this.mv_price);
+  }
+
+  private extractDataMv($event: any) {
+    const dataCarinfoTemp = [];
+    dataCarinfoTemp.push($event);
+    const dataCarInfo = dataCarinfoTemp.map((item: MvInfo) => {
+      const mainsi = parseFloat(item.mainsi.replace(/,/g, ''));
+      const unit_price_max = mainsi + (mainsi * 0.1);
+      this.mv_price_max = unit_price_max;
+      const unit_price = mainsi.toLocaleString();
+      this.mv_price = item.mainsi;
+      this.updateKendaraanPayload('mainsi', item.mainsi);
+      const unit_price_min = mainsi - (mainsi * 0.1);
+      this.mv_price_min = unit_price_min;
+      return {
+        ...item,
+        unit_price_max: unit_price_max,
+        unit_price: unit_price,
+        unit_price_min: unit_price_min,
+      };
+    });
+    this.MV_INFO_DATA = dataCarInfo;
+  }
+
+  checkInput2($event: any) {
+    const inputValue = parseInt($event.target.value.replace(/,/g, ''), 10);
+    if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 1000000000000) {
+      this.mv_price = $event.target.value;
+    } else {
+      this.mv_price = '0';
+    }
   }
 }

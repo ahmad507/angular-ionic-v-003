@@ -38,7 +38,7 @@
       <ion-col sizeXs="12" sizeMd="6" sizeLg="8" sizeXl="8">
         <section class="section_Q" #slider>
 
-          <swiper-container #swiper (slidechange)="onSlideChange()" [slidesPerView]="1.12" [spaceBetween]="25"
+          <swiper-container #swiper (slidechange)="onSlideChange()" [slidesPerView]="1" [spaceBetween]="0"
             [centeredSlides]="true" [initialSlide]="1" [autoplay]="{delay:3050, disableOnInteraction:false, autoplayDisableOnInteraction:false}">
             <swiper-slide *ngFor="let item of bannerArray let idx = index">
               <div class="h-40 mt-4 rounded-lg bg-blue-500 shadow-md">

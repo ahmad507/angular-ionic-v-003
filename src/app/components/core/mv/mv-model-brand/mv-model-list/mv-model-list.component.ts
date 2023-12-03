@@ -8,6 +8,8 @@ import {
   MvAccessoriesComponent
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
 import {MvModalService} from "@src/app/components/core/mv/mv-model-brand/services/mv.modal.service";
+import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
+
 interface CarInfo {
   model_number: string;
   merk_code: string;
@@ -25,7 +27,8 @@ interface CarInfo {
   imports: [
     IonicModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    ButtonComponent
   ],
   selector: 'app-mv-model-list',
   templateUrl: './mv-model-list.component.html',

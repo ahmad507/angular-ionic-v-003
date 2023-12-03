@@ -1,5 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {AlertController, IonicModule, ModalController} from "@ionic/angular";
+import {Component, OnInit} from '@angular/core';
+import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";

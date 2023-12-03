@@ -27,3 +27,10 @@ ion-item {
   text-transform: capitalize;
   @apply text-[14px] text-blue-50;
 }
+
+.input-mv-price{
+  @apply border border-blue-700 w-full rounded-[8px] p-3 my-1 text-right text-[14px] text-blue-700;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: capitalize;
+}
+

@@ -15,6 +15,7 @@ import {MvTypeComponent} from "@src/app/components/core/mv/mv-type/mv-type.compo
 import {MvYearsComponent} from "@src/app/components/core/mv/mv-years/mv-years.component";
 import {MvModelBrandComponent} from "@src/app/components/core/mv/mv-model-brand/mv-model-brand.component";
 import {MvLicenseComponent} from "@src/app/components/core/mv/mv-license/mv-license.component";
+import {SharedDirectivesModule} from "@src/app/directives/shared-directives.module";
 
 @NgModule({
     imports: [
@@ -28,7 +29,8 @@ import {MvLicenseComponent} from "@src/app/components/core/mv/mv-license/mv-lice
         MvFunctionComponent,
         MvYearsComponent,
         MvModelBrandComponent,
-        MvLicenseComponent
+        MvLicenseComponent,
+        SharedDirectivesModule
     ],
     declarations: [KendaraanPage, MvTypeComponent]
 })

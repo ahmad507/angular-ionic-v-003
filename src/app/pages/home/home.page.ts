@@ -365,8 +365,6 @@ export class HomePage {
     this.swiperRef?.nativeElement.swiper.autoplay.start();
   }
 
-
-
   async ngOnInit() {
     await this.loadImageFiles();
     await this.loadPdfFiles();

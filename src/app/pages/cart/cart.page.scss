@@ -1,3 +1,38 @@
 .mv-price{
   @apply border border-blue-700 w-full rounded p-2;
 }
+
+.button-text {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: capitalize;
+  @apply text-[14px] text-blue-50;
+}
+
+.header-name{
+  font-family: 'Montserrat', sans-serif;
+  @apply mx-3 font-bold text-[14px] text-blue-500
+}
+
+ion-item {
+  //--inner-border-width: 0;
+  //--border-width: 0.5px;
+  //border-bottom: 1px;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--ion-color-primary);
+  @apply my-1 font-semibold;
+  //--border-radius: 8px;
+}
+
+.custom-ion-item {
+  @apply mx-4 p-1;
+  border-bottom: 1px solid #ddd;
+}
+
+.custom-ion-list .custom-ion-item {
+  border-bottom: 1px solid #ddd;
+}
+
+.plat-id{
+  @apply h-[32px] w-[46px] p-1 mx-1 bg-blue-600 text-center;
+  border: 1px solid grey;
+}

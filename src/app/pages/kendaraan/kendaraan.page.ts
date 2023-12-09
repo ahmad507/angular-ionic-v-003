@@ -2,12 +2,12 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
-import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {CarInsuranceState, MvInfoDetail} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {
-  resetCarInsuranceData,
-  updateKendaraanData
+  resetCarInsuranceData, resetMvInfoDetailData,
+  updateKendaraanData, updateMvInfoDetail
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
-import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 
 export interface MvInfo {
   mainsi: string;
@@ -54,12 +54,18 @@ export class KendaraanPage implements OnInit {
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.dataTempMvType = res.vtype;
       this.dataTempMvYear = res.vyear;
-    })
+    });
   }
 
   gotoHome() {
     this.store.dispatch(resetCarInsuranceData());
+    this.store.dispatch(resetMvInfoDetailData());
     this.router.navigate(['/main/home']);
+  }
+
+  updateMvInfoDetail(property: string, value: any){
+    const dataCarInfo = this.mvInfoDetailStore(property, value);
+    this.store.dispatch(updateMvInfoDetail({dataCarInfo}));
   }
 
   updateKendaraanPayload(property: string, value: any) {
@@ -95,6 +101,20 @@ export class KendaraanPage implements OnInit {
     return newData;
   }
 
+  private mvInfoDetailStore(property: string, value: any) {
+    const dataCarInfo: Partial<MvInfoDetail> = {
+      mainsi: '',
+      vcode: '',
+      unit_name: '',
+      merek: '',
+      unit_price_max: 0,
+      unit_price: '',
+      unit_price_min: 0,
+      [property]: value
+    }
+    return dataCarInfo;
+  }
+
   async getDataNasabah($event: string) {
     this.updateKendaraanPayload('ctype', $event);
   }
@@ -106,12 +126,12 @@ export class KendaraanPage implements OnInit {
   async getDataMvType($event: string) {
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.dataTempMvType = res.vtype;
+      if(this.dataTempMvType === 'A'){
+        this.isMVCAR = true;
+      } else {
+        this.isMVCAR = false;
+      }
     })
-    if(this.dataTempMvType === 'A'){
-      this.isMVCAR = true;
-    } else {
-      this.isMVCAR = false;
-    }
     this.updateKendaraanPayload('vtype', $event);
   }
 
@@ -142,11 +162,16 @@ export class KendaraanPage implements OnInit {
   }
 
   CheckParamMV2() {
-    if (this.MV_INFO_DATA.length === 0){
-      return 'hidden';
-    } else{
-      return 'block';
-    }
+    this.store.select(selectMvInfoDetailData).pipe().subscribe((res)=>{
+      const temp : any = [];
+      temp.push({...res})
+      this.MV_INFO_DATA = temp;
+      if (this.MV_INFO_DATA.mv_price === ''){
+        return 'hidden';
+      } else{
+        return 'block';
+      }
+    });
   }
 
   async getDataMvMerekModel($event: any) {
@@ -191,7 +216,17 @@ export class KendaraanPage implements OnInit {
         unit_price_min: unit_price_min,
       };
     });
-    this.MV_INFO_DATA = dataCarInfo;
+
+    dataCarInfo.forEach((res:MvInfoDetail)=>{
+      this.updateMvInfoDetail('mainsi', res.mainsi);
+      this.updateMvInfoDetail('merek', res.merek);
+      this.updateMvInfoDetail('vcode', res.vcode);
+      this.updateMvInfoDetail('unit_name', res.unit_name);
+      this.updateMvInfoDetail('unit_price_max', res.unit_price_max);
+      this.updateMvInfoDetail('unit_price', res.unit_price);
+      this.updateMvInfoDetail('unit_price_min', res.unit_price_min);
+    });
+
   }
 
   checkInput2($event: any) {
@@ -202,4 +237,5 @@ export class KendaraanPage implements OnInit {
       this.mv_price = '0';
     }
   }
+
 }

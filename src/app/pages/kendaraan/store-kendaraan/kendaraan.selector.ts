@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import {CarInsuranceState} from "./kendaraan.state";
+import {CarInsuranceState, MvInfoDetail} from "./kendaraan.state";
 
 const selectCarInsuranceState = createFeatureSelector<CarInsuranceState>('carInsurance');
 
@@ -17,3 +17,6 @@ export const selectKendaraanDataVTypeVYear = createSelector(
     mv_year: state.vyear
   })
 );
+
+const selectMvInfoDetail = createFeatureSelector<MvInfoDetail[]>('mvinfoUpdate');
+export const selectMvInfoDetailData = createSelector(selectMvInfoDetail, (state) => state);

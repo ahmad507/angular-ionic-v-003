@@ -8,7 +8,7 @@ import {
 } from "@src/app/components/core/mv/mv-model-brand/modal-mv-model-brand/modal-mv-model-brand.component";
 import {
   selectKendaraanData,
-  selectKendaraanDataVtype
+  selectKendaraanDataVtype, selectMvInfoDetailData
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {select, Store} from "@ngrx/store";
 import {take} from "rxjs";

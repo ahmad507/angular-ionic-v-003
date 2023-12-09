@@ -21,3 +21,13 @@ export interface CarInsuranceState {
   addsi_all: any[];
   addsi: any[];
 }
+
+export interface MvInfoDetail {
+  mainsi: string;
+  vcode: string;
+  unit_name: string;
+  merek: string;
+  unit_price_max: number;
+  unit_price: string;
+  unit_price_min: number;
+}

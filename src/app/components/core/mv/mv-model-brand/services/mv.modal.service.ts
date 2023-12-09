@@ -11,6 +11,7 @@ export class MvModalService {
     this.dataSubject.next(data);
   }
 
+
   getData() {
     return this.dataSubject.asObservable();
   }

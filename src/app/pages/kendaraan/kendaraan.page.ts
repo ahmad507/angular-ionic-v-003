@@ -3,7 +3,10 @@ import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
-import {resetCarInsuranceData, updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {
+  resetCarInsuranceData,
+  updateKendaraanData
+} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 
 export interface MvInfo {
@@ -36,6 +39,8 @@ export class KendaraanPage implements OnInit {
   private mv_price_min: number = 0;
   isButtonDisabled: boolean = true;
   isMVCAR: boolean = true;
+  dataTempMvType: string = '';
+  dataTempMvYear: number = 0;
 
 
   constructor(
@@ -46,6 +51,10 @@ export class KendaraanPage implements OnInit {
   ngOnInit() {
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.dataTempMvType = res.vtype;
+      this.dataTempMvYear = res.vyear;
+    })
   }
 
   gotoHome() {
@@ -54,6 +63,11 @@ export class KendaraanPage implements OnInit {
   }
 
   updateKendaraanPayload(property: string, value: any) {
+    const newData = this.mvDataStore(property, value);
+    this.store.dispatch(updateKendaraanData({ newData }));
+  }
+
+  private mvDataStore(property: string, value: any) {
     const newData: Partial<CarInsuranceState> = {
       accesories_detail: [],
       accesories_si: 0,
@@ -70,12 +84,15 @@ export class KendaraanPage implements OnInit {
       sortby: "",
       total_passenger: "",
       vcode: "",
+      vmodel: '',
+      vbrand: '',
       vfunction: "",
       vtype: "",
       vyear: 0,
       year_period: "",
-      [property]: value };
-    this.store.dispatch(updateKendaraanData({ newData }));
+      [property]: value
+    };
+    return newData;
   }
 
   async getDataNasabah($event: string) {
@@ -87,18 +104,21 @@ export class KendaraanPage implements OnInit {
   }
 
   async getDataMvType($event: string) {
-    this.MV_TYPE = $event;
-    if(this.MV_TYPE === 'A'){
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.dataTempMvType = res.vtype;
+    })
+    if(this.dataTempMvType === 'A'){
       this.isMVCAR = true;
     } else {
       this.isMVCAR = false;
     }
     this.updateKendaraanPayload('vtype', $event);
-    this.MV_YEAR = 0;
   }
 
   async getDataMvYear($event: number) {
-    this.MV_YEAR = $event;
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.dataTempMvYear = res.vyear;
+    })
     this.updateKendaraanPayload('vyear', $event);
   }
 
@@ -111,10 +131,12 @@ export class KendaraanPage implements OnInit {
     })
   }
 
-  CheckParamMV() {
-    if (this.MV_TYPE === '' || this.MV_YEAR === 0){
+  CheckParamMV(dataTempMvYear: number, dataTempMvType: string) {
+    if (dataTempMvYear === 0 || dataTempMvType === ''){
       return 'hidden';
+      console.log('MASUK-ITU');
     } else{
+      console.log('MASUK-SINI');
       return 'block';
     }
   }
@@ -133,7 +155,8 @@ export class KendaraanPage implements OnInit {
     mvInfo.push({...$event});
     mvInfo.map((res)=>{
       this.updateKendaraanPayload('vcode', res.vcode);
-      this.MV_CODE = res.vcode;
+      this.updateKendaraanPayload('vmodel', res.unit_name);
+      this.updateKendaraanPayload('vbrand', res.merek);
     });
   }
 

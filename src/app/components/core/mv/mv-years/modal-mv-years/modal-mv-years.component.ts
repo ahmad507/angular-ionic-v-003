@@ -35,7 +35,6 @@ export class ModalMvYearsComponent  implements OnInit {
   }
 
   async dismissModal() {
-    this.selectedMvYear = this.selectedMvYear === 0 ? new Date().getFullYear() : this.selectedMvYear;
     await this.modalController.dismiss(this.selectedMvYear, 'confirm');
   }
 

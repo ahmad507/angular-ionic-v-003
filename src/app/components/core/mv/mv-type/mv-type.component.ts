@@ -3,6 +3,7 @@ import {ModalController} from "@ionic/angular";
 import {ModalMvTypeComponent} from "@src/app/components/core/mv/mv-type/modal-mv-type/modal-mv-type.component";
 import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {Store} from "@ngrx/store";
+import {resetDataOnVTypeChange} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 
 @Component({
   selector: 'app-mv-type',
@@ -44,6 +45,7 @@ export class MvTypeComponent  implements OnInit {
       } else {
         this.setDataMvType.emit(response.data);
         this.checkSelectedMvType(responseDataTemp);
+        this.store.dispatch(resetDataOnVTypeChange());
       }
     })
   }

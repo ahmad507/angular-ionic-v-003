@@ -7,11 +7,13 @@ import {
   ModalMvModelBrandComponent
 } from "@src/app/components/core/mv/mv-model-brand/modal-mv-model-brand/modal-mv-model-brand.component";
 import {
+  selectKendaraanData,
   selectKendaraanDataVtype
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {select, Store} from "@ngrx/store";
 import {take} from "rxjs";
 import {MvModalService} from "@src/app/components/core/mv/mv-model-brand/services/mv.modal.service";
+import {resetDataOnVTypeChange} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 
 @Component({
   standalone: true,
@@ -30,6 +32,10 @@ export class MvModelBrandComponent  implements OnInit {
   selectedMVBrandModel: string =  'Merek - Model Kendaraan';
   listDataMerekKendaraan: any = [];
   private MV_TYPE: string = 'A';
+  private dataTempMvCode: string = '';
+  private dataTempMvBrand: string = '';
+  private dataTempMvModel: string = '';
+  private dataTempMvType: string = '';
 
   constructor(
     private store: Store,
@@ -38,7 +44,15 @@ export class MvModelBrandComponent  implements OnInit {
     private mvModalService: MvModalService,
     ) { this.getDataMvSelected() }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.dataTempMvCode = res.vcode;
+      this.dataTempMvBrand = res.vbrand;
+      this.dataTempMvModel = res.vmodel;
+      this.dataTempMvType = res.vtype;
+      this.checkSelectedMvModelBrand(this.dataTempMvBrand, this.dataTempMvModel);
+    })
+  }
 
   async openModalBrand() {
     this.store.pipe(select(selectKendaraanDataVtype), take(1)).subscribe((vtype) => {
@@ -80,5 +94,17 @@ export class MvModelBrandComponent  implements OnInit {
         this.iconColorRight = 'success';
       })
     })
+  }
+
+  private checkSelectedMvModelBrand(dataTempMvBrand: string, dataTempMvModel: string) {
+    if (dataTempMvBrand === '' && dataTempMvModel === ''){
+      this.selectedMVBrandModel = 'Merek - Model Kendaraan';
+      this.iconRight = 'caret-forward';
+      this.iconColorRight = 'primary';
+    }else{
+      this.selectedMVBrandModel = `${dataTempMvBrand} - ${dataTempMvModel}`
+      this.iconRight = 'checkmark-circle-sharp';
+      this.iconColorRight = 'success';
+    }
   }
 }

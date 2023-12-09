@@ -6,6 +6,8 @@ export interface CarInsuranceState {
   vtype: string;
   vyear: number;
   vcode: string;
+  vmodel: string;
+  vbrand: string;
   year_period: string;
   mainsi: number;
   accesories_si: number;

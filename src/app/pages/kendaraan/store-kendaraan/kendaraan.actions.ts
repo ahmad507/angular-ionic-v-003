@@ -7,3 +7,5 @@ export const updateKendaraanData = createAction(
 );
 
 export const resetCarInsuranceData = createAction('[Car Insurance] Reset Data');
+
+export const resetDataOnVTypeChange = createAction('[Car Insurance] Reset Data on VType Change');

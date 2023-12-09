@@ -11,6 +11,8 @@ export const initialState: CarInsuranceState = {
   vtype: '',
   vyear: 0,
   vcode: '',
+  vmodel: '',
+  vbrand: '',
   year_period: '',
   mainsi: 0,
   accesories_si: 0,
@@ -37,6 +39,8 @@ export const carInsuranceReducer = createReducer(
       vtype: newData.vtype || state.vtype,
       vyear:newData.vyear || state.vyear,
       vcode: newData.vcode || state.vcode,
+      vmodel: newData.vmodel || state.vmodel,
+      vbrand: newData.vbrand || state.vbrand,
       year_period: newData.year_period || state.year_period,
       mainsi:newData.mainsi || state.mainsi,
       accesories_si:newData.accesories_si || state.accesories_si,
@@ -52,4 +56,14 @@ export const carInsuranceReducer = createReducer(
     };
   }),
   on(kendaraanAction.resetCarInsuranceData, () => initialState),
+  on(kendaraanAction.resetDataOnVTypeChange, (state) =>{
+    return {
+      ...state,
+      vcode: '',
+      vmodel: '',
+      vbrand: '',
+      mainsi: 0,
+      vyear: 0
+    }
+  })
 );

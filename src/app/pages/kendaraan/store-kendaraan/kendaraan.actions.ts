@@ -5,3 +5,5 @@ export const updateKendaraanData = createAction(
   '[Car Insurance] Update Data',
   props<{ newData: Partial<CarInsuranceState> }>()
 );
+
+export const resetCarInsuranceData = createAction('[Car Insurance] Reset Data');

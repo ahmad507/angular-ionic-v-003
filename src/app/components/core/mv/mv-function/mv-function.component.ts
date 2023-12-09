@@ -5,6 +5,8 @@ import {FormsModule} from "@angular/forms";
 import {
   ModalMvFunctionComponent
 } from "@src/app/components/core/mv/mv-function/modal-mv-function/modal-mv-function.component";
+import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {Store} from "@ngrx/store";
 
 @Component({
   standalone: true,
@@ -26,10 +28,19 @@ export class MvFunctionComponent  implements OnInit {
   @Output() setDataMvFunction = new EventEmitter<string>();
 
   selectedMVFunction: string = 'Penggunaan Kendaraan';
+  private responseDataTemp: string = '';
 
-  constructor(private modalController : ModalController) { }
+  constructor(
+    private modalController : ModalController,
+    private store : Store,
+  ) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.responseDataTemp = res.vfunction;
+      this.checkSelectedMvFunction(this.responseDataTemp);
+    })
+  }
 
   async openModalMVFunction() {
     const modalMvFunction = await this.modalController.create({
@@ -37,18 +48,42 @@ export class MvFunctionComponent  implements OnInit {
     });
     await modalMvFunction.present();
     await modalMvFunction.onDidDismiss().then((response)=>{
-      this.setDataMvFunction.emit(response.data);
-      if(response.data === 'P'){
+      const responseDataTemp: string = response.data || '';
+      if (responseDataTemp === '') {
+        this.checkSelectedMvFunction(this.responseDataTemp || '');
+      } else {
+        this.setDataMvFunction.emit(response.data);
+        this.checkSelectedMvFunction(responseDataTemp);
+      }
+    })
+  }
+
+  private checkSelectedMvFunction(responseDataTemp: string) {
+    switch (true){
+      case responseDataTemp === '':
+        this.selectedMVFunction = 'Penggunaan Kendaraan';
+        this.iconLeft = 'key'
+        this.iconRight = 'caret-forward';
+        this.iconColorRight = 'primary';
+        break;
+      case responseDataTemp === 'P':
         this.selectedMVFunction = 'Pribadi / Dinas';
         this.iconLeft = 'key'
         this.iconRight = 'checkmark-circle-sharp';
         this.iconColorRight = 'success';
-      }else {
+        break;
+      case responseDataTemp === 'S':
         this.selectedMVFunction = 'Disewakan';
         this.iconLeft = 'calculator';
         this.iconRight = 'checkmark-circle-sharp';
         this.iconColorRight = 'success';
-      }
-    })
+        break;
+      default:
+        this.selectedMVFunction = 'Pribadi / Dinas';
+        this.iconLeft = 'key'
+        this.iconRight = 'checkmark-circle-sharp';
+        this.iconColorRight = 'success';
+        break;
+    }
   }
 }

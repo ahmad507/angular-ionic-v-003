@@ -6,6 +6,7 @@ import  * as kendaraanAction  from "./kendaraan.actions";
 export const initialState: CarInsuranceState = {
   ctype: '',
   license: '',
+  license_region: '',
   vfunction: '',
   vtype: '',
   vyear: 0,
@@ -31,6 +32,7 @@ export const carInsuranceReducer = createReducer(
       ...state,
       ctype: newData.ctype || state.ctype,
       license: newData.license || state.license,
+      license_region: newData.license_region || state.license_region,
       vfunction: newData.vfunction || state.vfunction,
       vtype: newData.vtype || state.vtype,
       vyear:newData.vyear || state.vyear,
@@ -48,5 +50,6 @@ export const carInsuranceReducer = createReducer(
       addsi_all: newData.addsi_all || state.addrisk_all,
       addsi: newData.addsi || state.addsi
     };
-  })
+  }),
+  on(kendaraanAction.resetCarInsuranceData, () => initialState),
 );

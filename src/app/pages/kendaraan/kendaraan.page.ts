@@ -3,7 +3,8 @@ import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
-import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {resetCarInsuranceData, updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 
 export interface MvInfo {
   mainsi: string;
@@ -43,12 +44,12 @@ export class KendaraanPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(this.mv_price);
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
   }
 
   gotoHome() {
+    this.store.dispatch(resetCarInsuranceData());
     this.router.navigate(['/main/home']);
   }
 
@@ -62,6 +63,7 @@ export class KendaraanPage implements OnInit {
       addsi_all: [],
       ctype: "",
       license: "",
+      license_region: "",
       mainrisk: "",
       mainsi: 0,
       reg_no: "",
@@ -105,6 +107,7 @@ export class KendaraanPage implements OnInit {
     dataLicense.push($event);
     dataLicense.forEach((res)=>{
       this.updateKendaraanPayload('license', res.id);
+      this.updateKendaraanPayload('license_region', res.text);
     })
   }
 

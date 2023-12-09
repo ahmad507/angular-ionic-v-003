@@ -1,6 +1,7 @@
 export interface CarInsuranceState {
   ctype: string;
   license: string;
+  license_region: string;
   vfunction: string;
   vtype: string;
   vyear: number;

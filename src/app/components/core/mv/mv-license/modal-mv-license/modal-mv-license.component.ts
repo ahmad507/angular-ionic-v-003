@@ -19,7 +19,8 @@ import {FormsModule} from "@angular/forms";
   ]
 })
 export class ModalMvLicenseComponent  implements OnInit {
-  private selectedMvLicense: object = {id:'B',desc:'DKI-Jakarta, Depok, Tangerang, Bekasi (JaDeTaBek)', text:'B - DKI-Jakarta, Depok, Tangerang, Bekasi (JaDeTaBek)'};
+  private selectedMvLicense: object = { desc:'', id: '', text: '' };
+
   listMvLicense: any = [];
 
   constructor(
@@ -33,7 +34,6 @@ export class ModalMvLicenseComponent  implements OnInit {
   async dismissModal() {
     await this.modalController.dismiss(this.selectedMvLicense, 'confirm');
   }
-
 
   private async getMvLicense() {
     const loading = await this.loadingCOntroller.create({
@@ -75,7 +75,4 @@ export class ModalMvLicenseComponent  implements OnInit {
     await this.dismissModal();
   }
 
-  private async loadingIndicator(dataParam: any) {
-
-  }
 }

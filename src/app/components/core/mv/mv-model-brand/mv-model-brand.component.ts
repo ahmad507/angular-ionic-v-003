@@ -8,12 +8,11 @@ import {
 } from "@src/app/components/core/mv/mv-model-brand/modal-mv-model-brand/modal-mv-model-brand.component";
 import {
   selectKendaraanData,
-  selectKendaraanDataVtype, selectMvInfoDetailData
+  selectKendaraanDataVtype
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {select, Store} from "@ngrx/store";
 import {take} from "rxjs";
 import {MvModalService} from "@src/app/components/core/mv/mv-model-brand/services/mv.modal.service";
-import {resetDataOnVTypeChange} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 
 @Component({
   standalone: true,

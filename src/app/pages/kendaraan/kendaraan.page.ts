@@ -205,7 +205,7 @@ export class KendaraanPage implements OnInit {
     const dataCarInfo = dataCarinfoTemp.map((item: MvInfo) => {
       const mainsi = parseFloat(item.mainsi.replace(/,/g, ''));
       const unit_price_max = mainsi + (mainsi * 0.1);
-      
+
       this.mv_price_max = unit_price_max;
       const unit_price = mainsi.toLocaleString();
       this.mv_price = item.mainsi;

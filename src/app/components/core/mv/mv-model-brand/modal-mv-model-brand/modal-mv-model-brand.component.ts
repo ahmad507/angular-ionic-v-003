@@ -31,6 +31,9 @@ export interface Mv_Brand {
 export class ModalMvModelBrandComponent  implements OnInit {
   selectedMvModelBrand: string = '';
   @Input() DataMerekKendaraan : any = [];
+  focused: boolean = false;
+  searchParam: string = '';
+  filteredList: any[] = [];
 
   constructor(
     private dataServiceKendaraan: DataServiceKendaraan,
@@ -38,6 +41,7 @@ export class ModalMvModelBrandComponent  implements OnInit {
     private store: Store) { }
 
   ngOnInit() {
+    this.loadData();
   }
 
   async dismissModal() {
@@ -76,5 +80,23 @@ export class ModalMvModelBrandComponent  implements OnInit {
       }
     });
     await modalListMvBrand.present();
+  }
+
+  filter() {
+    this.filteredList = this.DataMerekKendaraan.filter((item:any) => item.name.toString().toLowerCase().includes(this.searchParam.toLowerCase()));
+  }
+
+  onBlur(event: any){
+    const value = event.target.value;
+    if(!value){
+      this.focused = false;
+    }
+  }
+
+  private loadData() {
+    if(this.DataMerekKendaraan.length > 0){
+      this.filter();
+      return this.DataMerekKendaraan;
+    }
   }
 }

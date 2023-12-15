@@ -85,6 +85,7 @@ export class MvModelBrandComponent  implements OnInit {
 
   private getDataMvSelected() {
     this.mvModalService.getData().subscribe((res)=>{
+      console.log('EMIT', res);
       this.setDataMvDetail.emit(res);
       let mvInfo = [];
       mvInfo.push({...res});

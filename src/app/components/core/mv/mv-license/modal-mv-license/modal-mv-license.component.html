@@ -5,12 +5,16 @@
         <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <span class="header-name">Pilih Penggunaan Kendaraan</span>
+    <span class="header-name">Pilih Plat Wilayah</span>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item *ngFor="let item of listMvLicense" (click)="getDataMvLicense(item)">
+  <div class="form-field">
+    <label [class]="focused ? 'label-focused' : '' ">Plat Wilayah Kendaraan</label>
+    <input [(ngModel)]="searchParam" (input)="filter()" type="text" (focus)="focused = true" (blur)="onBlur($event)">
+  </div>
+  <ion-item *ngFor="let item of filteredList" (click)="getDataMvLicense(item)">
     <div class="flex items-center justify-between">
       <div class="text-xs break-all font-semibold">{{item.id}}&nbsp;&nbsp;-&nbsp;&nbsp;{{item.desc}}</div>
     </div>

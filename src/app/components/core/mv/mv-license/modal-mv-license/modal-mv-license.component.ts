@@ -20,8 +20,10 @@ import {FormsModule} from "@angular/forms";
 })
 export class ModalMvLicenseComponent  implements OnInit {
   private selectedMvLicense: object = { desc:'', id: '', text: '' };
-
+  focused: boolean = false;
+  searchParam: string = '';
   listMvLicense: any = [];
+  filteredList: any[] = [];
 
   constructor(
     private modalController: ModalController,
@@ -52,6 +54,7 @@ export class ModalMvLicenseComponent  implements OnInit {
         });
       });
       this.listMvLicense = arrDataPlat;
+      this.filter()
     }, async (res) => {
       await loading.dismiss();
       const alert = await this.alertController.create({
@@ -75,4 +78,14 @@ export class ModalMvLicenseComponent  implements OnInit {
     await this.dismissModal();
   }
 
+  filter() {
+    this.filteredList = this.listMvLicense.filter((item:any) => item.text.toString().toLowerCase().includes(this.searchParam.toLowerCase()));
+  }
+
+  onBlur(event: any){
+    const value = event.target.value;
+    if(!value){
+      this.focused = false;
+    }
+  }
 }

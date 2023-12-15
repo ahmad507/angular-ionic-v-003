@@ -10,7 +10,11 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <ion-item *ngFor="let item of DataMerekKendaraan" (click)="getDataMvModel(item)">
+  <div class="form-field">
+    <label [class]="focused ? 'label-focused' : '' ">Merek Kendaraan</label>
+    <input [(ngModel)]="searchParam" (input)="filter()" type="text" (focus)="focused = true" (blur)="onBlur($event)">
+  </div>
+  <ion-item *ngFor="let item of filteredList" (click)="getDataMvModel(item)">
     <div class="text-sm">{{item.name}}</div>
     <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
   </ion-item>

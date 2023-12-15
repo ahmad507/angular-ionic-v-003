@@ -10,9 +10,13 @@
 </ion-header>
 
 <ion-content class="ion-padding">
+  <div class="form-field">
+    <label [class]="focused ? 'label-focused' : '' ">Merek Kendaraan</label>
+    <input [(ngModel)]="searchParam" (input)="filter()" type="text" (focus)="focused = true" (blur)="onBlur($event)">
+  </div>
   <div *ngIf="DATA_LIST.length > 0 then this.showList else this.noList"></div>
   <ng-template #showList>
-    <ion-item *ngFor="let item of DATA_LIST let i = index" (click)="selectMvModel(i)">
+    <ion-item *ngFor="let item of filteredList let i = index" (click)="selectMvModel(item)">
       <ion-icon slot="start" name="ribbon" color="primary"></ion-icon>
       <div class="text-xs font-bold">{{item.unit_name}}</div>
       <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>

@@ -176,6 +176,7 @@ export class KendaraanPage implements OnInit {
 
   async getDataMvMerekModel($event: any) {
     this.extractDataMv($event);
+    console.log('EVENT',$event);
     const mvInfo = [];
     mvInfo.push({...$event});
     mvInfo.map((res)=>{
@@ -198,11 +199,13 @@ export class KendaraanPage implements OnInit {
   }
 
   private extractDataMv($event: any) {
+    console.log('EXTRACT', $event)
     const dataCarinfoTemp = [];
     dataCarinfoTemp.push($event);
     const dataCarInfo = dataCarinfoTemp.map((item: MvInfo) => {
       const mainsi = parseFloat(item.mainsi.replace(/,/g, ''));
       const unit_price_max = mainsi + (mainsi * 0.1);
+      
       this.mv_price_max = unit_price_max;
       const unit_price = mainsi.toLocaleString();
       this.mv_price = item.mainsi;

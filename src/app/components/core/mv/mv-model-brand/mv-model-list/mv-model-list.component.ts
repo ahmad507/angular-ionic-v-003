@@ -39,6 +39,11 @@ export class MvModelListComponent  implements OnInit {
   @Input() DataMerekKendaraan : string = '';
   @Input() DataMvYears : number = 0;
   @Input() DataMvType : string = '';
+
+  focused: boolean = false;
+  searchParam: string = '';
+  filteredList: any[] = [];
+
   DATA_LIST: DetailMerek[] = [];
   HARGA_KENDARAAN: any = '';
   HARGA_AKSESORIS: any = '';
@@ -54,6 +59,8 @@ export class MvModelListComponent  implements OnInit {
       unit_price: parseInt(item.unit_price).toLocaleString(),
       unit_price_min: (parseInt(item.unit_price)) - (parseInt(item.unit_price) * 0.1),
     }));
+    console.log(this.DATA_LIST);
+    this.filter();
   }
 
   dismissModal() {
@@ -96,16 +103,44 @@ export class MvModelListComponent  implements OnInit {
     }
   }
 
-  async selectMvModel(i: number) {
+// {
+//   "model_number": "72321",
+//   "merk_code": "NIS",
+//   "unit_name": "Grand Livina All New Livina EL AT",
+//   "unit_year": "2020",
+//   "unit_price": "188,730,000",
+//   "unit_type": "A",
+//   "unit_price_max": 207603000,
+//   "unit_price_min": 169857000
+// }
+//
+
+  async selectMvModel(item: any) {
+    console.log(item);
     const dataMv = {
-      mainsi: this.DATA_LIST[i].unit_price,
-      vcode: this.DATA_LIST[i].model_number,
-      accesories_si: this.DATA_LIST[i].acc_price,
-      unit_name: this.DATA_LIST[i].unit_name,
-      merek: this.DataMerekKendaraan
+      vcode: item.model_number,
+      unit_name: item.unit_name,
+      merek: this.DataMerekKendaraan,
+      unit_price_max: item.unit_price_max,
+      mainsi: item.unit_price,
+      unit_price_min: item.unit_price_min
     }
     this.mvModalService.sendData(dataMv);
     await this.modalController.dismiss(dataMv, 'confirm');
+  }
+
+
+
+  filter() {
+    this.filteredList = this.DATA_LIST.filter((item:any) => item.unit_name.toString().toLowerCase().includes(this.searchParam.toLowerCase()));
+    console.log(this.filteredList);
+  }
+
+  onBlur(event: any){
+    const value = event.target.value;
+    if(!value){
+      this.focused = false;
+    }
   }
 }
 

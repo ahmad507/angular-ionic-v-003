@@ -1,14 +1,18 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="close-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content class="ion-padding">
-  <div>{{acc_props}}</div>
   <div class="mt-[16px]">
-    <div class="form-field mb-[16px]">
-      <label [class]="isMerekFocused || inputMerekAcc !== ''? 'label-focused' : 'label-blur' ">Merek Aksesoris</label>
-      <input [(ngModel)]="inputMerekAcc" type="text" (focus)="onFocus('merek')" (blur)="onBlur('merek')">
-    </div>
-    <div class="form-field mb-[16px]">
-      <label [class]="isHargaFocused || inputHargaAcc !== ''? 'label-focused' : 'label-blur' ">Harga Aksesoris</label>
-      <input [(ngModel)]="inputHargaAcc" type="text" (focus)="onFocus('harga')" (blur)="onBlur('harga')">
-    </div>
+    <app-input label="Merek Aksesoris" [(value)]="inputMerekAcc"></app-input>
+    <app-input label="Harga Aksesoris" [(value)]="inputHargaAcc"></app-input>
     <app-button (buttonClick)="handleClick(acc_props)" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
   </div>
 </ion-content>
+

@@ -45,57 +45,35 @@
         <app-spacer SECTION_NAME="Harga Kendaraan"></app-spacer>
       </ng-template>
 
-      <div class="my-3">
-        <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
-          <ion-icon name="cash-outline"></ion-icon>
-          <ion-label>
-            <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>
-          </ion-label>
-        </ion-chip>
+      <div [class]="CheckParamMV2()">
+        <div class="my-3">
+          <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
+            <ion-icon name="cash-outline"></ion-icon>
+            <ion-label>
+              <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>
+            </ion-label>
+          </ion-chip>
+        </div>
+
+        <div class="my-3">
+          <app-input label="Harga Kendaraan (Rp)"  [(value)]="mv_price"/>
+        </div>
+        <div [appShowAccessories]="isMVCAR" id="accessories_detail">
+        <div class="-mt-[16px]">
+          <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + mv_price_acc"></app-spacer>
+          <div class="header-name text-right"></div>
+<!--          <app-input label="Harga Aksesoris (Rp)" [disabled]="true" [(value)]="mv_price_acc" />-->
+        </div>
+        <div class="my-3">
+          <button
+            [appDisableButton]="isButtonDisabled"
+            (click)="openAccModal()"
+            id="acc_button"
+            class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
+        </div>
+        </div>
+        <button [appDisableButton]="isButtonDisabled" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text" disabled>Selanjutnya</button>
       </div>
-
-      <div class="my-3">
-        <input [(ngModel)]="mv_price" (input)="checkInput2($event)" (keyup)="checkInput($event)" id="input_mv_price" class="input-mv-price" type="text" />
-      </div>
-
-      <div class="my-3">
-        <button
-          [appDisableButton]="isButtonDisabled"
-          (click)="openAccModal()"
-          id="add_acc"
-          class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
-      </div>
-
-<!--      <div [appShowAccessories]="isMVCAR" id="accessories_detail">-->
-<!--        <div class="my-3">-->
-<!--          <input [(ngModel)]="mv_price" (input)="checkInput2($event)" (keyup)="checkInput($event)" id="input_mv_price" class="input-mv-price" type="text" />-->
-<!--        </div>-->
-<!--      </div>-->
-      <button [appDisableButton]="isButtonDisabled" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text" disabled>Selanjutnya</button>
-
-<!--      <div class="hidden" [class]="CheckParamMV2()">-->
-<!--        <div class="my-3">-->
-<!--          <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">-->
-<!--            <ion-icon name="cash-outline"></ion-icon>-->
-<!--            <ion-label>-->
-<!--              <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>-->
-<!--            </ion-label>-->
-<!--          </ion-chip>-->
-<!--        </div>-->
-
-<!--        <div class="my-3">-->
-<!--          <input [(ngModel)]="mv_price" (input)="checkInput2($event)" (keyup)="checkInput($event)" id="input_mv_price" class="input-mv-price" type="text" />-->
-<!--        </div>-->
-<!--        <div [appShowAccessories]="isMVCAR" id="accessories_detail">-->
-<!--        <div class="my-3">-->
-<!--          <input [(ngModel)]="mv_price" (input)="checkInput2($event)" (keyup)="checkInput($event)" id="input_mv_price" class="input-mv-price" type="text" />-->
-<!--        </div>-->
-<!--        <div class="my-3">-->
-<!--          <button [appDisableButton]="isButtonDisabled" id="search_button" class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Aksesoris</button>-->
-<!--        </div>-->
-<!--        </div>-->
-<!--        <button [appDisableButton]="isButtonDisabled" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text" disabled>Selanjutnya</button>-->
-<!--      </div>-->
 
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
       <div class="my-3 ion-activatable ripple-parent hidden" *ngFor="let item of inputDetail_2">

@@ -2,16 +2,17 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
-import {CarInsuranceState, MvInfoDetail} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {MvInfoDetail} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {
-  resetCarInsuranceData, resetMvInfoDetailData,
-  updateKendaraanData, updateMvInfoDetail
+  resetCarInsuranceData, resetMvInfoDetailData
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {ModalController} from "@ionic/angular";
 import {
   MvAccessoriesComponent
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
+import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
+import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service";
 
 export interface MvInfo {
   mainsi: string;
@@ -27,6 +28,7 @@ export interface MvInfo {
 })
 export class KendaraanPage implements OnInit {
   @Input() mv_price: string = '0';
+  @Input() mv_price_acc: string = '0';
 
   inputDetail: any = informasiNasabah;
   inputDetail_2: any = informasiKendaraan;
@@ -47,10 +49,13 @@ export class KendaraanPage implements OnInit {
   dataTempMvYear: number = 0;
 
 
+
   constructor(
     private router : Router,
     private store : Store,
     private modalController : ModalController,
+    private mvDataService: MvDataService,  // Inject service
+    private accInputService: AccessoryService
   ) {}
 
   ngOnInit() {
@@ -68,56 +73,14 @@ export class KendaraanPage implements OnInit {
     this.router.navigate(['/main/home']);
   }
 
-  updateMvInfoDetail(property: string, value: any){
-    const dataCarInfo = this.mvInfoDetailStore(property, value);
-    this.store.dispatch(updateMvInfoDetail({dataCarInfo}));
+  updateMvInfoDetail(property: string, value: any) {
+    this.mvDataService.updateMvInfoDetail(property, value);
+    this.accInputService.deleteAccessory();
   }
 
   updateKendaraanPayload(property: string, value: any) {
-    const newData = this.mvDataStore(property, value);
-    this.store.dispatch(updateKendaraanData({ newData }));
-  }
-
-  private mvDataStore(property: string, value: any) {
-    const newData: Partial<CarInsuranceState> = {
-      accesories_detail: [],
-      accesories_si: 0,
-      addrisk: [],
-      addrisk_all: [],
-      addsi: [],
-      addsi_all: [],
-      ctype: "",
-      license: "",
-      license_region: "",
-      mainrisk: "",
-      mainsi: 0,
-      reg_no: "",
-      sortby: "",
-      total_passenger: "",
-      vcode: "",
-      vmodel: '',
-      vbrand: '',
-      vfunction: "",
-      vtype: "",
-      vyear: 0,
-      year_period: "",
-      [property]: value
-    };
-    return newData;
-  }
-
-  private mvInfoDetailStore(property: string, value: any) {
-    const dataCarInfo: Partial<MvInfoDetail> = {
-      mainsi: '',
-      vcode: '',
-      unit_name: '',
-      merek: '',
-      unit_price_max: 0,
-      unit_price: '',
-      unit_price_min: 0,
-      [property]: value
-    }
-    return dataCarInfo;
+    this.mvDataService.updateKendaraanPayload(property, value);
+    this.accInputService.deleteAccessory();
   }
 
   async getDataNasabah($event: string) {
@@ -129,6 +92,7 @@ export class KendaraanPage implements OnInit {
   }
 
   async getDataMvType($event: string) {
+    this.updateKendaraanPayload('vtype', $event);
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.dataTempMvType = res.vtype;
       if(this.dataTempMvType === 'A'){
@@ -137,7 +101,6 @@ export class KendaraanPage implements OnInit {
         this.isMVCAR = false;
       }
     })
-    this.updateKendaraanPayload('vtype', $event);
   }
 
   async getDataMvYear($event: number) {
@@ -156,32 +119,21 @@ export class KendaraanPage implements OnInit {
     })
   }
 
-  CheckParamMV(dataTempMvYear: number, dataTempMvType: string) {
-    if (dataTempMvYear === 0 || dataTempMvType === ''){
-      return 'hidden';
-      console.log('MASUK-ITU');
-    } else{
-      console.log('MASUK-SINI');
-      return 'block';
-    }
-  }
-
   CheckParamMV2() {
     this.store.select(selectMvInfoDetailData).pipe().subscribe((res)=>{
-      const temp : any = [];
-      temp.push({...res})
+      let temp : any = [];
+      temp.push({...res});
       this.MV_INFO_DATA = temp;
-      if (this.MV_INFO_DATA.mv_price === ''){
-        return 'hidden';
-      } else{
-        return 'block';
-      }
     });
+    this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
+      this.mv_price = (res.mainsi).toString();
+      this.mv_price_acc = (res.accesories_si).toLocaleString();
+    })
+
   }
 
   async getDataMvMerekModel($event: any) {
     this.extractDataMv($event);
-    console.log('EVENT',$event);
     const mvInfo = [];
     mvInfo.push({...$event});
     mvInfo.map((res)=>{
@@ -204,16 +156,14 @@ export class KendaraanPage implements OnInit {
   }
 
   private extractDataMv($event: any) {
-    console.log('EXTRACT', $event)
     const dataCarinfoTemp = [];
     dataCarinfoTemp.push($event);
     const dataCarInfo = dataCarinfoTemp.map((item: MvInfo) => {
       const mainsi = parseFloat(item.mainsi.replace(/,/g, ''));
       const unit_price_max = mainsi + (mainsi * 0.1);
-
       this.mv_price_max = unit_price_max;
       const unit_price = mainsi.toLocaleString();
-      this.mv_price = item.mainsi;
+      this.mv_price = (item.mainsi);
       this.updateKendaraanPayload('mainsi', item.mainsi);
       const unit_price_min = mainsi - (mainsi * 0.1);
       this.mv_price_min = unit_price_min;
@@ -246,10 +196,20 @@ export class KendaraanPage implements OnInit {
     }
   }
 
+  checkInput3($event: any) {
+    const inputValue = parseInt($event.target.value.replace(/,/g, ''), 10);
+    if (!isNaN(inputValue) && inputValue >= 0 && inputValue <= 1000000000000) {
+      this.mv_price_acc = $event.target.value;
+    } else {
+      this.mv_price_acc = '0';
+    }
+  }
+
   async openAccModal() {
     const modalAccMv = await this.modalController.create({
       component: MvAccessoriesComponent
     });
     await modalAccMv.present();
   }
+
 }

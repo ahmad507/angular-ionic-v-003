@@ -1,0 +1,4 @@
+<div class="form-field">
+  <label [class]="isFocused || value !== '' ? 'label-focused' : 'label-blur' ">{{ label }}</label>
+  <input [(ngModel)]="value" type="text" (focus)="onFocus()" (blur)="onBlur()" [disabled]="disabled">
+</div>

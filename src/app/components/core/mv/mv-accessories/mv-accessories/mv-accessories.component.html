@@ -8,8 +8,25 @@
     <span class="header-name">Aksesoris Kendaraan</span>
   </ion-toolbar>
 </ion-header>
-<ion-content>
-  <div class="p-2 mx-2 my-2">
-    <app-button ButtonText="Tambahkan" [ButtonBlock]="true" (buttonClick)="getDataAccessories(DATA_LIST)"></app-button>
+<ion-content class="ion-padding">
+  <div *ngFor="let accessory of ['KACA_FILM', 'SOUND_SYSTEM', 'KARPET_MOBIL', 'VELG_BAN', 'JOK_MOBIL', 'BODY_KIT', 'LAINNYA']" class="mb-2">
+    <ion-item>
+      <div class="flex flex-1 flex-row justify-between items-center" (click)="openInputAccModal(accessory)">
+        <div>
+          <div class="acc-title">{{ replaceUnderscoreWithSpace(accessory) }}</div>
+          <div class="acc-subtitle">{{ getAccessoryDetail(accessory).merek }}</div>
+        </div>
+        <div class="acc-price">Rp {{ getAccessoryDetail(accessory).harga.toLocaleString() }}</div>
+      </div>
+      <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)" [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
+      <ng-container *ngIf="getAccessoryDetail(accessory).harga > 0">
+      <ion-icon slot="end" name="trash" color="danger" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
+      </ng-container>
+    </ion-item>
   </div>
+  <div class="acc-title my-2">
+    <div class="text-right">Total Harga Aksesoris : Rp {{sum_acc_price.toLocaleString()}}</div>
+  </div>
+
+  <app-button (buttonClick)="handleClick()" [ButtonType]="'primary'"  [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
 </ion-content>

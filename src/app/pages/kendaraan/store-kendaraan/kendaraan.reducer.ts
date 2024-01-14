@@ -73,7 +73,9 @@ export const carInsuranceReducer = createReducer(
       vmodel: '',
       vbrand: '',
       mainsi: 0,
-      vyear: 0
+      vyear: 0,
+      accesories_si:0,
+      accesories_detail:[]
     }
   })
 );

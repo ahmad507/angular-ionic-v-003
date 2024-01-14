@@ -16,22 +16,24 @@ import {MvYearsComponent} from "@src/app/components/core/mv/mv-years/mv-years.co
 import {MvModelBrandComponent} from "@src/app/components/core/mv/mv-model-brand/mv-model-brand.component";
 import {MvLicenseComponent} from "@src/app/components/core/mv/mv-license/mv-license.component";
 import {SharedDirectivesModule} from "@src/app/directives/shared-directives.module";
+import {InputComponent} from "@src/app/components/core/input/input/input.component";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        KendaraanPageRoutingModule,
-        HomePageModule,
-        SearchableSelectComponent,
-        NasabahComponent,
-        MvFunctionComponent,
-        MvYearsComponent,
-        MvModelBrandComponent,
-        MvLicenseComponent,
-        SharedDirectivesModule
-    ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		KendaraanPageRoutingModule,
+		HomePageModule,
+		SearchableSelectComponent,
+		NasabahComponent,
+		MvFunctionComponent,
+		MvYearsComponent,
+		MvModelBrandComponent,
+		MvLicenseComponent,
+		SharedDirectivesModule,
+		InputComponent
+	],
     declarations: [KendaraanPage, MvTypeComponent]
 })
 export class KendaraanPageModule {}

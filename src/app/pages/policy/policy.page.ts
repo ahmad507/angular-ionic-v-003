@@ -32,6 +32,7 @@ export class PolicyPage implements OnInit {
   inputHargaAcc = '';
   // accessories$: Observable<AccItems[]> = this.accessoryService.getAllAccessories();
   accessories: AccItems[] = [];
+  sum_acc_price: any;
 
   constructor(
     private modalController: ModalController,
@@ -42,7 +43,10 @@ export class PolicyPage implements OnInit {
   ngOnInit() {
     this.callApiForMvYear();
     this.filter();
-    this.store.select(selectAllAccessories).subscribe(accessories => this.accessories = accessories);
+    this.store.select(selectAllAccessories).subscribe((accessories) => {
+      this.accessories = accessories;
+      this.sum_acc_price = this.calculateTotalPrice(accessories);
+    });
   }
 
   private callApiForMvYear() {
@@ -126,5 +130,9 @@ export class PolicyPage implements OnInit {
 
   dismissModal() {
     // this.modalController.dismiss();
+  }
+
+  private calculateTotalPrice(accessories: AccItems[]) {
+    return accessories.reduce((total, accessory) => total + accessory.harga, 0);
   }
 }

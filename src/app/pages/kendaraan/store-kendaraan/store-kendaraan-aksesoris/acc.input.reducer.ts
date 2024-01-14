@@ -8,16 +8,14 @@ export const accessoryReducer = createReducer(
   initialState,
   on(AccessoryActions.addAccessory, (state, { accessory }) => {
     const existingIndex = state.findIndex(item => item.name === accessory.name);
-
     if (existingIndex !== -1) {
-      // Jika aksesoris sudah ada, perbarui nilainya
       const updatedState = [...state];
       updatedState[existingIndex] = { ...updatedState[existingIndex], ...accessory };
       return updatedState;
     } else {
-      // Jika aksesoris belum ada, tambahkan yang baru
       return [...state, accessory];
     }
   }),
-  on(AccessoryActions.removeAccessory, (state, { accessoryName }) => state.filter(item => item.name !== accessoryName))
+  on(AccessoryActions.removeAccessory, (state, { accessoryName }) => state.filter(item => item.name !== accessoryName)),
+  on(AccessoryActions.removeAllAccessories, () => [])
 );

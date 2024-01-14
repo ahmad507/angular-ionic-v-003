@@ -1,0 +1,14 @@
+<ion-content class="ion-padding">
+  <div>{{acc_props}}</div>
+  <div class="mt-[16px]">
+    <div class="form-field mb-[16px]">
+      <label [class]="isMerekFocused || inputMerekAcc !== ''? 'label-focused' : 'label-blur' ">Merek Aksesoris</label>
+      <input [(ngModel)]="inputMerekAcc" type="text" (focus)="onFocus('merek')" (blur)="onBlur('merek')">
+    </div>
+    <div class="form-field mb-[16px]">
+      <label [class]="isHargaFocused || inputHargaAcc !== ''? 'label-focused' : 'label-blur' ">Harga Aksesoris</label>
+      <input [(ngModel)]="inputHargaAcc" type="text" (focus)="onFocus('harga')" (blur)="onBlur('harga')">
+    </div>
+    <app-button (buttonClick)="handleClick(acc_props)" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
+  </div>
+</ion-content>

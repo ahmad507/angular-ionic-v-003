@@ -8,6 +8,10 @@ import {
   updateKendaraanData, updateMvInfoDetail
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {ModalController} from "@ionic/angular";
+import {
+  MvAccessoriesComponent
+} from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
 
 export interface MvInfo {
   mainsi: string;
@@ -46,6 +50,7 @@ export class KendaraanPage implements OnInit {
   constructor(
     private router : Router,
     private store : Store,
+    private modalController : ModalController,
   ) {}
 
   ngOnInit() {
@@ -241,4 +246,10 @@ export class KendaraanPage implements OnInit {
     }
   }
 
+  async openAccModal() {
+    const modalAccMv = await this.modalController.create({
+      component: MvAccessoriesComponent
+    });
+    await modalAccMv.present();
+  }
 }

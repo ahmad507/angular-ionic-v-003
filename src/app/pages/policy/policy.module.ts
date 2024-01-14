@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PolicyPageRoutingModule } from './policy-routing.module';
 
 import { PolicyPage } from './policy.page';
+import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PolicyPage } from './policy.page';
     IonicModule,
     PolicyPageRoutingModule,
     ReactiveFormsModule,
+    ButtonComponent,
   ],
   declarations: [PolicyPage]
 })

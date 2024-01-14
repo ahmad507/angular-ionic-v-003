@@ -1,439 +1,657 @@
 {
   "/API_STAGE_1/v01/mv/license/listLicense": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/license/listLicense",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/license/listLicense",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/model_type/listModelTypeByMerk": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/model_type/listModelTypeByMerk",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/model_type/listModelTypeByMerk",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/model_type/priceByModelNumber": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/model_type/priceByModelNumber",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/model_type/priceByModelNumber",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/coverage/listMainRisk": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listMainRisk",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listMainRisk",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/coverage/listAdditionalRisk": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listAdditionalRisk",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listAdditionalRisk",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/coverage/listWorkshop": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listWorkshop",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/listWorkshop",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/coverage/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/list",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/coverage/list",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/merk/listByVehicleType": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/merk/listByVehicleType",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/merk/listByVehicleType",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/merk/listMerkByWorkshop": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/merk/listMerkByWorkshop",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/merk/listMerkByWorkshop",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/city/listAllCityByProvince": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listAllCityByProvince",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listAllCityByProvince",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/city/listZipCodeByCity": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listZipCodeByCity",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listZipCodeByCity",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/city/listAllCity": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listAllCity",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/city/listAllCity",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/mv/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/uploadDocumentNow",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/uploadDocumentNow",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/buy/dataTransaction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/dataTransaction",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/dataTransaction",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/mv/buy/changeTransactionData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/changeTransactionData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/changeTransactionData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/mv/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/checkVoucher",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy/checkVoucher",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/mv/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/mv/buy",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/boundary/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/boundary/list",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/boundary/list",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/insurance_type/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/insurance_type/list",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/insurance_type/list",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/occupation/listStorey": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/listStorey",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/listStorey",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/occupation/listClassConstruction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/listClassConstruction",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/listClassConstruction",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/occupation/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/list",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/occupation/list",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/region/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/region/list",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/region/list",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/zone/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/zone/list",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/zone/list",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/coverage/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/coverage/list",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/coverage/list",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/uploadDocumentNow",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/uploadDocumentNow",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/health/buy/annualIncome": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/annualIncome",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/annualIncome",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/buy/dataTransaction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/dataTransaction",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/dataTransaction",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/buy/changeTransactionData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/changeTransactionData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/changeTransactionData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/property/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/checkVoucher",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/checkVoucher",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/property/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/property/buy/",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/health/benefit": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/benefit",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/benefit",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/health/care_type": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/care_type",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/care_type",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/health/range_premi": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/range_premi",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/range_premi",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/health/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/uploadDocumentNow",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/uploadDocumentNow",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/health/buy/dataTransaction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/dataTransaction",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/dataTransaction",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/health/buy/changeTransactionData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/changeTransactionData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/changeTransactionData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/health/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/checkVoucher",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy/checkVoucher",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/health/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/buy",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/health/coverage/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/coverage/list",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/health/coverage/list",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/country": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/country",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/country",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/job": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/job",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/job",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/beneficiary": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/beneficiary",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/beneficiary",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/register": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/register",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/register",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/artikel/getAllMedia": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getAllMedia",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getAllMedia",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/artikel/getArticleByCategory": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getArticleByCategory",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getArticleByCategory",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/artikel/getReadArticle": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getReadArticle",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getReadArticle",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/artikel/getMostPopularArticle": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getMostPopularArticle",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/getMostPopularArticle",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/artikel/readArticleUpdate": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/readArticleUpdate",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel/readArticleUpdate",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/artikel": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/artikel",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/detail": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/detail",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/detail",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/login": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/login",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/login",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/requestOTP": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/requestOTP",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/requestOTP",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/updatePassword": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updatePassword",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updatePassword",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/listBank": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/listBank",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/listBank",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/updateAccountBank": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updateAccountBank",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updateAccountBank",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/updateAccountData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updateAccountData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/updateAccountData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/tokenVerification": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/tokenVerification",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/tokenVerification",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/logout": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/logout",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/logout",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/notification": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/notification",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/notification",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/generateResetPasswordLink": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/generateResetPasswordLink",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/generateResetPasswordLink",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/account/register": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/register",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/register",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/account/modifyPassword": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/modifyPassword",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/account/modifyPassword",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/payment/payment_method/getBankFee": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/getBankFee",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/getBankFee",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/payment/payment_method/usePromo": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/usePromo",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/usePromo",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/payment/payment_method/resetPromo": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/resetPromo",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/resetPromo",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/payment/payment_method/getDataPayment": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/getDataPayment",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method/getDataPayment",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/payment/payment_method": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_method",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/payment/payment_confirmation/confirmData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_confirmation/confirmData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_confirmation/confirmData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/payment/payment_confirmation": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_confirmation",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/payment_confirmation",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/cart/waitingForPayment": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart/waitingForPayment",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart/waitingForPayment",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/cart/cartItemCounter": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart/cartItemCounter",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart/cartItemCounter",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/general/cart": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/cart",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/payment/pay_now/checkPaymentStatus": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/pay_now/checkPaymentStatus",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/pay_now/checkPaymentStatus",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/payment/pay_now": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/pay_now",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/payment/pay_now",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/policy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/policy",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/policy",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/travel/coverage/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/coverage/list",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/coverage/list",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/travel/buy/callMe": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/callMe",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/callMe",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/travel/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/uploadDocumentNow",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/uploadDocumentNow",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/travel/buy/getInsurerCountry": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/getInsurerCountry",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/getInsurerCountry",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/travel/buy/dataTransaction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/dataTransaction",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/dataTransaction",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/travel/buy/changeTransactionData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/changeTransactionData",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/changeTransactionData",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/travel/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/checkVoucher",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy/checkVoucher",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/travel/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/travel/buy",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/pet/pet_type": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/pet_type",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/pet_type",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/pet/coverage/list": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/coverage/list",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/coverage/list",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/pet/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/uploadDocumentNow",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/uploadDocumentNow",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/pet/buy/dataTransaction": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/dataTransaction",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/dataTransaction",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/pet/buy/changeTransactionData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/changeTransactionData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/changeTransactionData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/pet/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/checkVoucher",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy/checkVoucher",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/pet/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/pet/buy",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/claim/lapor_claim/getMemberPolicy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim/getMemberPolicy",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim/getMemberPolicy",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
 
   "/API_STAGE_1/v01/claim/lapor_claim/getClaimData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim/getClaimData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim/getClaimData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/claim/lapor_claim": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/claim/lapor_claim",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/micro/product/detail": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/product/detail",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/product/detail",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/micro/product": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/product",
-      "secure": false
-  },
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/product",
+    "secure": false
+  ,
+    "changeOrigin": true,
+    "logLevel": "debug"},
   "/API_STAGE_1/v01/micro/buy/uploadDocumentNow": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy/uploadDocumentNow",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy/uploadDocumentNow",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/micro/buy/checkVoucher": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy/checkVoucher",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy/checkVoucher",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/micro/buy": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/micro/buy",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/other_product/productList": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/other_product/productList",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/other_product/productList",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/other_product": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/other_product",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/other_product",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/subscribe/newSubscribe": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/subscribe/newSubscribe",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/subscribe/newSubscribe",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/general/short_link/generateSimulationData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/short_link/generateSimulationData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/general/short_link/generateSimulationData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/dashboard": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/dashboard",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/dashboard",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/member_referral": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/member_referral",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/member_referral",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/redeem/getAllRedeemData": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/getAllRedeemData",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/getAllRedeemData",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/redeem/cekTotalPoint": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/cekTotalPoint",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/cekTotalPoint",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/redeem/doRedeem": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/doRedeem",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/doRedeem",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   },
   "/API_STAGE_1/v01/referral/redeem/cekRekeningBank": {
-      "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/cekRekeningBank",
-      "secure": false
+    "target": "https://dev.asuransiku.id/API_STAGE_1/v01/referral/redeem/cekRekeningBank",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

@@ -14,7 +14,7 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.scss'],
 })
-export class ButtonComponent  implements OnInit {
+export class ButtonComponent {
   @Input() ButtonText: string = '';
   @Input() ButtonBlock: boolean = false;
   @Input() ButtonType: string = 'primary'
@@ -22,29 +22,35 @@ export class ButtonComponent  implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {}
-
   getButtonClasses(): string {
     if(this.ButtonBlock){
-      return `bg-${this.getButtonColor()} p-2 w-full h-[46px] rounded-[8px] block`;
+      return `block`;
     } else{
-      return `bg-${this.getButtonColor()} p-0 w-[66px] h-[46px] rounded-[8px]`;
+      return `w-auto`;
     }
-
   }
 
-  private getButtonColor(): string {
+  getType(BlockType:any){
+    return this.ButtonBlock = BlockType;
+  }
+
+   getButtonColor(): string {
     switch (this.ButtonType) {
       case 'primary':
-        return 'blue-600';
+        return `bg-blue-600 p-2 w-full h-[46px] rounded-[8px] ${this.ButtonBlock ? 'block' : 'w-auto'}`;
+        // return 'blue-600';
       case 'success':
-        return 'green-600';
+        return `bg-green-600 p-2 w-full h-[46px] rounded-[8px] ${this.ButtonBlock ? 'block' : 'w-auto'}`;
+        // return 'green-600';
+      case 'danger':
+        return `bg-red-600 p-2 w-full h-[46px] rounded-[8px] ${this.ButtonBlock ? 'block' : 'w-auto'}`;
+        // return 'red-600';
       case 'warning':
-        return 'red-600';
-      case 'warning':
-        return 'red-600';
+        return `bg-yellow-600 p-2 w-full h-[46px] rounded-[8px] ${this.ButtonBlock ? 'block' : 'w-auto'}`;
+        // return 'yellow-600';
       default:
-        return 'blue-600';
+        return `bg-blue-600 p-2 w-full h-[46px] rounded-[8px] ${this.ButtonBlock ? 'block' : 'w-auto'}`;
+        // return 'blue-600';
     }
   }
 

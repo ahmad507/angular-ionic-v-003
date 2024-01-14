@@ -12,6 +12,7 @@ import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 
 import {carInsuranceReducer} from "./pages/kendaraan/store-kendaraan/kendaraan.reducer";
 import {updateMvInfoReducer} from "./pages/kendaraan/store-kendaraan/kendaraan.reducer";
+import {accessoryReducer} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.reducer";
 
 import {StoreModule} from "@ngrx/store";
 import { localStorageSync } from "ngrx-store-localstorage";
@@ -21,10 +22,11 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const reducers = {
   carInsurance: carInsuranceReducer,
-  mvinfoUpdate: updateMvInfoReducer
+  mvinfoUpdate: updateMvInfoReducer,
+  accessories: accessoryReducer
 };
 
-const keys = ['carInsurance', 'mvinfoUpdate']
+const keys = ['carInsurance', 'mvinfoUpdate', 'accessories']
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: keys, rehydrate: true })(reducer);

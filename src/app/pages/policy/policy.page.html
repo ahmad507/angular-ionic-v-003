@@ -1,21 +1,32 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
+      <ion-button (click)="dismissModal()">
         <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <span class="header-name">Pilih Tahun Kendaraan</span>
+    <span class="header-name">Aksesoris Kendaraan</span>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="form-field">
-    <label [class]="focused ? 'label-focused' : '' ">Tahun Kendaraan</label>
-    <input [(ngModel)]="searchParam" (input)="filter()" type="text" (focus)="focused = true" (blur)="onBlur($event)">
+  <div *ngFor="let accessory of ['KACA_FILM', 'SOUND_SYSTEM', 'KARPET_MOBIL', 'VELG_BAN', 'JOK_MOBIL', 'BODY_KIT', 'LAINNYA']" class="mb-2">
+    <ion-item (click)="openInputAccModal(accessory)">
+      <div class="flex flex-1 flex-row justify-between items-center">
+
+        <div>
+          <div class="acc-title">{{ replaceUnderscoreWithSpace(accessory) }}</div>
+          <div class="acc-subtitle">{{ getAccessoryDetail(accessory).merek }}</div>
+        </div>
+
+        <div class="acc-price">Rp {{ getAccessoryDetail(accessory).harga.toLocaleString() }}</div>
+
+      </div>
+      <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)" [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
+    </ion-item>
   </div>
-  <ion-item *ngFor="let item of filteredList">
-    <div class="text-sm font-semibold">{{item.text}}</div>
-    <ion-icon slot="end" clas="icon-only" name="caret-forward" color="primary"></ion-icon>
-  </ion-item>
+  <div></div>
+
+  <app-button (buttonClick)="handleClick()" [ButtonType]="'primary'"  [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
 </ion-content>
+

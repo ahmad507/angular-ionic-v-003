@@ -1,7 +1,9 @@
 <button
   class="button-text"
-  [class]="getButtonClasses()"
+  [class]="getButtonColor()"
   (click)="onButtonClick()"
-  [ngClass]="{'block': ButtonBlock, 'shadow-lg': ButtonType === 'primary'}">
+  [ngClass]="'block'">
+  <div class="mx-3">
   {{ ButtonText }}
+  </div>
 </button>

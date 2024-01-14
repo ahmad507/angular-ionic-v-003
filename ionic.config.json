@@ -3,5 +3,11 @@
   "integrations": {
     "capacitor": {}
   },
-  "type": "angular"
+  "type": "angular",
+  "proxies": [
+    {
+      "path": "/API_STAGE_1",
+      "proxyUrl": "https://dev.asuransiku.id/API_STAGE_1"
+    }
+  ]
 }

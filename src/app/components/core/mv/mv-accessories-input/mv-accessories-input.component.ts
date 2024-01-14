@@ -67,4 +67,11 @@ export class MvAccessoriesInputComponent implements OnInit {
   async dismissModal() {
     await this.modalController.dismiss();
   }
+
+  replaceUnderscoreWithSpace(accessory: string) {
+    const stringWithSpaces = accessory.replace(/_/g, ' ');
+    const words = stringWithSpaces.split(' ');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+    return capitalizedWords.join(' ');
+  }
 }

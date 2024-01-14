@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -12,12 +12,12 @@ import {
 import {
   MvAccessoriesInputComponent
 } from "@src/app/components/core/mv/mv-accessories-input/mv-accessories-input.component";
-import {ListYear, MvListYear} from "@src/app/pages/policy/policy.page";
 import {
   updateAccesoriesSi,
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
 import {take} from "rxjs";
+import {HomePageModule} from "@src/app/pages/home/home.module";
 
 
 @Component({
@@ -26,17 +26,17 @@ import {take} from "rxjs";
     IonicModule,
     CommonModule,
     FormsModule,
-    ButtonComponent
+    ButtonComponent,
+    HomePageModule
   ],
   selector: 'app-mv-accessories',
   templateUrl: './mv-accessories.component.html',
   styleUrls: ['./mv-accessories.component.scss'],
 })
 export class MvAccessoriesComponent  implements OnInit {
+  @Input() mv_price:any = '';
   focused = false;
   searchParam = '';
-  listMvYear: MvListYear = [];
-  filteredList: ListYear[] = [];
   kacaFilm = false;
   soundSystem = false;
   isMerekFocused = false;
@@ -45,6 +45,7 @@ export class MvAccessoriesComponent  implements OnInit {
   inputHargaAcc = '';
   accessories: AccItems[] = [];
   sum_acc_price: any;
+  limit_acc: number = 0;
 
   constructor(
     private modalController: ModalController,
@@ -54,12 +55,19 @@ export class MvAccessoriesComponent  implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getLimitAccPrice();
     this.store.select(selectAllAccessories).subscribe((accessories) => {
       this.accessories = accessories;
       this.sum_acc_price = this.calculateTotalPrice(accessories);
     });
   }
 
+
+  private getLimitAccPrice() {
+    const mv_limit_acc = parseFloat(this.mv_price.replace(/,/g, ''));
+    const discountPercentage = 0.1; // 10%
+    this.limit_acc = mv_limit_acc * discountPercentage;
+  }
 
   async openInputAccModal(acc_props: string) {
     const filteredAccessories = this.accessories.filter(item => item.name === acc_props);
@@ -145,5 +153,9 @@ export class MvAccessoriesComponent  implements OnInit {
 
   async deleteAccItem(name: string) {
     await this.accessoryService.removeAccessory(name);
+  }
+
+  async dismissModal() {
+    await this.modalController.dismiss();
   }
 }

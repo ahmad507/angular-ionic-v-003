@@ -8,6 +8,8 @@ import { PolicyPageRoutingModule } from './policy-routing.module';
 
 import { PolicyPage } from './policy.page';
 import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
+import {HomePageModule} from "@src/app/pages/home/home.module";
+import {RegInputComponent} from "@src/app/components/core/input/reg-input/reg-input.component";
 
 @NgModule({
   imports: [
@@ -17,7 +19,9 @@ import {ButtonComponent} from "@src/app/components/core/buttons/button/button.co
     PolicyPageRoutingModule,
     ReactiveFormsModule,
     ButtonComponent,
+    HomePageModule,
+    RegInputComponent,
   ],
-  declarations: [PolicyPage]
+	declarations: [PolicyPage]
 })
 export class PolicyPageModule {}

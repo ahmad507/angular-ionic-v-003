@@ -6,18 +6,13 @@
 
 .header-name{
   font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[14px] text-blue-500
+  @apply font-bold text-[14px] text-blue-500
 }
 
 .button-text {
   font-family: 'Montserrat', sans-serif;
   text-transform: capitalize;
   @apply text-[14px] text-blue-50;
-}
-
-.header-name{
-  font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[14px] text-blue-500
 }
 
 .acc-title{

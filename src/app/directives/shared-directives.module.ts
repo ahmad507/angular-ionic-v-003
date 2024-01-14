@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HideHeaderDirective } from './hide-header.directive';
 import { DisableButtonDirective } from './disable-button.directive';
 import { ShowAccessoriesDirective } from './show-accessories.directive';
+import { ControlValueAccessorDirective } from './control-value-accessor.directive';
 
 
 
@@ -11,6 +12,7 @@ import { ShowAccessoriesDirective } from './show-accessories.directive';
     HideHeaderDirective,
     DisableButtonDirective,
     ShowAccessoriesDirective,
+    ControlValueAccessorDirective,
   ],
   imports: [
     CommonModule

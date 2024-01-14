@@ -1,8 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      <ion-button (click)="dismissModal()">
+<!--        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>-->
       </ion-button>
     </ion-buttons>
     <span class="header-name">Aksesoris Kendaraan</span>
@@ -21,9 +21,15 @@
 
       <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)" [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
       <ng-container *ngIf="getAccessoryDetail(accessory).harga > 0">
-      <ion-icon slot="end" name="trash" color="danger" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
+      <ion-icon slot="end" name="trash" color="primary" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
       </ng-container>
     </ion-item>
+  </div>
+  <div class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
+    <app-spacer SECTION_NAME="Limit Total Harga Aksesoris" />
+    <div>
+      Rp {{limit_acc.toLocaleString()}}
+    </div>
   </div>
   <div class="acc-title my-2">
     <div class="text-right">Total Harga Aksesoris : Rp {{sum_acc_price.toLocaleString()}}</div>

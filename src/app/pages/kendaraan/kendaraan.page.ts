@@ -216,7 +216,10 @@ export class KendaraanPage implements OnInit {
 
   async openAccModal() {
     const modalAccMv = await this.modalController.create({
-      component: MvAccessoriesComponent
+      component: MvAccessoriesComponent,
+      componentProps:{
+        mv_price: this.mv_price
+      }
     });
     await modalAccMv.present();
   }

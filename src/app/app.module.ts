@@ -19,6 +19,8 @@ import { localStorageSync } from "ngrx-store-localstorage";
 import {StoreDevtoolsModule} from "@ngrx/store-devtools";
 import {environment} from "../environments/environment";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ReactiveFormsModule} from "@angular/forms";
+import {InputComponent} from "@src/app/components/core/input/input/input.component";
 
 const reducers = {
   carInsurance: carInsuranceReducer,
@@ -35,6 +37,7 @@ export function localStorageSyncReducer(reducer: any) {
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     IonicModule.forRoot(),

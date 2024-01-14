@@ -13,14 +13,12 @@ import {
   MvAccessoriesInputComponent
 } from "@src/app/components/core/mv/mv-accessories-input/mv-accessories-input.component";
 import {ListYear, MvListYear} from "@src/app/pages/policy/policy.page";
-import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
-import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {
+  updateAccesoriesSi,
+} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
+import {take} from "rxjs";
 
-interface AccItem {
-  id: number;
-  price: string;
-}
 
 @Component({
   standalone: true,
@@ -45,7 +43,6 @@ export class MvAccessoriesComponent  implements OnInit {
   isHargaFocused = false;
   inputMerekAcc = '';
   inputHargaAcc = '';
-  // accessories$: Observable<AccItems[]> = this.accessoryService.getAllAccessories();
   accessories: AccItems[] = [];
   sum_acc_price: any;
 
@@ -63,9 +60,6 @@ export class MvAccessoriesComponent  implements OnInit {
     });
   }
 
-  updateKendaraanPayload(property: string, value: any) {
-    this.mvDataService.updateKendaraanPayload(property, value);
-  }
 
   async openInputAccModal(acc_props: string) {
     const filteredAccessories = this.accessories.filter(item => item.name === acc_props);
@@ -106,17 +100,19 @@ export class MvAccessoriesComponent  implements OnInit {
     this.isHargaFocused = input === 'harga' && this.inputHargaAcc !== '';
   }
 
+  updateKendaraanPayload(property: string, value: any) {
+    this.mvDataService.updateKendaraanPayload(property, value);
+  }
 
   async handleClick() {
-    console.log('acc_detailz', this.accessories);
-    console.log('acc_siz', this.sum_acc_price);
-    this.store.select(selectAllAccessories).subscribe((accessories) => {
+    this.store.select(selectAllAccessories).pipe(take(1)).subscribe(async (accessories) => {
       this.accessories = accessories;
       this.sum_acc_price = this.calculateTotalPrice(accessories);
+      this.accessoryService.updateAllAccessory(this.accessories);
+      this.updateKendaraanPayload('accesories_si', this.sum_acc_price);
+      this.updateKendaraanPayload('accesories_detail', accessories);
     });
-    this.updateKendaraanPayload('accesories_detail', this.accessories);
-    this.updateKendaraanPayload('accesories_si', this.sum_acc_price);
-    await this.modalController.dismiss();
+    await this.modalController.dismiss(this.accessories, 'confirm');
   }
 
   openInputSoundSystem() {
@@ -138,19 +134,16 @@ export class MvAccessoriesComponent  implements OnInit {
     return capitalizedWords.join(' ');
   }
 
-  dismissModal() {
-    // this.modalController.dismiss();
-  }
-
   private calculateTotalPrice(accessories: AccItems[]) {
-    return accessories.reduce((total, accessory) => total + accessory.harga, 0);
+    if (accessories.length > 0) {
+      return accessories.reduce((total, accessory) => total + accessory.harga, 0);
+    } else {
+      this.store.dispatch(updateAccesoriesSi({newAccesoriesSi:0}))
+      return 0;
+    }
   }
 
-  deleteAccItem(name: string) {
-    this.accessoryService.removeAccessory(name);
-    this.store.select(selectAllAccessories).subscribe((accessories) => {
-      this.accessories = accessories;
-      this.updateKendaraanPayload('accesories_detail', this.accessories);
-    });
+  async deleteAccItem(name: string) {
+    await this.accessoryService.removeAccessory(name);
   }
 }

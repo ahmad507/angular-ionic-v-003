@@ -9,8 +9,12 @@ export const updateKendaraanData = createAction(
 export const resetCarInsuranceData = createAction('[Car Insurance] Reset Data');
 export const resetDataOnVTypeChange = createAction('[Car Insurance] Reset Data on VType Change');
 
-export const updateMvInfoDetail = createAction(
-  '[Mv Info] Update MvInfo',
+export const updateMvInfoDetail = createAction('[Mv Info] Update MvInfo',
   props<{ dataCarInfo: Partial<MvInfoDetail>}>()
   );
 export const resetMvInfoDetailData = createAction('[Mv Info] Reset Data');
+
+export const updateAccesoriesSi = createAction(
+  '[Kendaraan] Update Accesories Si',
+  props<{ newAccesoriesSi: number }>()
+);

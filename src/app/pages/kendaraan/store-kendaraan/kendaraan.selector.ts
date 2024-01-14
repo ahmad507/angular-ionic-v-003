@@ -18,5 +18,5 @@ export const selectKendaraanDataVTypeVYear = createSelector(
   })
 );
 
-const selectMvInfoDetail = createFeatureSelector<MvInfoDetail[]>('mvinfoUpdate');
+export const selectMvInfoDetail = createFeatureSelector<MvInfoDetail[]>('mvinfoUpdate');
 export const selectMvInfoDetailData = createSelector(selectMvInfoDetail, (state) => state);

@@ -43,13 +43,9 @@ export class MvAccessoriesInputComponent implements OnInit {
       harga: parseFloat(this.inputHargaAcc),
       merek: this.inputMerekAcc,
     };
-
-    console.log(data)
-
     this.accessoryService.addAccessory(data);
     this.resetInputs();
-    this.dataChanged.emit(data); // Mengirimkan perubahan data menggunakan EventEmitter
-
+    this.dataChanged.emit(data);
     this.modalController.dismiss();
   }
 

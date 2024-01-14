@@ -77,6 +77,12 @@ export const carInsuranceReducer = createReducer(
       accesories_si:0,
       accesories_detail:[]
     }
+  }),
+  on(kendaraanAction.updateAccesoriesSi , (state, { newAccesoriesSi }) => {
+    return {
+      ...state,
+      accesories_si: newAccesoriesSi
+    };
   })
 );
 

@@ -13,6 +13,11 @@ import {
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
 import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service";
+import {
+  selectAllAccessories
+} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector";
+import {AccItems} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state";
+import {take} from "rxjs";
 
 export interface MvInfo {
   mainsi: string;
@@ -65,6 +70,10 @@ export class KendaraanPage implements OnInit {
       this.dataTempMvType = res.vtype;
       this.dataTempMvYear = res.vyear;
     });
+  }
+
+  private calculateTotalPrice(accessories: AccItems[]) {
+    return accessories.reduce((total, accessory) => total + accessory.harga, 0);
   }
 
   gotoHome() {

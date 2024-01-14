@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Store } from "@ngrx/store";
 import { CarInsuranceState, MvInfoDetail } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {
+  updateAccesoriesSi,
   updateKendaraanData,
   updateMvInfoDetail
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
@@ -21,6 +22,10 @@ export class MvDataService {
   updateKendaraanPayload(property: string, value: any) {
     const newData = this.mvDataStore(property, value);
     this.store.dispatch(updateKendaraanData({ newData }));
+  }
+
+  updateAccesoriesSiS(newAccesoriesSi:number){
+    this.store.dispatch(updateAccesoriesSi({newAccesoriesSi}))
   }
 
   private mvDataStore(property: string, value: any) {

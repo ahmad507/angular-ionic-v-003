@@ -19,7 +19,7 @@
           <br/>
           <span class="text-[8px]">Untuk Wilayah Coverage (JaDeTaBek)</span>
         </div>
-        <img src="./assets/towing.png" class="mr-[16px] pt-[50px] w-[153px]">
+        <img src="./assets/towing.png" alt="towing.png" class="mr-[16px] pt-[50px] w-[153px]">
       </div>
     </div>
     <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px] shadow-2xl h-full">
@@ -45,7 +45,7 @@
         <app-spacer SECTION_NAME="Harga Kendaraan"></app-spacer>
       </ng-template>
 
-      <div [class]="CheckParamMV2()">
+      <div [class]="CheckParamMV()">
         <div class="my-3">
           <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
             <ion-icon name="cash-outline"></ion-icon>
@@ -56,7 +56,7 @@
         </div>
 
         <div class="my-3">
-          <app-input label="Harga Kendaraan (Rp)"  [(value)]="mv_price"/>
+            <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
         </div>
         <div [appShowAccessories]="isMVCAR" id="accessories_detail">
         <div class="-mt-[16px]">

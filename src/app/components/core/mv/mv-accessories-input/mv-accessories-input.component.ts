@@ -29,18 +29,24 @@ export class MvAccessoriesInputComponent implements OnInit {
   isHargaFocused = false;
 
   accessories$ = this.accessoryService.getAllAccessories();
+  isNumeric: boolean = false;
 
   constructor(
     private modalController: ModalController,
     private accessoryService: AccessoryService
-  ) {}
+  ) {
+    this.isNumeric = true;
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.inputHargaAcc.toLocaleString();
+  }
 
   handleClick(acc_props: string) {
+    const integerValue = parseInt(this.inputHargaAcc.replace(/[^0-9]/g, ''), 10);
     const data = {
       name: acc_props,
-      harga: parseFloat(this.inputHargaAcc),
+      harga: integerValue,
       merek: this.inputMerekAcc,
     };
     this.accessoryService.addAccessory(data);

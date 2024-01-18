@@ -62,7 +62,6 @@ export class MvAccessoriesComponent  implements OnInit {
     });
   }
 
-
   private getLimitAccPrice() {
     const mv_limit_acc = parseFloat(this.mv_price.replace(/,/g, ''));
     const discountPercentage = 0.1; // 10%
@@ -123,12 +122,11 @@ export class MvAccessoriesComponent  implements OnInit {
     await this.modalController.dismiss(this.accessories, 'confirm');
   }
 
-  openInputSoundSystem() {
-    this.soundSystem = !this.soundSystem;
-  }
-
   getAccessoryDetail(name: string): AccItems {
-    return this.accessories.find(accessory => accessory.name === name) || { name: '', harga: 0, merek: '' };
+    return this.accessories.find(accessory => accessory.name === name) || {
+      name: '',
+      harga: 0,
+      merek: '' };
   }
 
   iconColor(price: number) {
@@ -144,7 +142,7 @@ export class MvAccessoriesComponent  implements OnInit {
 
   private calculateTotalPrice(accessories: AccItems[]) {
     if (accessories.length > 0) {
-      return accessories.reduce((total, accessory) => total + accessory.harga, 0);
+      return accessories.reduce((total, accessory) => total + (accessory.harga), 0);
     } else {
       this.store.dispatch(updateAccesoriesSi({newAccesoriesSi:0}))
       return 0;

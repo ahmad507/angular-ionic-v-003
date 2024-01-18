@@ -1,7 +1,8 @@
 import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
 import {ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {IonicModule} from "@ionic/angular";
-import {CommonModule} from "@angular/common";
+import { IonicModule } from "@ionic/angular";
+import { CommonModule } from "@angular/common";
+import {InputCurrencyDirective} from "@src/app/directives/input-currency.directive";
 
 @Component({
   selector: 'app-input',
@@ -9,7 +10,8 @@ import {CommonModule} from "@angular/common";
   imports: [
     IonicModule,
     CommonModule,
-    FormsModule
+    FormsModule,
+    InputCurrencyDirective
   ],
   providers: [
     {
@@ -21,10 +23,11 @@ import {CommonModule} from "@angular/common";
   templateUrl: './input.component.html',
   styleUrls: ['./input.component.scss'],
 })
-export class InputComponent{
-  @Input() label: any = '';
+export class InputComponent implements ControlValueAccessor {
+  @Input() label: string = '';
   @Input() value: any = '';
   @Input() disabled: boolean = false;
+  @Input() shouldFormat: boolean = false;
   @Output() valueChange = new EventEmitter<string>();
 
   isFocused: boolean = false;
@@ -35,6 +38,21 @@ export class InputComponent{
 
   onBlur(): void {
     this.isFocused = this.value !== '';
-    this.valueChange.emit(this.value); // Emit event saat blur terjadi
+    this.valueChange.emit(this.value);
+  }
+
+  // Implementasi ControlValueAccessor
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any): void {
+    this.valueChange.subscribe(fn);
+  }
+
+  registerOnTouched(fn: any): void {}
+
+  setDisabledState?(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

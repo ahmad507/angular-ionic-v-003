@@ -21,6 +21,7 @@ import { ControlValueAccessorDirective } from './control-value-accessor.directiv
     HideHeaderDirective,
     DisableButtonDirective,
     ShowAccessoriesDirective,
+    ControlValueAccessorDirective,
   ]
 })
 export class SharedDirectivesModule { }

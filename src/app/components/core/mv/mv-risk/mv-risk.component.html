@@ -43,7 +43,7 @@
           <div class="-mt-[32px] p-2 flex justify-end text-blue-500" *ngIf="!showFullText" (click)="showFullText = true">Selengkapnya</div>
           <div class="-mt-[32px] p-2 flex justify-end text-blue-500" *ngIf="showFullText" (click)="showFullText = false">Sembunyikan</div>
           <div class="m-[8px]">
-            <app-button (buttonClick)="getAdditionalRisk(item.risk_number)" [ButtonType]="'success'" ButtonText="Perluasan Jaminan" />
+            <app-button (buttonClick)="getAdditionalRisk(item.risk_number)" [ButtonType]="'success'" ButtonText="Tambah Perluasan Jaminan" />
           </div>
           <div class="m-[8px]">
             <app-button (buttonClick)="getAdditionalRisk(item.risk_number)" ButtonText="Cari Asuransi" />

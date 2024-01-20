@@ -75,9 +75,7 @@ export class SearchableSelectComponent  implements OnInit {
     await toast.present();
   }
 
-  initialData(){
-    console.log(this.modal_id);
-  }
+  initialData(){}
 
   ngOnInit() {
     switch (this.modal_id) {
@@ -112,7 +110,7 @@ export class SearchableSelectComponent  implements OnInit {
 
 
   private callApiForNasabah() {
-    const tipeNasabah = [
+    this.listNasabah = [
       {
         id: '1',
         text: 'Perorangan',
@@ -124,11 +122,10 @@ export class SearchableSelectComponent  implements OnInit {
         checked: false,
       },
     ];
-    this.listNasabah = tipeNasabah;
   }
 
   private callApiForPenggunaan() {
-    const tipePengguna = [
+    this.listPenggunaan = [
       {
         id: 'P',
         text: 'Pribadi / Dinas (Non-Komersil)',
@@ -140,7 +137,6 @@ export class SearchableSelectComponent  implements OnInit {
         checked: false,
       },
     ];
-    this.listPenggunaan = tipePengguna;
   }
 
   private callApiForTahunKendaraan() {
@@ -154,7 +150,7 @@ export class SearchableSelectComponent  implements OnInit {
   }
 
   private callApiForTipeKendaraan() {
-    const jenisKendaraan = [
+    this.listTipeKendaraan = [
       {
         id: 'A',
         text: 'Sedan, Minibus, Jeep, City Car',
@@ -171,7 +167,6 @@ export class SearchableSelectComponent  implements OnInit {
         checked: false,
       },
     ];
-    this.listTipeKendaraan = jenisKendaraan;
   }
 
   private callApiForMerekModelKendaraan() {
@@ -207,7 +202,6 @@ export class SearchableSelectComponent  implements OnInit {
   }
 
   handleTipeNasabagChange(selectedItem:any) {
-    console.log(selectedItem.id)
     this.listNasabah.forEach((item:any) => {
       if (item.id !== selectedItem.id) {
         item.checked = false;
@@ -338,14 +332,11 @@ export class SearchableSelectComponent  implements OnInit {
           arrDataMerekKendaraan = detail.model
         });
         this.showModalListMerekModel(merekKendaraan, arrDataMerekKendaraan);
-        console.log(arrDataMerekKendaraan)
       });
     })
   }
 
-  openModalMerekKendaraanList(openMerekKendaraanList: string) {
-    console.log(openMerekKendaraanList);
-  }
+  openModalMerekKendaraanList() {}
 
   private async showModalListMerekModel(merekKendaraan: string, arrDataMerekKendaraan: any) {
     const modal = await this.modalController.create({

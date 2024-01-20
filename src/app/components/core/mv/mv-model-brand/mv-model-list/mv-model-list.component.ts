@@ -3,7 +3,6 @@ import {DetailMerek} from "@src/app/components/utils/merek-model-kendaraan/merek
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
-import {Router} from "@angular/router";
 import {
   MvAccessoriesComponent
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
@@ -49,8 +48,7 @@ export class MvModelListComponent  implements OnInit {
   HARGA_AKSESORIS: any = '';
 
   constructor(private modalController: ModalController,
-              private mvModalService: MvModalService,
-              private router: Router) { }
+              private mvModalService: MvModalService,) { }
 
   ngOnInit() {
     this.DATA_LIST = this.DataarrDataMerekKendaraan.map((item:CarInfo)=>({
@@ -59,7 +57,6 @@ export class MvModelListComponent  implements OnInit {
       unit_price: parseInt(item.unit_price).toLocaleString(),
       unit_price_min: (parseInt(item.unit_price)) - (parseInt(item.unit_price) * 0.1),
     }));
-    console.log(this.DATA_LIST);
     this.filter();
   }
 
@@ -90,7 +87,6 @@ export class MvModelListComponent  implements OnInit {
     });
     await modalAccessories.present();
     await modalAccessories.onDidDismiss().then((res)=>{
-      console.log(res)
       this.DATA_LIST[i].acc_price = res.data;
     });
   }
@@ -103,20 +99,7 @@ export class MvModelListComponent  implements OnInit {
     }
   }
 
-// {
-//   "model_number": "72321",
-//   "merk_code": "NIS",
-//   "unit_name": "Grand Livina All New Livina EL AT",
-//   "unit_year": "2020",
-//   "unit_price": "188,730,000",
-//   "unit_type": "A",
-//   "unit_price_max": 207603000,
-//   "unit_price_min": 169857000
-// }
-//
-
   async selectMvModel(item: any) {
-    console.log(item);
     const dataMv = {
       vcode: item.model_number,
       unit_name: item.unit_name,
@@ -133,7 +116,6 @@ export class MvModelListComponent  implements OnInit {
 
   filter() {
     this.filteredList = this.DATA_LIST.filter((item:any) => item.unit_name.toString().toLowerCase().includes(this.searchParam.toLowerCase()));
-    console.log(this.filteredList);
   }
 
   onBlur(event: any){

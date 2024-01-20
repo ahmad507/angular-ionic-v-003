@@ -1,14 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import {
-  Camera,
-  CameraResultType,
-  CameraSource,
-  Photo,
-} from '@capacitor/camera';
-import { Directory, Filesystem } from '@capacitor/filesystem';
-import { LoadingController, Platform, ToastController } from '@ionic/angular';
-import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
-import { HttpClient, HttpEventType } from '@angular/common/http';
+import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Camera, CameraResultType, CameraSource, Photo,} from '@capacitor/camera';
+import {Directory, Filesystem} from '@capacitor/filesystem';
+import {LoadingController, Platform, ToastController} from '@ionic/angular';
+import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
+import {HttpClient, HttpEventType} from '@angular/common/http';
 import {GlobalService} from "@src/app/services/utils/global.service";
 import {Banner} from "@src/app/interfaces/global/banner";
 import {MediaPartner} from "@src/app/interfaces/global/media-partner";
@@ -61,8 +56,7 @@ export class HomePage {
   }
 
   onSlideChange() {
-    const st = this.swiperRef?.nativeElement.swiper.activeIndex;
-    this.activeSlide = st;
+    this.activeSlide = this.swiperRef?.nativeElement.swiper.activeIndex;
   }
 
   // select image from local gallery
@@ -76,7 +70,6 @@ export class HomePage {
     if (image) {
       await this.saveImage(image);
     } else {
-      //  console.log('Failed Select Image From Gallery');
     }
   }
 
@@ -89,7 +82,6 @@ export class HomePage {
       source: CameraSource.Camera,
     }).catch((Error) => {
       if (Error) {
-        //  console.log('ERROR : Camera Closed');
       }
     });
     if (image) {
@@ -100,7 +92,6 @@ export class HomePage {
   // save image
   async saveImage(photo: Photo) {
     const base64Data = await this.readAsBase64(photo);
-    //  console.log('BASE64', base64Data);
 
     const fileName = new Date().getTime() + '.jpg';
     await Filesystem.writeFile({
@@ -108,7 +99,6 @@ export class HomePage {
       path: `${IMAGE_DIR}/${fileName}`,
       data: base64Data,
     });
-    //  console.log('SAVED :', savedFile);
     this.loadImageFiles();
     this.loadPdfFiles();
   }
@@ -126,11 +116,9 @@ export class HomePage {
     })
       .then(
         (result) => {
-          //  console.log('RESULT', result);
           this.loadImageFilesData(result.files);
         },
-        async (err) => {
-          //  console.log('ERROR LOAD FILE', err);
+        async () => {
           await Filesystem.mkdir({
             directory: Directory.Data,
             path: IMAGE_DIR,
@@ -159,11 +147,10 @@ export class HomePage {
   }
 
   uploadImage(file: any) {
-    //  console.log(file);
+    console.log(file);
   }
 
   async deleteImage(file: LocalFile) {
-    //  console.log('IMAGE DELETE :', file);
     await Filesystem.deleteFile({
       directory: Directory.Data,
       path: file.path,
@@ -172,7 +159,6 @@ export class HomePage {
   }
 
   async deletePdf(file: LocalFile) {
-    //  console.log('FILE DELETE :', file);
     await Filesystem.deleteFile({
       directory: Directory.Data,
       path: file.path,
@@ -181,16 +167,13 @@ export class HomePage {
   }
 
   async openFile(file: LocalFile) {
-    //  console.log('TAP OPEN FILE:', file);
     const filePath = await Filesystem.getUri({
       directory: Directory.Data,
       path: file.path,
     });
-    //  console.log('FILE PATH', filePath);
     this.fileOpener
       .showOpenWithDialog(filePath.uri, 'application/pdf')
-      .then(() => console.log('File is opened'))
-      .catch(async (e) => {
+      .catch(async () => {
         const loading = await this.loadingCtrl.create({
           duration: 3000,
           message: 'Failed Open File...',
@@ -241,7 +224,7 @@ export class HomePage {
       message: 'Downloading...',
       spinner: 'circles',
     });
-    loading.present();
+    await loading.present();
     this.http
       .get(pdfUrl, {
         responseType: 'blob',
@@ -264,7 +247,7 @@ export class HomePage {
                 message: 'Failed Download File !',
                 spinner: 'circles',
               });
-              loading.present();
+              await loading.present();
             }
           }
         }
@@ -301,10 +284,8 @@ export class HomePage {
       .then(
         (result) => {
           this.loadPdfFilesData(result.files);
-          //  console.log(result);
         },
-        async (err) => {
-          //  console.log('ERROR LOAD FILE PDF', err);
+        async () => {
           await Filesystem.mkdir({
             directory: Directory.Data,
             path: PDF_DIR,

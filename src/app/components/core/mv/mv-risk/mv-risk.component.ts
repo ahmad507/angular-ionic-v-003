@@ -53,9 +53,7 @@ export class MvRiskComponent  implements OnInit {
     this.mainRisk = '1';
   }
 
-  ngOnInit() {
-    console.log(this.mvType)
-  }
+  ngOnInit() {}
 
   async dismissModal() {
     await this.modalController.dismiss();

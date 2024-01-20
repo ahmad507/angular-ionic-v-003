@@ -43,7 +43,6 @@ export class MerekModelKendaraanComponent  implements OnInit {
       unit_price: parseInt(item.unit_price).toLocaleString(),
       unit_price_min: (parseInt(item.unit_price)) - (parseInt(item.unit_price) * 0.1),
     }))
-    console.log(this.HARGA_KENDARAAN);
   }
 
   dismissModal() {

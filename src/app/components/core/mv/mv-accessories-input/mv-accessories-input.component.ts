@@ -47,7 +47,6 @@ export class MvAccessoriesInputComponent implements OnInit {
       harga: integerValue,
       merek: this.inputMerekAcc,
     };
-    console.log('DATA', data);
     this.accessoryService.addAccessory(data);
     this.resetInputs();
     this.dataChanged.emit(data);

@@ -33,7 +33,6 @@ export class MainPage implements OnInit {
   selectedTabs($event:any) {
     this.activeTab = !this.activeTab;
     this.tab_name = $event.tab;
-    // console.log(this.tab_name);
   }
 
 }

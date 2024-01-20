@@ -64,6 +64,7 @@ export interface RESPONSE_RISK {
 export class KendaraanPage implements OnInit {
   @Input() mv_price: string = '0';
   @Input() mv_price_acc: string = '0';
+  // @ViewChild('toolbar', { read: IonToolbar }) toolbar: IonToolbar;
 
 
   inputDetail: any = informasiNasabah;

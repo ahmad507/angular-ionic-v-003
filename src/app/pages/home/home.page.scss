@@ -75,7 +75,7 @@ ion-toolbar{
   position: absolute;
   top: -2px;
   right: -5px;
-  padding: 0px 4px;
+  padding: 0 4px;
   transform: translate(10%, -8%);
 }
 
@@ -144,4 +144,6 @@ ion-thumbnail {
   @apply transform rotate-12;
 }
 
-
+ion-header{
+  margin-top: 16px;
+}

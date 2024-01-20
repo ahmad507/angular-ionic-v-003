@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { register } from 'swiper/element/bundle';
+import { StatusBar, Style } from '@capacitor/status-bar';
 register();
 
 @Component({
@@ -7,6 +8,12 @@ register();
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   constructor() {}
+
+  ngOnInit() {
+    StatusBar.setStyle({ style: Style.Light });
+    StatusBar.setBackgroundColor({color:'#FFFFFF'})
+  }
+
 }

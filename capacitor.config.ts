@@ -8,7 +8,6 @@ const config: CapacitorConfig = {
     androidScheme: 'https',
     url: 'https://dev.asuransiku.id/asuransiku-id-pro-beta-dua/'
   },
-  backgroundColor: '#3171e0'
 };
 
 export default config;

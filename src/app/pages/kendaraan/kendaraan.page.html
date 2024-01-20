@@ -1,5 +1,5 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar>
+  <ion-toolbar #toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="gotoHome()">
         <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
@@ -9,16 +9,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [fullscreen]="true" [scrollEvents]="true">
 
   <div class="relative">
-    <div class="h-40 w-full bg-blue-400">
-      <div class="flex justify-between">
-        <div class="mx-[16px] pt-[32px] font-bold text-lg leading-6 text-white">Gratis Layanan Mobil Derek...
-          <br/>
-          <span class="text-[8px]">Untuk Wilayah Coverage (JaDeTaBek)</span>
-        </div>
-        <img src="./assets/towing.png" alt="towing.png" class="mr-[16px] pt-[50px] w-[153px]">
+    <div class="h-[232px] w-full bg-blue-400">
+      <div class="image-container">
+        <img src="assets/compre.jpg" alt="asuransiku.id">
       </div>
     </div>
     <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px] shadow-2xl h-full">

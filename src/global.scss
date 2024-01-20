@@ -61,4 +61,19 @@ ion-modal.custom-modal{
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+#myToolbar {
+  --background: transparent;
+}
 
+:root{
+  --ion-safe-area-bottom: 14px;
+}
+
+.ios{
+  --ion-safe-area-top : -1 !important;
+  --ion-safe-area-bottom: 14px;
+}
+
+ion-header{
+  margin-top: 14px;
+}

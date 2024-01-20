@@ -6,7 +6,6 @@ import { ShowAccessoriesDirective } from './show-accessories.directive';
 import { ControlValueAccessorDirective } from './control-value-accessor.directive';
 
 
-
 @NgModule({
   declarations: [
     HideHeaderDirective,

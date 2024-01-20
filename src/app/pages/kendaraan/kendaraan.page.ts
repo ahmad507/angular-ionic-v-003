@@ -13,7 +13,9 @@ import {
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
 import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service";
-import {debounceTime, Subject} from "rxjs";
+import {debounceTime, Subject, take} from "rxjs";
+import {MvModalComponent} from "@src/app/components/core/mv/mv-modal/mv-modal.component";
+import {MvRiskComponent} from "@src/app/components/core/mv/mv-risk/mv-risk.component";
 
 export interface MvInfo {
   mainsi: string;
@@ -21,6 +23,38 @@ export interface MvInfo {
   unit_name: string;
   merek: string;
 }
+export interface MvValidator {
+  ctype: string;
+  license: string;
+  license_region: string;
+  vfunction: string;
+  vtype: string;
+  vyear: number;
+  vcode: string;
+  vmodel: string;
+  vbrand: string;
+  year_period: string;
+  mainsi: any;
+}
+export interface MvRisk {
+  risk_number: string;
+  risk_code: string;
+  main_risk_number: string;
+  risk_description_id: string;
+  risk_description_en: any;
+  risk_long_desc: string;
+  risk_long_desc_en: any;
+  category: string;
+  type: string;
+  private_si_flags: string;
+}
+export interface RESPONSE_RISK {
+  r_status: boolean;
+  r_data: MvRisk[];
+  r_code: number;
+  r_message: string;
+}
+
 
 @Component({
   selector: 'app-kendaraan',
@@ -34,6 +68,7 @@ export class KendaraanPage implements OnInit {
 
   inputDetail: any = informasiNasabah;
   inputDetail_2: any = informasiKendaraan;
+
   TIPE_NASABAH: string = '';
   PENGGUNAAN_KENDARAAN: string = '';
   JENIS_KENDARAAN: string = '';
@@ -43,6 +78,7 @@ export class KendaraanPage implements OnInit {
   MV_YEAR: number = 0;
   MV_INFO_DATA: any = [];
   MV_CODE: string = '';
+
   private mv_price_max: number = 0;
   private mv_price_min: number = 0;
   private inputSubject = new Subject<string>();
@@ -74,6 +110,7 @@ export class KendaraanPage implements OnInit {
       this.dataTempMvYear = res.vyear;
     });
   }
+
   async gotoHome() {
     this.store.dispatch(resetCarInsuranceData());
     this.store.dispatch(resetMvInfoDetailData());
@@ -199,25 +236,25 @@ export class KendaraanPage implements OnInit {
     await modalAccMv.present();
   }
 
-  private checkLimitMvPrice(dataPrice: any) {
-    let min_mv_price_temp : number = 0;
-    let max_mv_price_temp : number = 0;
-    let mv_price_temp : number = 0;
+  private async checkLimitMvPrice(dataPrice: any) {
+    let min_mv_price_temp: number = 0;
+    let max_mv_price_temp: number = 0;
+    let mv_price_temp: number = 0;
     let dataPriceMv = parseInt(dataPrice.replace(/,/g, ''), 10);
-    this.MV_INFO_DATA.map((data:any)=>{
+    this.MV_INFO_DATA.map((data: any) => {
       min_mv_price_temp = data.unit_price_min;
       max_mv_price_temp = data.unit_price_max;
       mv_price_temp = parseInt(data.unit_price.replace(/,/g, ''), 10);
     })
-    if (dataPriceMv > max_mv_price_temp){
+    if (dataPriceMv > max_mv_price_temp) {
       const message = 'Harga kendaraan melebihi limit maksimal';
-      this.toastWarning(message)
-    }else if (min_mv_price_temp > dataPriceMv){
+      await this.toastWarning(message)
+    } else if (min_mv_price_temp > dataPriceMv) {
       const message = 'Harga kendaraan kurang dari limit minimal';
-      this.toastWarning(message)
-      console.log('Masuk Under MIN')
-    } else if (dataPrice === 0){
-      console.log('not null')
+      await this.toastWarning(message)
+    } else {
+      const message = 'Harga kendaraan melebihi limit maksimal';
+      await this.toastWarning(message)
     }
   }
 
@@ -230,5 +267,94 @@ export class KendaraanPage implements OnInit {
       icon: 'warning',
     })
     await toast.present();
+  }
+
+  checkMvPrice(mv_price: string) {
+    const mv_temp_price = parseInt(mv_price);
+    return mv_temp_price > 0;
+  }
+
+  deleteAccData() {
+    this.updateKendaraanPayload('accesories_si', 0);
+    this.updateKendaraanPayload('accesories_detail', []);
+    this.accInputService.removeAccessory([])
+  }
+
+  checkAccPrice(mv_price_acc: string) {
+    const mv_temp_price_acc = parseInt(mv_price_acc);
+    return mv_temp_price_acc > 0;
+  }
+
+  getYearPeriode($event: any) {
+    const yearPeriodSelected: string = $event.detail.value;
+    this.updateKendaraanPayload('year_period', yearPeriodSelected);
+  }
+
+  getDataMainRisk() {
+    this.store.select(selectKendaraanData).pipe(take(1)).subscribe(async (res) => {
+      const validator: MvValidator = {
+        ctype: res.ctype,
+        license: res.license,
+        license_region: res.license_region,
+        vfunction: res.vfunction,
+        vtype: res.vtype,
+        vyear: res.vyear,
+        vcode: res.vcode,
+        vmodel: res.vmodel,
+        vbrand: res.vbrand,
+        year_period: res.year_period,
+        mainsi: res.mainsi
+      }
+      const validParam = this.checkValidationBeforeNext(validator);
+      if (validParam) {
+        this.mvDataService.mvMainRisk().pipe(take(1)).subscribe(async (res: RESPONSE_RISK) => {
+          if (res.r_data.length > 0) {
+            await this.openModalRisk(res.r_data);
+          }
+        });
+      } else {
+        await this.openModalMessage();
+      }
+    });
+  }
+
+  private checkValidationBeforeNext(validator: MvValidator): boolean {
+    for (const key in validator) {
+      if (validator.hasOwnProperty(key)) {
+        const value = validator[key as keyof MvValidator];
+        if (typeof value === 'string' && !value.trim()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private async openModalMessage() {
+    const modalWarning = await this.modalController.create({
+      component: MvModalComponent,
+      componentProps:{
+        message: 'Silahkan untuk melengkapi data terlebih dahulu',
+        imgSource: 'assets/undraw_selection_re_ycpo.png',
+        btnText: 'Ok, Lanjutkan...'
+      },
+      cssClass: 'custom-modal',
+      backdropDismiss: false,
+      showBackdrop: true,
+      initialBreakpoint: 1,
+      backdropBreakpoint: 1
+    })
+    await modalWarning.present();
+  }
+
+  private async openModalRisk(r_data: MvRisk[]) {
+    const modalRisk = await this.modalController.create({
+      component: MvRiskComponent,
+      componentProps:{
+        dataRisk: r_data,
+        mvType: this.dataTempMvType
+      },
+    })
+    await modalRisk.present();
   }
 }

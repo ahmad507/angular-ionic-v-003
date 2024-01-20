@@ -2,7 +2,7 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="dismissModal()">
-<!--        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>-->
+        <!--        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>-->
       </ion-button>
     </ion-buttons>
     <span class="header-name">Aksesoris Kendaraan</span>
@@ -18,10 +18,9 @@
         </div>
         <div class="acc-price">Rp {{ getAccessoryDetail(accessory).harga.toLocaleString() }}</div>
       </div>
-
       <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)" [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
       <ng-container *ngIf="getAccessoryDetail(accessory).harga > 0">
-      <ion-icon slot="end" name="trash" color="primary" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
+        <ion-icon slot="end" name="trash" color="danger" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
       </ng-container>
     </ion-item>
   </div>
@@ -34,6 +33,7 @@
   <div class="acc-title my-2">
     <div class="text-right">Total Harga Aksesoris : Rp {{sum_acc_price.toLocaleString()}}</div>
   </div>
-
-  <app-button (buttonClick)="handleClick()" [ButtonType]="'primary'"  [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
+  <div>
+    <app-button (buttonClick)="handleClick()" [ButtonType]="sum_acc_price > limit_acc ? 'danger' : 'primary'"  [ButtonBlock]="true" [ButtonText]="sum_acc_price > limit_acc ? 'Melebihi Limit Total' : 'Tambahkan'"></app-button>
+  </div>
 </ion-content>

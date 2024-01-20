@@ -7,12 +7,19 @@ import {
   updateKendaraanData,
   updateMvInfoDetail
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import apiConfig from "@src/config/apiConfig";
+import {RESPONSE_RISK} from "@src/app/pages/kendaraan/kendaraan.page";
 
 @Injectable({
   providedIn: 'root',
 })
 export class MvDataService {
-  constructor(private store: Store) {}
+  headers = new HttpHeaders({ 'asri-api-key': apiConfig.apiKey.asri_api_key });
+  mvRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listMainRisk';
+  mvAdditionalRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listAdditionalRisk';
+
+  constructor(private store: Store, private httpClient: HttpClient) {}
 
   updateMvInfoDetail(property: string, value: any) {
     const dataCarInfo = this.mvInfoDetailStore(property, value);
@@ -28,7 +35,7 @@ export class MvDataService {
     this.store.dispatch(updateAccesoriesSi({newAccesoriesSi}))
   }
 
-  private mvDataStore(property: string, value: any) {
+  mvDataStore(property: string, value: any) {
     const newData: Partial<CarInsuranceState> = {
       accesories_detail: [],
       accesories_si: 0,
@@ -50,13 +57,13 @@ export class MvDataService {
       vfunction: "",
       vtype: "",
       vyear: 0,
-      year_period: "",
+      year_period: "1",
       [property]: value
     };
     return newData;
   }
 
-  private mvInfoDetailStore(property: string, value: any) {
+  mvInfoDetailStore(property: string, value: any) {
     const dataCarInfo: Partial<MvInfoDetail> = {
       mainsi: '',
       vcode: '',
@@ -69,4 +76,13 @@ export class MvDataService {
     };
     return dataCarInfo;
   }
+
+  mvMainRisk(){
+    return this.httpClient.get<RESPONSE_RISK>(this.mvRiskENDPOINT, {headers: this.headers});
+  }
+
+  mvAdditionalRisk(param:any){
+    return this.httpClient.get(this.mvAdditionalRiskENDPOINT,{headers: this.headers, params:param});
+  }
+
 }

@@ -13,7 +13,7 @@ export const initialState: CarInsuranceState = {
   vcode: '',
   vmodel: '',
   vbrand: '',
-  year_period: '',
+  year_period: '1',
   mainsi: 0,
   accesories_si: 0,
   accesories_detail: [],

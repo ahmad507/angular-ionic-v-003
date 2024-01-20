@@ -38,9 +38,7 @@ export class MvAccessoriesInputComponent implements OnInit {
     this.isNumeric = true;
   }
 
-  ngOnInit() {
-    this.inputHargaAcc.toLocaleString();
-  }
+  ngOnInit() {}
 
   handleClick(acc_props: string) {
     const integerValue = parseInt(this.inputHargaAcc.replace(/[^0-9]/g, ''), 10);
@@ -49,6 +47,7 @@ export class MvAccessoriesInputComponent implements OnInit {
       harga: integerValue,
       merek: this.inputMerekAcc,
     };
+    console.log('DATA', data);
     this.accessoryService.addAccessory(data);
     this.resetInputs();
     this.dataChanged.emit(data);
@@ -79,5 +78,9 @@ export class MvAccessoriesInputComponent implements OnInit {
     const words = stringWithSpaces.split(' ');
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
     return capitalizedWords.join(' ');
+  }
+
+  getFormatInput(inputHargaAcc: string) {
+    console.log(inputHargaAcc)
   }
 }

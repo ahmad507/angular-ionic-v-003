@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 import { HomePage } from './home.page';
 import { SpacerComponent } from '../../components/utils/spacer/spacer/spacer.component';
 import { HomePageRoutingModule } from './home-routing.module';
-import { SharedDirectivesModule } from '../../directives/shared-directives.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 
@@ -15,7 +14,6 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
         FormsModule,
         IonicModule,
         HomePageRoutingModule,
-        SharedDirectivesModule
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     exports: [

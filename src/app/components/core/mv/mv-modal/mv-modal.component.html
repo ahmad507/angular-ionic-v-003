@@ -1,0 +1,11 @@
+<ion-content>
+  <div class="p-2 mx-2 flex flex-col content-center justify-center items-center">
+    <img style="height: 112px; width: 148px" [src]="imgSource" alt="error.png" />
+    <div class="modal-content my-3 p-2 text-center">{{message}}</div>
+  </div>
+  <div class="mb-1 mx-3">
+    <app-button (buttonClick)="dismissModal()" [ButtonType]="'danger'"  [ButtonBlock]="true" [ButtonText]="btnText"></app-button>
+  </div>
+</ion-content>
+
+

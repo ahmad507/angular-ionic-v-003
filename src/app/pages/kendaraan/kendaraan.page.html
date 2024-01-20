@@ -14,8 +14,7 @@
   <div class="relative">
     <div class="h-40 w-full bg-blue-400">
       <div class="flex justify-between">
-        <div class="mx-[16px] pt-[32px] font-bold text-lg leading-6 text-white">
-          Gratis Layanan Mobil Derek...
+        <div class="mx-[16px] pt-[32px] font-bold text-lg leading-6 text-white">Gratis Layanan Mobil Derek...
           <br/>
           <span class="text-[8px]">Untuk Wilayah Coverage (JaDeTaBek)</span>
         </div>
@@ -28,6 +27,20 @@
       <app-mv-function (setDataMvFunction)="getDataMvFunction($event)"/>
       <app-spacer SECTION_NAME="Plat Wilayah Kendaraan"></app-spacer>
       <app-mv-license (setDataMvLicense)="getDataMvLicense($event)"/>
+      <app-spacer SECTION_NAME="Periode Asuransi (Tahun)"></app-spacer>
+      <div class="my-3">
+        <ion-segment (ionChange)="getYearPeriode($event)" value="1" mode="ios">
+          <ion-segment-button value="1">
+            <div class="m-2 p-2">Satu Tahun</div>
+          </ion-segment-button>
+          <ion-segment-button value="2">
+            <div class="m-2 p-2">Dua Tahun</div>
+          </ion-segment-button>
+          <ion-segment-button value="3">
+            <div class="m-2 p-2">Tiga Tahun</div>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
       <app-spacer SECTION_NAME="Data Kendaraan"></app-spacer>
       <app-mv-type (setDataMvType)="getDataMvType($event)"/>
       <app-mv-years (setDataMvYear)="getDataMvYear($event)"/>
@@ -55,24 +68,31 @@
           </ion-chip>
         </div>
 
-        <div class="my-3">
+        <div [appShowAccessories]="checkMvPrice(mv_price)" id="mv-price-input">
+          <div class="my-3">
             <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
+          </div>
         </div>
-        <div [appShowAccessories]="isMVCAR" id="accessories_detail">
-        <div class="-mt-[16px]">
-          <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' +mv_price_acc"></app-spacer>
-          <div class="header-name text-right"></div>
-<!--          <app-input label="Harga Aksesoris (Rp)" [disabled]="true" [(value)]="mv_price_acc" />-->
+        <div [appShowAccessories]="isMVCAR && checkMvPrice(mv_price)" id="accessories_detail">
+          <div class="mt-[16px] flex justify-between items-center">
+            <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' + mv_price_acc"></app-spacer>
+            <ion-buttons [appShowAccessories]=checkAccPrice(mv_price_acc)>
+              <ion-button (click)="deleteAccData()">
+                <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div [appShowAccessories]="checkMvPrice(mv_price)" id="accessories_button">
+            <div class="my-3">
+
+              <button
+                (click)="openAccModal()"
+                id="acc_button"
+                class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
+            </div>
+          </div>
         </div>
-        <div class="my-3">
-          <button
-            [appDisableButton]="isButtonDisabled"
-            (click)="openAccModal()"
-            id="acc_button"
-            class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
-        </div>
-        </div>
-        <button [appDisableButton]="isButtonDisabled" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text" disabled>Selanjutnya</button>
+        <button (click)="getDataMainRisk()" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
       </div>
 
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>

@@ -14,7 +14,7 @@
   </div>
   <div class="mt-[16px]">
     <app-input label="Merek Aksesoris" [(value)]="inputMerekAcc"></app-input>
-    <app-input [shouldFormat]="true" label="Harga Aksesoris" [(value)]="inputHargaAcc"></app-input>
+    <app-input [shouldFormat]="true" type="text" label="Harga Aksesoris" [(value)]="inputHargaAcc"></app-input>
     <app-button (buttonClick)="handleClick(acc_props)" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
   </div>
 </ion-content>

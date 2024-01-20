@@ -51,3 +51,14 @@ ion-toast.custom-toast {
   font-size: 12px;
   font-weight: bold;
 }
+
+ion-modal.custom-modal{
+  --background: #ffffff;
+  --height: 270px;
+  --width: 300px;
+  --border-radius: 16px;
+  --backdrop-opacity: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+

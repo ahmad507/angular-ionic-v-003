@@ -18,6 +18,8 @@ import {
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
 import {take} from "rxjs";
 import {HomePageModule} from "@src/app/pages/home/home.module";
+import {SharedDirectivesModule} from "@src/app/directives/shared-directives.module";
+import {MvModalComponent} from "@src/app/components/core/mv/mv-modal/mv-modal.component";
 
 
 @Component({
@@ -27,7 +29,8 @@ import {HomePageModule} from "@src/app/pages/home/home.module";
     CommonModule,
     FormsModule,
     ButtonComponent,
-    HomePageModule
+    HomePageModule,
+    SharedDirectivesModule
   ],
   selector: 'app-mv-accessories',
   templateUrl: './mv-accessories.component.html',
@@ -46,6 +49,7 @@ export class MvAccessoriesComponent  implements OnInit {
   accessories: AccItems[] = [];
   sum_acc_price: any;
   limit_acc: number = 0;
+  over_limit_acc_price: boolean = false;
 
   constructor(
     private modalController: ModalController,
@@ -81,7 +85,7 @@ export class MvAccessoriesComponent  implements OnInit {
         inputMerekAcc: accessoryDetails.length > 0 ? accessoryDetails[0].merek : '',
         inputHargaAcc: accessoryDetails.length > 0 ? accessoryDetails[0].harga : '',
       },
-      initialBreakpoint: 0.55,
+      initialBreakpoint: 0.65,
       breakpoints: [0, 0.55, 0.5, 0.75],
       backdropDismiss: false,
       cssClass: 'custom-modal-class',
@@ -116,10 +120,16 @@ export class MvAccessoriesComponent  implements OnInit {
       this.accessories = accessories;
       this.sum_acc_price = this.calculateTotalPrice(accessories);
       this.accessoryService.updateAllAccessory(this.accessories);
-      this.updateKendaraanPayload('accesories_si', this.sum_acc_price);
-      this.updateKendaraanPayload('accesories_detail', accessories);
+      if (this.sum_acc_price > this.limit_acc){
+        // this.over_limit_acc_price = true;
+        await this.showOverLimitWarning();
+      }else{
+        // this.over_limit_acc_price = false;
+        this.updateKendaraanPayload('accesories_si', this.sum_acc_price);
+        this.updateKendaraanPayload('accesories_detail', accessories);
+        await this.modalController.dismiss(this.accessories, 'confirm');
+      }
     });
-    await this.modalController.dismiss(this.accessories, 'confirm');
   }
 
   getAccessoryDetail(name: string): AccItems {
@@ -155,5 +165,22 @@ export class MvAccessoriesComponent  implements OnInit {
 
   async dismissModal() {
     await this.modalController.dismiss();
+  }
+
+  private async showOverLimitWarning() {
+    const modalWarning = await this.modalController.create({
+      component: MvModalComponent,
+      componentProps:{
+        message: 'Total harga melebihi batas minimal 10% dari harga kendaraan',
+        imgSource: 'assets/undraw_Warning_re_eoyh.png',
+        btnText: 'Ok, Mengerti...'
+      },
+      cssClass: 'custom-modal',
+      backdropDismiss: false,
+      showBackdrop: true,
+      initialBreakpoint: 1,
+      backdropBreakpoint: 1
+    })
+    await modalWarning.present();
   }
 }

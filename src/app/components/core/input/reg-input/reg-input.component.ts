@@ -8,7 +8,10 @@ import {ControlValueAccessorDirective} from "@src/app/directives/control-value-a
 import {IonicModule} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 
-type inputType = 'button' | 'checkbox' | 'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
+type inputType =
+  'button' |
+  'checkbox' |
+  'color' | 'date' | 'datetime-local' | 'email' | 'file' | 'hidden' | 'image' | 'month' | 'number' | 'password' | 'radio' | 'range' | 'reset' | 'search' | 'submit' | 'tel' | 'text' | 'time' | 'url' | 'week';
 
 
 @Component({

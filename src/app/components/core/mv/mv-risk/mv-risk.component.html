@@ -1,0 +1,55 @@
+<!--<ion-header class="ion-no-border">-->
+<!--  <ion-toolbar>-->
+<!--    <ion-buttons slot="start">-->
+<!--      <ion-button (click)="dismissModal()">-->
+<!--        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>-->
+<!--      </ion-button>-->
+<!--    </ion-buttons>-->
+<!--    <span class="header-name">Pilih Jaminan Asuransi</span>-->
+<!--  </ion-toolbar>-->
+<!--</ion-header>-->
+<!--<ion-content>-->
+<!--  <div *ngFor="let itemRisk of dataRisk; let i = index">-->
+<!--    <h3>{{i}}</h3>-->
+<!--  </div>-->
+<!--</ion-content>-->
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="dismissModal()">
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <span class="header-name">Pilih Jaminan Asuransi</span>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <div class="mx-[16px] p-1">
+    <ion-segment mode="ios" value="1" [(ngModel)]="mainRisk">
+      <ion-segment-button *ngFor="let item of dataDummy" [value]="item.risk_number">
+        <div class="m-2 p-2">{{getRiskName(item.risk_number)}}</div>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+  <div *ngFor="let item of dataDummy" [ngSwitch]="mainRisk">
+    <section *ngSwitchCase="item.risk_number">
+      <div class="p-2 mx-[16px]">
+        <div class="custom-container">
+          <div class="mb-[32px] custom-header" [innerHTML]="item.risk_description_id"></div>
+          <div class="image-container">
+            <img [src]="getImgSrc(item.risk_number)" alt="asuransiku.id">
+          </div>
+          <div class="text-justify tracking-tight mb-[16px] p-2" [innerHTML]="showFullText ? item.risk_long_desc : (item.risk_long_desc | slice:0:95) + '...' "></div>
+          <div class="-mt-[32px] p-2 flex justify-end text-blue-500" *ngIf="!showFullText" (click)="showFullText = true">Selengkapnya</div>
+          <div class="-mt-[32px] p-2 flex justify-end text-blue-500" *ngIf="showFullText" (click)="showFullText = false">Sembunyikan</div>
+          <div class="m-[8px]">
+            <app-button (buttonClick)="getAdditionalRisk(item.risk_number)" [ButtonType]="'success'" ButtonText="Perluasan Jaminan" />
+          </div>
+          <div class="m-[8px]">
+            <app-button (buttonClick)="getAdditionalRisk(item.risk_number)" ButtonText="Cari Asuransi" />
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</ion-content>

@@ -34,4 +34,43 @@ ion-item {
   text-transform: capitalize;
 }
 
+ion-button.custom-segment{
+  --background: transparent !important;
+  @apply text-[14px] text-blue-500;
+}
 
+
+ion-segment{
+  border-radius: 12px;
+}
+
+ion-segment-button::part(indicator-background) {
+  @apply bg-blue-600;
+}
+
+/* Material Design styles */
+ion-segment-button.md::part(native) {
+  color: #000;
+}
+
+.segment-button-checked.md::part(native) {
+  color: #08a391;
+}
+
+ion-segment-button.md::part(indicator-background) {
+  height: 4px;
+}
+
+/* iOS styles */
+ion-segment-button.ios::part(native) {
+  font-family: 'Montserrat', sans-serif;
+  @apply text-blue-700
+}
+
+.segment-button-checked.ios::part(native) {
+  color: #fff;
+}
+
+ion-segment-button.ios::part(indicator-background) {
+  border-radius: 10px;
+}

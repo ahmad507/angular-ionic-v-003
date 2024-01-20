@@ -10,18 +10,20 @@ import { PolicyPage } from './policy.page';
 import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
 import {HomePageModule} from "@src/app/pages/home/home.module";
 import {RegInputComponent} from "@src/app/components/core/input/reg-input/reg-input.component";
+import {MvRiskComponent} from "@src/app/components/core/mv/mv-risk/mv-risk.component";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    PolicyPageRoutingModule,
-    ReactiveFormsModule,
-    ButtonComponent,
-    HomePageModule,
-    RegInputComponent,
-  ],
+	imports: [
+		CommonModule,
+		FormsModule,
+		IonicModule,
+		PolicyPageRoutingModule,
+		ReactiveFormsModule,
+		ButtonComponent,
+		HomePageModule,
+		RegInputComponent,
+		MvRiskComponent,
+	],
 	declarations: [PolicyPage]
 })
 export class PolicyPageModule {}

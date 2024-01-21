@@ -177,12 +177,13 @@ export class KendaraanPage implements OnInit {
     this.store.select(selectMvInfoDetailData).pipe().subscribe((res)=>{
       let temp : any = [];
       temp.push({...res});
-      this.MV_INFO_DATA = temp;
+      return this.MV_INFO_DATA = temp;
     });
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.mv_price = (res.mainsi).toString();
       this.mv_price_acc = (res.accesories_si).toLocaleString();
     })
+
   }
 
   checkInput($event: any) {

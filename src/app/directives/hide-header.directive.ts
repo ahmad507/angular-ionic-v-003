@@ -8,33 +8,35 @@ import { throttleTime, distinctUntilChanged } from 'rxjs/operators';
 })
 export class HideHeaderDirective {
   @Input('appHideHeader') toolbar: any;
-  private toolbarHeight = 60;
-
+  private toolbarHeight = 44;
   private scrollSubject = new Subject<number>();
 
-  constructor(private renderer: Renderer2, private domCtrl: DomController) {}
+  constructor(
+    private renderer: Renderer2,
+    private domCtrl: DomController) {}
 
-  @HostListener('ionScroll', ['$event']) onContentScroll($event: any) {
+  @HostListener('ionScroll', ['$event'])
+  onContentScroll($event: any) {
     const scrollTop = $event.detail.scrollTop;
     this.scrollSubject.next(scrollTop);
-    this.scrollSubject.pipe(
-      throttleTime(16), // Adjust the throttle time as needed
-      distinctUntilChanged()
-    ).subscribe((scrollTop) => {
-      let newPosition = -(scrollTop / 0.75);
-      let newOpacity = 1 - newPosition / -this.toolbarHeight;
 
-      if (newPosition < -this.toolbarHeight) {
-        newPosition = -this.toolbarHeight;
-      }
-
-      this.domCtrl.write(() => {
-        requestAnimationFrame(() => {
-          this.renderer.setStyle(this.toolbar, 'margin-top', `${newPosition}px`);
-          this.renderer.setStyle(this.toolbar, 'opacity', newOpacity);
+    this.scrollSubject
+      .pipe(
+        throttleTime(100),
+        distinctUntilChanged()
+      )
+      .subscribe((scrollTop) => {
+        let newPosition = -(scrollTop / 0.1);
+        this.domCtrl.write(() => {
+          if (newPosition < -this.toolbarHeight) {
+            this.renderer.setStyle(this.toolbar, 'visibility', 'hidden');
+            this.renderer.setStyle(this.toolbar, 'transition', 'transform 0.3s, opacity 0.3s');
+          }else {
+            this.renderer.setStyle(this.toolbar, 'visibility', 'visible');
+            this.renderer.setStyle(this.toolbar, 'transition', 'transform 0.3s, opacity 0.3s');
+          }
         });
       });
-    });
   }
 
   ngOnInit(): void {

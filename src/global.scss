@@ -44,6 +44,19 @@
   --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 
+.popover-viewport{
+  --background: transparent !important;
+}
+
+ion-popover.custom-pop-over{
+  --background: transparent !important;
+}
+
+.custom-pop-over{
+  --background: transparent !important;
+  --box-shadow: -5px 0px 25px 5px rgba(107,107,107,0.43);
+}
+
 ion-toast.custom-toast {
   --background: rgb(37, 99, 235);
   color: rgb(239 246 255);
@@ -74,6 +87,8 @@ ion-modal.custom-modal{
   --ion-safe-area-bottom: 14px;
 }
 
-ion-header{
-  margin-top: 14px;
+ion-header {
+  ion-toolbar {
+    padding-top: 24px !important;
+  }
 }

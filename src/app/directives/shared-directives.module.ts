@@ -4,6 +4,7 @@ import { HideHeaderDirective } from './hide-header.directive';
 import { DisableButtonDirective } from './disable-button.directive';
 import { ShowAccessoriesDirective } from './show-accessories.directive';
 import { ControlValueAccessorDirective } from './control-value-accessor.directive';
+import { HideFooterDirective } from './hide-footer.directive';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ControlValueAccessorDirective } from './control-value-accessor.directiv
     DisableButtonDirective,
     ShowAccessoriesDirective,
     ControlValueAccessorDirective,
+    HideFooterDirective,
   ],
   imports: [
     CommonModule
@@ -21,6 +23,7 @@ import { ControlValueAccessorDirective } from './control-value-accessor.directiv
     DisableButtonDirective,
     ShowAccessoriesDirective,
     ControlValueAccessorDirective,
+    HideFooterDirective,
   ]
 })
 export class SharedDirectivesModule { }

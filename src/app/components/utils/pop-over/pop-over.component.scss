@@ -1,0 +1,14 @@
+.pop-over-wrapper{
+  background: white;
+  padding: 8px;
+}
+
+ion-item {
+  font-family: 'Montserrat', sans-serif;
+  --inner-border-width: 0;
+  --border-width: 1px;
+  --border-radius: 8px;
+  --background: transparent;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}

@@ -12,8 +12,8 @@ export class AppComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
+    StatusBar.setOverlaysWebView({overlay:true})
     StatusBar.setStyle({ style: Style.Light });
-    StatusBar.setBackgroundColor({color:'#FFFFFF'})
   }
 
 }

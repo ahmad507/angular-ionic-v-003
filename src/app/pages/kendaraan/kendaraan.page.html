@@ -1,16 +1,20 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar #toolbar>
+<ion-header #toolbar class="ion-no-border">
+  <ion-toolbar >
     <ion-buttons slot="start">
       <ion-button (click)="gotoHome()">
-        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>
+        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="light"></ion-icon>
       </ion-button>
     </ion-buttons>
     <span class="header-name">Asuransi Kendaraan</span>
+    <ion-buttons slot="end">
+      <ion-button (click)="goToPopOver($event)">
+        <ion-icon class="ml-4" slot="icon-only" name="ellipsis-vertical" color="light"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [scrollEvents]="true">
-
+<ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar" [appHideFooter]="footer">
   <div class="relative">
     <div class="h-[232px] w-full bg-blue-400">
       <div class="image-container">
@@ -64,7 +68,7 @@
           </ion-chip>
         </div>
 
-        <div [appShowAccessories]="checkMvPrice(mv_price)" id="mv-price-input">
+        <div id="mv-price-input">
           <div class="my-3">
             <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
           </div>
@@ -103,4 +107,11 @@
     </div>
   </div>
 </ion-content>
+
+
+<ion-footer style="background: white" #footer>
+    <ion-toolbar>
+      <ion-title>Footer</ion-title>
+    </ion-toolbar>
+</ion-footer>
 

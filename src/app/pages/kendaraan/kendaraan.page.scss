@@ -1,6 +1,6 @@
 .header-name{
   font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[14px] text-blue-500;
+  @apply mx-3 font-bold text-[16px] text-blue-50
 }
 
 .input-lable {
@@ -84,5 +84,19 @@ ion-segment-button.ios::part(indicator-background) {
   width: 100%;
   height: 100%;
   object-fit: cover; /* Make the image cover the container while maintaining its aspect ratio */
+}
+
+ion-toolbar{
+  --background: transparent !important;
+  --border-color: trasparent !important;
+}
+
+ion-content{
+  --offset-top:0px;
+  position: absolute;
+}
+
+ion-footer{
+  visibility: hidden;
 }
 

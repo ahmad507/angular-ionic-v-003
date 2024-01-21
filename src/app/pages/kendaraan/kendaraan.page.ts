@@ -7,7 +7,7 @@ import {
   resetCarInsuranceData, resetMvInfoDetailData
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {ModalController, ToastController} from "@ionic/angular";
+import {ModalController, PopoverController, ToastController} from "@ionic/angular";
 import {
   MvAccessoriesComponent
 } from "@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component";
@@ -16,6 +16,7 @@ import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-k
 import {debounceTime, Subject, take} from "rxjs";
 import {MvModalComponent} from "@src/app/components/core/mv/mv-modal/mv-modal.component";
 import {MvRiskComponent} from "@src/app/components/core/mv/mv-risk/mv-risk.component";
+import {PopOverComponent} from "@src/app/components/utils/pop-over/pop-over.component";
 
 export interface MvInfo {
   mainsi: string;
@@ -97,6 +98,7 @@ export class KendaraanPage implements OnInit {
     private mvDataService: MvDataService,
     private accInputService: AccessoryService,
     private toastController: ToastController,
+    private popOverController: PopoverController
   ) {
     this.inputSubject.pipe(debounceTime(750)).subscribe((value) => {
       this.checkLimitMvPrice(value);
@@ -357,5 +359,16 @@ export class KendaraanPage implements OnInit {
       },
     })
     await modalRisk.present();
+  }
+
+  async goToPopOver(event: any) {
+    const popOver = await this.popOverController.create({
+      component: PopOverComponent,
+      alignment:'end',
+      event: event,
+      cssClass: 'custom-pop-over',
+      showBackdrop: false
+    })
+    await popOver.present();
   }
 }

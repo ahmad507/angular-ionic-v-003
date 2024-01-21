@@ -3,6 +3,12 @@
   @apply mx-3 font-bold text-[16px] text-blue-50
 }
 
+.footer-name{
+  font-family: 'Montserrat', sans-serif;
+  @apply mx-3 font-bold text-[16px] text-blue-500
+}
+
+
 .input-lable {
   color: var(--ion-color-primary);
 }

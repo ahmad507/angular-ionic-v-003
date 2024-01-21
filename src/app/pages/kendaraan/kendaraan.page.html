@@ -88,11 +88,11 @@
               <button
                 (click)="openAccModal()"
                 id="acc_button"
-                class="my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
+                class="mb-[32px] my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
             </div>
           </div>
         </div>
-        <button (click)="getDataMainRisk()" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
+        <!--        <button (click)="getDataMainRisk()" id="search_button" class="my-4 block bg-blue-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>-->
       </div>
 
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
@@ -110,8 +110,9 @@
 
 
 <ion-footer style="background: white" #footer>
-    <ion-toolbar>
-      <ion-title>Footer</ion-title>
-    </ion-toolbar>
+    <div class="mx-[16px] flex flex-row justify-between items-center">
+      <div class="footer-name">Pilihan Jaminan</div>
+      <button (click)="getDataMainRisk()" id="search_button" class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
+    </div>
 </ion-footer>
 

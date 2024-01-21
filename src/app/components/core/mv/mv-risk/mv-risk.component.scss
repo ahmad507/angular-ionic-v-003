@@ -3,6 +3,17 @@
   @apply mx-3 font-bold text-[16px] text-blue-500
 }
 
+.text-custom{
+  font-family: 'Montserrat', sans-serif;
+  @apply text-[13px]
+}
+
+.footer-name{
+  font-family: 'Montserrat', sans-serif;
+  @apply mx-3 font-bold text-[16px] text-blue-500
+}
+
+
 ion-segment{
   border-radius: 12px;
 }
@@ -43,7 +54,7 @@ ion-segment-button.ios::part(indicator-background) {
 }
 .custom-container{
   @apply p-2 shadow-sm;
-  border: 1px solid rgba(225, 225, 225, 0.8);
+  border: 1px solid rgba(0, 119, 255, 0.5);
   border-radius: 12px;
   font-family: 'Montserrat', sans-serif;
 }

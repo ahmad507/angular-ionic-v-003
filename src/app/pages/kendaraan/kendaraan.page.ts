@@ -17,8 +17,6 @@ import {debounceTime, Subject, take, takeUntil} from "rxjs";
 import {PopOverComponent} from "@src/app/components/utils/pop-over/pop-over.component";
 import {MvRepository} from "@src/app/pages/kendaraan/class/mvRepository";
 import {distinctUntilChanged} from "rxjs/operators";
-
-
 @Component({
   selector: 'app-kendaraan',
   templateUrl: './kendaraan.page.html',

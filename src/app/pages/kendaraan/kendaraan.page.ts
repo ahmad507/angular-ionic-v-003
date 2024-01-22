@@ -10,7 +10,7 @@ import {
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {resetCarInsuranceData, resetMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {ModalController, PopoverController, ToastController} from "@ionic/angular";
+import {PopoverController, ToastController} from "@ionic/angular";
 import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
 import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service";
 import {debounceTime, Subject, take, takeUntil} from "rxjs";
@@ -29,7 +29,6 @@ export class KendaraanPage implements OnInit {
   @Input() mv_price_acc: string = '0';
   private destroy$: Subject<void> = new Subject<void>();
   mv_price_max: number = 0;
-  mv_price_min: number = 0;
   inputSubject = new Subject<string>();
   isButtonDisabled: boolean = true;
   isCar: boolean = true;
@@ -39,7 +38,6 @@ export class KendaraanPage implements OnInit {
   constructor(
     private router: Router,
     private store: Store,
-    private modalController: ModalController,
     private mvDataService: MvDataService,
     private accInputService: AccessoryService,
     private toastController: ToastController,
@@ -81,7 +79,7 @@ export class KendaraanPage implements OnInit {
   async getDataMvType($event: string) {
     this.updateKendaraanPayload('vtype', $event);
     this.dataTempMvType = $event;
-    this.mvRepository.getStoreMvData().subscribe(data=>{
+    this.mvRepository.getStoreMvData().subscribe(()=>{
       this.isCar = this.dataTempMvType === 'A';
     })
   }

@@ -1,11 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import { informasiNasabah, informasiKendaraan } from "./data/data.simulasi";
 import {Store} from "@ngrx/store";
-import {MvInfoDetail} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {
-  resetCarInsuranceData, resetMvInfoDetailData
-} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+  MvInfo,
+  MvInfoDetail,
+  MvRisk,
+  MvValidator,
+  RESPONSE_RISK
+} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {resetCarInsuranceData, resetMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 import {ModalController, PopoverController, ToastController} from "@ionic/angular";
 import {
@@ -18,44 +21,6 @@ import {MvModalComponent} from "@src/app/components/core/mv/mv-modal/mv-modal.co
 import {MvRiskComponent} from "@src/app/components/core/mv/mv-risk/mv-risk.component";
 import {PopOverComponent} from "@src/app/components/utils/pop-over/pop-over.component";
 
-export interface MvInfo {
-  mainsi: string;
-  vcode: string;
-  unit_name: string;
-  merek: string;
-}
-export interface MvValidator {
-  ctype: string;
-  license: string;
-  license_region: string;
-  vfunction: string;
-  vtype: string;
-  vyear: number;
-  vcode: string;
-  vmodel: string;
-  vbrand: string;
-  year_period: string;
-  mainsi: any;
-}
-export interface MvRisk {
-  risk_number: string;
-  risk_code: string;
-  main_risk_number: string;
-  risk_description_id: string;
-  risk_description_en: any;
-  risk_long_desc: string;
-  risk_long_desc_en: any;
-  category: string;
-  type: string;
-  private_si_flags: string;
-}
-export interface RESPONSE_RISK {
-  r_status: boolean;
-  r_data: MvRisk[];
-  r_code: number;
-  r_message: string;
-}
-
 
 @Component({
   selector: 'app-kendaraan',
@@ -65,43 +30,30 @@ export interface RESPONSE_RISK {
 export class KendaraanPage implements OnInit {
   @Input() mv_price: string = '0';
   @Input() mv_price_acc: string = '0';
-  // @ViewChild('toolbar', { read: IonToolbar }) toolbar: IonToolbar;
 
+  mv_price_max: number = 0;
+  mv_price_min: number = 0;
+  inputSubject = new Subject<string>();
 
-  inputDetail: any = informasiNasabah;
-  inputDetail_2: any = informasiKendaraan;
-
-  TIPE_NASABAH: string = '';
-  PENGGUNAAN_KENDARAAN: string = '';
-  JENIS_KENDARAAN: string = '';
-  TAHUN_KENDARAAN: string = '';
-  KODE_PLAT_KENDARAAN: string = '';
-  MV_TYPE: string = '';
-  MV_YEAR: number = 0;
-  MV_INFO_DATA: any = [];
-  MV_CODE: string = '';
-
-  private mv_price_max: number = 0;
-  private mv_price_min: number = 0;
-  private inputSubject = new Subject<string>();
   isButtonDisabled: boolean = true;
-  isMVCAR: boolean = true;
+  isCar: boolean = true;
   dataTempMvType: string = '';
   dataTempMvYear: number = 0;
-
-
+  MV_INFO_DATA: any = [];
 
   constructor(
-    private router : Router,
-    private store : Store,
-    private modalController : ModalController,
+    private router: Router,
+    private store: Store,
+    private modalController: ModalController,
     private mvDataService: MvDataService,
     private accInputService: AccessoryService,
     private toastController: ToastController,
     private popOverController: PopoverController
-  ) {
-    this.inputSubject.pipe(debounceTime(750)).subscribe((value) => {
-      this.checkLimitMvPrice(value);
+  ) {this.checkPriceInput()}
+
+  private checkPriceInput() {
+    this.inputSubject.pipe(debounceTime(750)).subscribe(async (value) => {
+      await this.checkLimitMvPrice(value);
     });
   }
 
@@ -142,7 +94,7 @@ export class KendaraanPage implements OnInit {
     this.updateKendaraanPayload('vtype', $event);
     this.store.select(selectKendaraanData).pipe().subscribe((res)=>{
       this.dataTempMvType = res.vtype;
-      this.isMVCAR = this.dataTempMvType === 'A';
+      this.isCar = this.dataTempMvType === 'A';
     })
   }
 
@@ -243,12 +195,10 @@ export class KendaraanPage implements OnInit {
   private async checkLimitMvPrice(dataPrice: any) {
     let min_mv_price_temp: number = 0;
     let max_mv_price_temp: number = 0;
-    let mv_price_temp: number = 0;
     let dataPriceMv = parseInt(dataPrice.replace(/,/g, ''), 10);
     this.MV_INFO_DATA.map((data: any) => {
       min_mv_price_temp = data.unit_price_min;
       max_mv_price_temp = data.unit_price_max;
-      mv_price_temp = parseInt(data.unit_price.replace(/,/g, ''), 10);
     })
     if (dataPriceMv > max_mv_price_temp) {
       const message = 'Harga kendaraan melebihi limit maksimal';

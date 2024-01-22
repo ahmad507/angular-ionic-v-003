@@ -1,7 +1,7 @@
 // mv-data.service.ts
 import { Injectable } from '@angular/core';
 import { Store } from "@ngrx/store";
-import { CarInsuranceState, MvInfoDetail } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {CarInsuranceState, MvInfoDetail, RESPONSE_RISK} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {
   updateAccesoriesSi,
   updateKendaraanData,
@@ -9,7 +9,6 @@ import {
 } from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import apiConfig from "@src/config/apiConfig";
-import {RESPONSE_RISK} from "@src/app/pages/kendaraan/kendaraan.page";
 
 @Injectable({
   providedIn: 'root',

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -29,7 +29,7 @@ export class ModalMvTypeComponent  implements OnInit {
   }
 
   private callApiForMvType() {
-    const jenisKendaraan = [
+    this.listMvType = [
       {
         id: 'A',
         text: 'Sedan, Minibus, Jeep, City Car',
@@ -43,20 +43,16 @@ export class ModalMvTypeComponent  implements OnInit {
         text: 'Sepeda Motor',
       },
     ];
-    this.listMvType = jenisKendaraan;
   }
 
   getIconName(id: string) {
     switch (id){
       case 'A':
         return  'car';
-        break;
       case 'B':
         return  'bus';
-        break;
       case 'D':
         return  'bicycle';
-        break;
       default:
         return  'car';
     }

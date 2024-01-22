@@ -11,12 +11,13 @@
 <ion-content>
   <div class="mx-[8px] p-1">
     <ion-segment mode="ios" value="1" [(ngModel)]="mainRisk">
-      <ion-segment-button *ngFor="let item of dataDummy" [value]="item.risk_number">
+      <ion-segment-button *ngFor="let item of dataRisk" [value]="item.risk_number">
         <div class="m-2 p-2">{{getRiskName(item.risk_number)}}</div>
       </ion-segment-button>
     </ion-segment>
   </div>
-  <div *ngFor="let item of dataDummy" [ngSwitch]="mainRisk">
+
+  <div *ngFor="let item of dataRisk" [ngSwitch]="mainRisk">
     <section *ngSwitchCase="item.risk_number">
       <div class="p-2 mx-[8px]">
         <div class="custom-container">
@@ -34,9 +35,10 @@
       </div>
     </section>
   </div>
+
 </ion-content>
 
-<div *ngFor="let item of dataDummy" [ngSwitch]="mainRisk">
+<div *ngFor="let item of dataRisk" [ngSwitch]="mainRisk">
   <section *ngSwitchCase="item.risk_number">
     <ion-footer style="background: white" #footer>
       <div class="p-3 mx-[16px] flex flex-row justify-between items-center">

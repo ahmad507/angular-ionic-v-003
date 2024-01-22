@@ -1,42 +1,6 @@
-// carInsurance.reducer.ts
-import { createReducer, on } from '@ngrx/store';
-import {CarInsuranceState, MvInfoDetail} from "./kendaraan.state";
-import  * as kendaraanAction  from "./kendaraan.actions";
-
-export const initialState: CarInsuranceState = {
-  ctype: '',
-  license: '',
-  license_region: '',
-  vfunction: '',
-  vtype: '',
-  vyear: 0,
-  vcode: '',
-  vmodel: '',
-  vbrand: '',
-  year_period: '1',
-  mainsi: 0,
-  accesories_si: 0,
-  accesories_detail: [],
-  mainrisk: '',
-  reg_no: '',
-  addrisk: [],
-  sortby: '',
-  total_passenger: '',
-  addrisk_all: [],
-  addsi_all: [],
-  addsi: [],
-};
-
-export const initialStateMvInfo: MvInfoDetail = {
-  mainsi: '',
-  vcode: '',
-  unit_name: '',
-  merek: '',
-  unit_price_max: 0,
-  unit_price: '',
-  unit_price_min: 0
-}
-
+import {createReducer, on} from '@ngrx/store';
+import {initialState, initialStateMvInfo} from "./kendaraan.state";
+import * as kendaraanAction from "./kendaraan.actions";
 export const carInsuranceReducer = createReducer(
   initialState,
   on(kendaraanAction.updateKendaraanData, (state, { newData }) => {
@@ -85,7 +49,6 @@ export const carInsuranceReducer = createReducer(
     };
   })
 );
-
 export const updateMvInfoReducer = createReducer(
   initialStateMvInfo,
   on(kendaraanAction.updateMvInfoDetail, (state, {dataCarInfo})=>{

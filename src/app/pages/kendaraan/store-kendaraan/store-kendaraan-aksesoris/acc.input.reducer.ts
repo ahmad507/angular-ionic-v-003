@@ -1,9 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import * as AccessoryActions from './acc.input.actions';
 import {AccState} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state";
-
 export const initialState: AccState = [];
-
 export const accessoryReducer = createReducer(
   initialState,
   on(AccessoryActions.addAccessory, (state, { accessory }) => {

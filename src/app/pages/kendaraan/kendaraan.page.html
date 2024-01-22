@@ -14,8 +14,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar" [appHideFooter]="footer">
-  <div class="relative">
+<ion-content  [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar" [appHideFooter]="footer">
+  <div class="relative mb-[60px]">
     <div class="h-[232px] w-full bg-blue-400">
       <div class="image-container">
         <img src="assets/compre.jpg" alt="asuransiku.id">
@@ -45,10 +45,10 @@
       <app-mv-type (setDataMvType)="getDataMvType($event)"/>
       <app-mv-years (setDataMvYear)="getDataMvYear($event)"/>
 
-      <div *ngIf="dataTempMvType !== '' && dataTempMvYear !== 0 then this.showBrandModelOption"></div>
-      <ng-template #showBrandModelOption>
+      <div *ngIf="checkYearAndType()">
         <app-mv-model-brand (setDataMvDetail)="getDataMvMerekModel($event)"/>
-      </ng-template>
+      </div>
+
 
       <div *ngIf="dataTempMvType === 'A' then this.typeCar else this.typeMotor"></div>
       <ng-template #typeCar>
@@ -59,40 +59,41 @@
       </ng-template>
 
       <div [class]="CheckParamMV()">
+      <div class="my-3">
+        <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
+          <ion-icon name="cash-outline"></ion-icon>
+          <ion-label>
+            <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>
+          </ion-label>
+        </ion-chip>
+      </div>
+      </div>
+
+      <div id="mv-price-input">
         <div class="my-3">
-          <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
-            <ion-icon name="cash-outline"></ion-icon>
-            <ion-label>
-              <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>
-            </ion-label>
-          </ion-chip>
+          <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
         </div>
+      </div>
 
-        <div id="mv-price-input">
+      <div [appShowAccessories]="isCar && checkMvPrice(mv_price)" id="accessories_detail">
+        <div class="mt-[16px] flex justify-between items-center">
+          <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' + mv_price_acc"></app-spacer>
+          <ion-buttons [appShowAccessories]=checkAccPrice(mv_price_acc)>
+            <ion-button (click)="deleteAccData()">
+              <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </div>
+        <div [appShowAccessories]="checkMvPrice(mv_price)" id="accessories_button">
           <div class="my-3">
-            <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
-          </div>
-        </div>
-        <div [appShowAccessories]="isCar && checkMvPrice(mv_price)" id="accessories_detail">
-          <div class="mt-[16px] flex justify-between items-center">
-            <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' + mv_price_acc"></app-spacer>
-            <ion-buttons [appShowAccessories]=checkAccPrice(mv_price_acc)>
-              <ion-button (click)="deleteAccData()">
-                <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
-              </ion-button>
-            </ion-buttons>
-          </div>
-          <div [appShowAccessories]="checkMvPrice(mv_price)" id="accessories_button">
-            <div class="my-3">
-
-              <button
-                (click)="openAccModal()"
-                id="acc_button"
-                class="mb-[32px] my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
-            </div>
+            <button
+              (click)="openAccModal()"
+              id="acc_button"
+              class="mb-[32px] my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
           </div>
         </div>
       </div>
+
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
     </div>
   </div>
@@ -100,9 +101,9 @@
 
 
 <ion-footer style="background: white" #footer>
-    <div class="mx-[16px] flex flex-row justify-between items-center">
-      <div class="footer-name">Pilihan Jaminan</div>
-      <button (click)="getDataMainRisk()" id="search_button" class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
-    </div>
+  <div class="mx-[16px] flex flex-row justify-between items-center">
+    <div class="footer-name">Pilihan Jaminan</div>
+    <button (click)="getDataMainRisk()" id="search_button" class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
+  </div>
 </ion-footer>
 

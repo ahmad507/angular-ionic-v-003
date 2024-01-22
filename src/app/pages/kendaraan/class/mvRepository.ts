@@ -1,6 +1,6 @@
 import {Store} from "@ngrx/store";
 import {selectKendaraanData, selectMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {shareReplay, take, tap} from "rxjs";
+import {shareReplay, take} from "rxjs";
 import {Injectable} from "@angular/core";
 import {
   MvAccessoriesComponent
@@ -48,9 +48,9 @@ export class MvRepository {
     const modalWarning = await this.modalController.create({
       component: MvModalComponent,
       componentProps: {
-        message: 'Silahkan untuk melengkapi data terlebih dahulu',
-        imgSource: 'assets/undraw_selection_re_ycpo.png',
-        btnText: 'Ok, Lanjutkan...'
+        message: message,
+        imgSource: imgSource,
+        btnText: btnText
       },
       cssClass: 'custom-modal',
       backdropDismiss: false,

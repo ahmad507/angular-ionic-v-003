@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ModalController } from '@ionic/angular';
 import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
 import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
-import { map, pluck, take } from 'rxjs';
+import { map, take } from 'rxjs';
 
 export interface AdditionalRisk {
   risk_number: string;
@@ -34,12 +34,18 @@ export interface ResponseAdditionalRisk {
   styleUrls: ['./mv-risk.component.scss'],
 })
 export class MvRiskComponent implements OnInit {
+  getStatus(arg0: any) {
+    console.log(arg0);
+    throw new Error('Method not implemented.');
+  }
   @Input() dataRisk: any[] = [];
   @Input() mvType: string = '';
   @Input() mainRisk: string = '';
 
   showFullText = false;
   ADDITIONAL_RISK: any = [];
+  ADDITIONAL_RISK_DATA_SIMULATION: any = [];
+  addedRiskIndexes: string[] = [];
 
   constructor(
     private modalController: ModalController,
@@ -84,6 +90,23 @@ export class MvRiskComponent implements OnInit {
       )
       .subscribe((r_data: AdditionalRisk[]) => {
         this.ADDITIONAL_RISK = r_data;
+        this.addedRiskIndexes = [];
+        this.ADDITIONAL_RISK_DATA_SIMULATION = [];
       });
+  }
+
+  setAddRisk(arg0: any) {
+    console.log(arg0);
+  }
+
+  toggleItem(riskNumber: string): void {
+    const index = this.addedRiskIndexes.indexOf(riskNumber);
+    if (index !== -1) {
+      this.ADDITIONAL_RISK_DATA_SIMULATION.splice(index, 1);
+      this.addedRiskIndexes.splice(index, 1); // Hapus nomor risiko dari array jika sudah ada
+    } else {
+      this.ADDITIONAL_RISK_DATA_SIMULATION.push(riskNumber);
+      this.addedRiskIndexes.push(riskNumber); // Tambahkan nomor risiko ke dalam array jika belum ada
+    }
   }
 }

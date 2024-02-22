@@ -36,17 +36,30 @@
       </div>
     </section>
   </div>
-  <section>
-    <div *ngFor="let item of ADDITIONAL_RISK" class="p-2 mx-[8px]">
-      <div class="p-3">{{item.risk_description_id}}</div>
-    </div>
+  <!-- 
+  <section class="p-2 mx-[8px]">
+    <ion-item *ngFor="let item of ADDITIONAL_RISK let i = index">
+      <div>{{i+1}} . {{item.risk_description_id}}</div>
+    </ion-item>
+  </section> -->
+
+  <section class="p-2 mx-[8px]">
+    <div *ngFor="let item of ADDITIONAL_RISK_DATA_SIMULATION">{{item}}</div>
   </section>
+
+  <section class="p-2 mx-[8px]">
+    <ion-item *ngFor="let item of ADDITIONAL_RISK; let i = index" (click)="toggleItem(item.risk_number)"
+      [ngClass]="{ 'green-background': addedRiskIndexes.includes(item.risk_number), '': !addedRiskIndexes.includes(item.risk_number) }">
+      <div>{{i+1}} . {{item.risk_description_id}}</div>
+    </ion-item>
+  </section>
+
 
 </ion-content>
 
 <div *ngFor="let item of dataRisk" [ngSwitch]="mainRisk">
   <section *ngSwitchCase="item.risk_number">
-    <ion-footer class="ion-no-border" style="background: white" #footer>
+    <ion-footer style="background: white" #footer>
       <div class="p-3 mx-[16px] flex flex-row justify-between items-center">
         <div class="footer-name">Selanjutnya</div>
         <app-button class="w-[50%]" (buttonClick)="getAdditionalRisk(item.risk_number)" ButtonText="Cari Asuransi" />

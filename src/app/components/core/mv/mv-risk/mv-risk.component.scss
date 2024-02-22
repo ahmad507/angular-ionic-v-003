@@ -1,20 +1,19 @@
-.header-name{
-  font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[16px] text-blue-500
+.header-name {
+  font-family: "Montserrat", sans-serif;
+  @apply mx-3 font-bold text-[16px] text-blue-500;
 }
 
-.text-custom{
-  font-family: 'Montserrat', sans-serif;
-  @apply text-[13px]
+.text-custom {
+  font-family: "Montserrat", sans-serif;
+  @apply text-[13px];
 }
 
-.footer-name{
-  font-family: 'Montserrat', sans-serif;
-  @apply mx-3 font-bold text-[16px] text-blue-500
+.footer-name {
+  font-family: "Montserrat", sans-serif;
+  @apply mx-3 font-bold text-[16px] text-blue-500;
 }
 
-
-ion-segment{
+ion-segment {
   border-radius: 12px;
 }
 
@@ -37,8 +36,8 @@ ion-segment-button.md::part(indicator-background) {
 
 /* iOS styles */
 ion-segment-button.ios::part(native) {
-  font-family: 'Montserrat', sans-serif;
-  @apply text-blue-700
+  font-family: "Montserrat", sans-serif;
+  @apply text-blue-700;
 }
 
 .segment-button-checked.ios::part(native) {
@@ -49,17 +48,17 @@ ion-segment-button.ios::part(indicator-background) {
   border-radius: 12px;
 }
 
-.custom-header{
+.custom-header {
   @apply font-bold text-[16px] text-blue-500 p-2 border-0 border-r-[3.5px] border-blue-500;
 }
-.custom-container{
+.custom-container {
   @apply p-2 shadow-sm;
   border: 1px solid rgba(0, 119, 255, 0.5);
   border-radius: 12px;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 
-.image-container{
+.image-container {
   width: 100%;
   height: 132px;
   background-color: grey;
@@ -72,4 +71,29 @@ ion-segment-button.ios::part(indicator-background) {
   height: 100%;
   object-fit: cover; /* Make the image cover the container while maintaining its aspect ratio */
   border-radius: 12px; /* In case the image doesn't completely cover the container, keep the border-radius consistent */
+}
+ion-item {
+  --inner-border-width: 0;
+  --border-width: 0.5px;
+  border-bottom: 1px;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  color: var(--ion-color-primary);
+  @apply mt-[8px] font-light;
+  --border-radius: 8px;
+  --background: transparent !important;
+}
+
+.green-background {
+  @apply bg-green-600 text-white rounded-[8px];
+}
+
+.white-background {
+  background-color: #08a391;
+  border-radius: 8px;
+  color: white;
+}
+
+.transparent-background {
+  @apply bg-transparent;
 }

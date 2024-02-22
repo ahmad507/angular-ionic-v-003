@@ -15,13 +15,13 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar">
-  <div class="relative h-full">
-    <div class="h-[232px] w-full bg-blue-400">
+  <div>
+    <div class="h-[232px] relative w-full bg-blue-400">
       <div class="image-container">
         <img src="assets/compre.jpg" alt="asuransiku.id">
       </div>
     </div>
-    <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px]">
+    <div class="my-2 z-50 bg-white p-4 rounded-t-[16px]">
       <app-spacer SECTION_NAME="Nasabah & Penggunaan"></app-spacer>
       <app-nasabah (setDataTipeNasabah)="getDataNasabah($event)" />
       <app-mv-function (setDataMvFunction)="getDataMvFunction($event)" />

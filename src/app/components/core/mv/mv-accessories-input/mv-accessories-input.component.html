@@ -9,13 +9,14 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="content-center p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-semibold header-name rounded">
+  <div
+    class="content-center p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-semibold header-name rounded">
     Merek dan Harga {{replaceUnderscoreWithSpace(acc_props)}}
   </div>
   <div class="mt-[16px]">
     <app-input label="Merek Aksesoris" [(value)]="inputMerekAcc"></app-input>
-    <app-input [shouldFormat]="true" type="text" label="Harga Aksesoris" [(value)]="inputHargaAcc"></app-input>
+    <app-input [shouldFormat]="true" type="text" label="Harga Aksesoris" [(ngModel)]="inputHargaAcc"
+      [(value)]="inputHargaAcc"></app-input>
     <app-button (buttonClick)="handleClick(acc_props)" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
   </div>
 </ion-content>
-

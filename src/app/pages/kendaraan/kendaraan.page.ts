@@ -1,22 +1,29 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Router} from "@angular/router";
-import {Store} from "@ngrx/store";
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import {
   MvInfo,
   MvInfoDetail,
   MvRisk,
   MvValidator,
-  RESPONSE_RISK
-} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
-import {resetCarInsuranceData, resetMvInfoDetailData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
-import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
-import {PopoverController, ToastController} from "@ionic/angular";
-import {MvDataService} from "@src/app/pages/kendaraan/store-kendaraan/mv.data.service";
-import {AccessoryService} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service";
-import {debounceTime, Subject, take, takeUntil} from "rxjs";
-import {PopOverComponent} from "@src/app/components/utils/pop-over/pop-over.component";
-import {MvRepository} from "@src/app/pages/kendaraan/class/mvRepository";
-import {distinctUntilChanged} from "rxjs/operators";
+  RESPONSE_RISK,
+} from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.state';
+import {
+  resetCarInsuranceData,
+  resetMvInfoDetailData,
+} from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
+import { selectKendaraanData } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector';
+import {
+  PopoverController,
+  ToastController,
+  LoadingController,
+} from '@ionic/angular';
+import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
+import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
+import { debounceTime, Subject, take, takeUntil } from 'rxjs';
+import { PopOverComponent } from '@src/app/components/utils/pop-over/pop-over.component';
+import { MvRepository } from '@src/app/pages/kendaraan/class/mvRepository';
+import { distinctUntilChanged } from 'rxjs/operators';
 @Component({
   selector: 'app-kendaraan',
   templateUrl: './kendaraan.page.html',
@@ -40,8 +47,11 @@ export class KendaraanPage implements OnInit {
     private accInputService: AccessoryService,
     private toastController: ToastController,
     private popOverController: PopoverController,
+    private loadingController: LoadingController,
     private mvRepository: MvRepository
-  ) {this.checkPriceInput()}
+  ) {
+    this.checkPriceInput();
+  }
   private checkPriceInput() {
     this.inputSubject.pipe(debounceTime(750)).subscribe(async (value) => {
       await this.checkLimitMvPrice(value);
@@ -50,10 +60,17 @@ export class KendaraanPage implements OnInit {
   async ngOnInit() {
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
-    this.mvRepository.getStoreMvData().subscribe(data=>{
+    this.mvRepository.getStoreMvData().subscribe((res) => {
+      if (res.vtype === 'A') {
+        this.isCar = true;
+      } else {
+        this.isCar = false;
+      }
+    });
+    this.mvRepository.getStoreMvData().subscribe((data) => {
       this.dataTempMvType = data.vtype;
       this.dataTempMvYear = data.vyear;
-    })
+    });
   }
   async gotoHome() {
     this.store.dispatch(resetCarInsuranceData());
@@ -77,9 +94,13 @@ export class KendaraanPage implements OnInit {
   async getDataMvType($event: string) {
     this.updateKendaraanPayload('vtype', $event);
     this.dataTempMvType = $event;
-    this.mvRepository.getStoreMvData().subscribe(()=>{
-      this.isCar = this.dataTempMvType === 'A';
-    })
+    this.mvRepository.getStoreMvData().subscribe((res) => {
+      if (res.vtype === 'A') {
+        this.isCar = true;
+      } else {
+        this.isCar = false;
+      }
+    });
   }
   async getDataMvYear($event: number) {
     this.dataTempMvYear = $event;
@@ -88,34 +109,34 @@ export class KendaraanPage implements OnInit {
   async getDataMvLicense($event: any) {
     const dataLicense = [];
     dataLicense.push($event);
-    dataLicense.forEach((res)=>{
+    dataLicense.forEach((res) => {
       this.updateKendaraanPayload('license', res.id);
       this.updateKendaraanPayload('license_region', res.text);
-    })
+    });
   }
   async getDataMvMerekModel($event: any) {
     this.extractDataMv($event);
     const mvInfo = [];
-    mvInfo.push({...$event});
-    mvInfo.map((res)=>{
+    mvInfo.push({ ...$event });
+    mvInfo.map((res) => {
       this.updateKendaraanPayload('vcode', res.vcode);
       this.updateKendaraanPayload('vmodel', res.unit_name);
       this.updateKendaraanPayload('vbrand', res.merek);
     });
   }
-  CheckParamMV(){
+  CheckParamMV() {
     return this.checkMvParamRangePrice();
   }
   private checkMvParamRangePrice() {
-    this.mvRepository.getStoreMvDetailData().subscribe(data => {
+    this.mvRepository.getStoreMvDetailData().subscribe((data) => {
       let temp: any[] = [];
-      temp.push({...data});
+      temp.push({ ...data });
       this.MV_INFO_DATA = temp;
     });
 
-    this.mvRepository.getStoreMvData().subscribe(data => {
-      this.mv_price = (data.mainsi).toString();
-      this.mv_price_acc = (data.accesories_si).toLocaleString();
+    this.mvRepository.getStoreMvData().subscribe((data) => {
+      this.mv_price = data.mainsi.toString();
+      this.mv_price_acc = data.accesories_si.toLocaleString();
     });
   }
   checkInput($event: any) {
@@ -130,8 +151,8 @@ export class KendaraanPage implements OnInit {
   }
   private extractDataMv($event: MvInfo) {
     const mainsi = parseFloat($event.mainsi.replace(/,/g, ''));
-    const unit_price_max = mainsi + (mainsi * 0.1);
-    const unit_price_min = mainsi - (mainsi * 0.1);
+    const unit_price_max = mainsi + mainsi * 0.1;
+    const unit_price_min = mainsi - mainsi * 0.1;
     this.mv_price_max = unit_price_max;
     this.mv_price = $event.mainsi;
     this.updateKendaraanPayload('mainsi', $event.mainsi);
@@ -156,16 +177,16 @@ export class KendaraanPage implements OnInit {
     this.MV_INFO_DATA.map((data: any) => {
       min_mv_price_temp = data.unit_price_min;
       max_mv_price_temp = data.unit_price_max;
-    })
+    });
     if (dataPriceMv > max_mv_price_temp) {
       const message = 'Harga kendaraan melebihi limit maksimal';
-      await this.toastWarning(message)
+      await this.toastWarning(message);
     } else if (min_mv_price_temp > dataPriceMv) {
       const message = 'Harga kendaraan kurang dari limit minimal';
-      await this.toastWarning(message)
+      await this.toastWarning(message);
     } else {
       const message = 'Harga kendaraan melebihi limit maksimal';
-      await this.toastWarning(message)
+      await this.toastWarning(message);
     }
   }
   private async toastWarning(message: string) {
@@ -175,7 +196,7 @@ export class KendaraanPage implements OnInit {
       position: 'top',
       duration: 2500,
       icon: 'warning',
-    })
+    });
     await toast.present();
   }
   checkMvPrice(mv_price: string) {
@@ -185,7 +206,7 @@ export class KendaraanPage implements OnInit {
   deleteAccData() {
     this.updateKendaraanPayload('accesories_si', 0);
     this.updateKendaraanPayload('accesories_detail', []);
-    this.accInputService.removeAccessory([])
+    this.accInputService.removeAccessory([]);
   }
   checkAccPrice(mv_price_acc: string) {
     const mv_temp_price_acc = parseInt(mv_price_acc);
@@ -196,31 +217,42 @@ export class KendaraanPage implements OnInit {
     this.updateKendaraanPayload('year_period', yearPeriodSelected);
   }
   getDataMainRisk() {
-    this.store.select(selectKendaraanData).pipe(take(1)).subscribe(async (res) => {
-      const validator: MvValidator = {
-        ctype: res.ctype,
-        license: res.license,
-        license_region: res.license_region,
-        vfunction: res.vfunction,
-        vtype: res.vtype,
-        vyear: res.vyear,
-        vcode: res.vcode,
-        vmodel: res.vmodel,
-        vbrand: res.vbrand,
-        year_period: res.year_period,
-        mainsi: res.mainsi
-      }
-      const validParam = this.checkValidationBeforeNext(validator);
-      if (validParam) {
-        this.mvDataService.mvMainRisk().pipe(takeUntil(this.destroy$)).subscribe(async (res: RESPONSE_RISK) => {
-          if (res.r_data.length > 0) {
-            await this.openModalRisk(res.r_data);
-          }
-        });
-      } else {
-        await this.openModalMessage();
-      }
-    });
+    this.store
+      .select(selectKendaraanData)
+      .pipe(take(1))
+      .subscribe(async (res) => {
+        const validator: MvValidator = {
+          ctype: res.ctype,
+          license: res.license,
+          license_region: res.license_region,
+          vfunction: res.vfunction,
+          vtype: res.vtype,
+          vyear: res.vyear,
+          vcode: res.vcode,
+          vmodel: res.vmodel,
+          vbrand: res.vbrand,
+          year_period: res.year_period,
+          mainsi: res.mainsi,
+        };
+        const validParam = this.checkValidationBeforeNext(validator);
+        if (validParam) {
+          const loading = await this.loadingController.create({
+            spinner: 'circles',
+          });
+          await loading.present();
+          this.mvDataService
+            .mvMainRisk()
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(async (res: RESPONSE_RISK) => {
+              if (res.r_data.length > 0) {
+                await loading.dismiss();
+                await this.openModalRisk(res.r_data);
+              }
+            });
+        } else {
+          await this.openModalMessage();
+        }
+      });
   }
   private checkValidationBeforeNext(validator: MvValidator): boolean {
     for (const key in validator) {
@@ -235,8 +267,8 @@ export class KendaraanPage implements OnInit {
   }
   private async openModalMessage() {
     const message = 'Silahkan untuk melengkapi data terlebih dahulu';
-    const imgSource = 'assets/undraw_selection_re_ycpo.png';
-    const btnText = 'Ok, Lanjutkan...';
+    const imgSource = 'assets/danger.png';
+    const btnText = 'Close';
     return this.mvRepository.openModalWarning(message, imgSource, btnText);
   }
   private async openModalRisk(r_data: MvRisk[]) {
@@ -248,21 +280,26 @@ export class KendaraanPage implements OnInit {
   async goToPopOver(event: any) {
     const popOver = await this.popOverController.create({
       component: PopOverComponent,
-      alignment:'end',
+      alignment: 'end',
       event: event,
       cssClass: 'custom-pop-over',
-      showBackdrop: false
-    })
+      showBackdrop: false,
+    });
     await popOver.present();
   }
   checkYearAndType() {
-    this.mvRepository.getStoreMvData().pipe(
-      distinctUntilChanged((prev, curr) => prev.vtype === curr.vtype && prev.vyear === curr.vyear)
-    ).subscribe(data => {
-      this.mv_price = (data.mainsi).toString();
-      this.dataTempMvType = data.vtype;
-      this.dataTempMvYear = data.vyear;
-    });
+    this.mvRepository
+      .getStoreMvData()
+      .pipe(
+        distinctUntilChanged(
+          (prev, curr) => prev.vtype === curr.vtype && prev.vyear === curr.vyear
+        )
+      )
+      .subscribe((data) => {
+        this.mv_price = data.mainsi.toString();
+        this.dataTempMvType = data.vtype;
+        this.dataTempMvYear = data.vyear;
+      });
     return this.dataTempMvYear !== 0;
   }
 }

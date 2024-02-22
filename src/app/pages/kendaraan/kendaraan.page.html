@@ -1,5 +1,5 @@
 <ion-header #toolbar class="ion-no-border">
-  <ion-toolbar >
+  <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="gotoHome()">
         <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="light"></ion-icon>
@@ -14,19 +14,19 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content  [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar" [appHideFooter]="footer">
-  <div class="relative mb-[60px]">
+<ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar">
+  <div class="relative h-full">
     <div class="h-[232px] w-full bg-blue-400">
       <div class="image-container">
         <img src="assets/compre.jpg" alt="asuransiku.id">
       </div>
     </div>
-    <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px] shadow-2xl h-full">
+    <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px]">
       <app-spacer SECTION_NAME="Nasabah & Penggunaan"></app-spacer>
-      <app-nasabah (setDataTipeNasabah)="getDataNasabah($event)"/>
-      <app-mv-function (setDataMvFunction)="getDataMvFunction($event)"/>
+      <app-nasabah (setDataTipeNasabah)="getDataNasabah($event)" />
+      <app-mv-function (setDataMvFunction)="getDataMvFunction($event)" />
       <app-spacer SECTION_NAME="Plat Wilayah Kendaraan"></app-spacer>
-      <app-mv-license (setDataMvLicense)="getDataMvLicense($event)"/>
+      <app-mv-license (setDataMvLicense)="getDataMvLicense($event)" />
       <app-spacer SECTION_NAME="Periode Asuransi (Tahun)"></app-spacer>
       <div class="my-3">
         <ion-segment (ionChange)="getYearPeriode($event)" value="1" mode="ios">
@@ -42,11 +42,11 @@
         </ion-segment>
       </div>
       <app-spacer SECTION_NAME="Data Kendaraan"></app-spacer>
-      <app-mv-type (setDataMvType)="getDataMvType($event)"/>
-      <app-mv-years (setDataMvYear)="getDataMvYear($event)"/>
+      <app-mv-type (setDataMvType)="getDataMvType($event)" />
+      <app-mv-years (setDataMvYear)="getDataMvYear($event)" />
 
       <div *ngIf="checkYearAndType()">
-        <app-mv-model-brand (setDataMvDetail)="getDataMvMerekModel($event)"/>
+        <app-mv-model-brand (setDataMvDetail)="getDataMvMerekModel($event)" />
       </div>
 
 
@@ -59,51 +59,51 @@
       </ng-template>
 
       <div [class]="CheckParamMV()">
-      <div class="my-3">
-        <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
-          <ion-icon name="cash-outline"></ion-icon>
-          <ion-label>
-            <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d  {{ (item.unit_price_max).toLocaleString() }}</div>
-          </ion-label>
-        </ion-chip>
-      </div>
+        <div class="my-3">
+          <ion-chip color="primary" *ngFor="let item of MV_INFO_DATA">
+            <ion-icon name="cash-outline"></ion-icon>
+            <ion-label>
+              <div class="font-light text-xs">Rp {{ (item.unit_price_min).toLocaleString() }} s/d {{
+                (item.unit_price_max).toLocaleString() }}</div>
+            </ion-label>
+          </ion-chip>
+        </div>
       </div>
 
       <div id="mv-price-input">
         <div class="my-3">
-          <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"  [(ngModel)]="mv_price"/>
+          <app-input (input)="checkInput($event)" [shouldFormat]="true" label="Harga Kendaraan (Rp)"
+            [(ngModel)]="mv_price" />
         </div>
       </div>
 
-      <div [appShowAccessories]="isCar && checkMvPrice(mv_price)" id="accessories_detail">
-        <div class="mt-[16px] flex justify-between items-center">
-          <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' + mv_price_acc"></app-spacer>
-          <ion-buttons [appShowAccessories]=checkAccPrice(mv_price_acc)>
-            <ion-button (click)="deleteAccData()">
-              <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </div>
-        <div [appShowAccessories]="checkMvPrice(mv_price)" id="accessories_button">
-          <div class="my-3">
-            <button
-              (click)="openAccModal()"
-              id="acc_button"
-              class="mb-[32px] my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah Aksesoris</button>
+      <div *ngIf="isCar === true then this.showAccInput"></div>
+      <ng-template #showAccInput>
+        <div id="accessories_detail">
+          <div class="mt-[16px] flex justify-between items-center">
+            <app-spacer [SECTION_NAME]="'Harga Aksesoris Rp' + ' : ' + mv_price_acc"></app-spacer>
+            <ion-buttons [appShowAccessories]=checkAccPrice(mv_price_acc)>
+              <ion-button (click)="deleteAccData()">
+                <ion-icon color="danger" slot="icon-only" name="trash"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </div>
+          <div id="accessories_button">
+            <div class="my-3">
+              <button (click)="openAccModal()" id="acc_button"
+                class="mb-[32px] my-4 block bg-green-600 p-2 w-full h-[46px] rounded-[8px] shadow-lg button-text">Tambah
+                Aksesoris</button>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-template>
 
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
+      <div class="mx-[16px] flex flex-row justify-between items-center">
+        <div class="footer-name">Pilihan Jaminan</div>
+        <button (click)="getDataMainRisk()" id="search_button"
+          class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
+      </div>
     </div>
   </div>
 </ion-content>
-
-
-<ion-footer style="background: white" #footer>
-  <div class="mx-[16px] flex flex-row justify-between items-center">
-    <div class="footer-name">Pilihan Jaminan</div>
-    <button (click)="getDataMainRisk()" id="search_button" class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
-  </div>
-</ion-footer>
-

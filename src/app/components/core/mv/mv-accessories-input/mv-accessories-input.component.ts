@@ -1,10 +1,11 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import {IonicModule, ModalController} from '@ionic/angular';
+import { IonicModule, ModalController } from '@ionic/angular';
 import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
-import {CommonModule} from "@angular/common";
-import {FormsModule} from "@angular/forms";
-import {InputComponent} from "@src/app/components/core/input/input/input.component";
-import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { InputComponent } from '@src/app/components/core/input/input/input.component';
+import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
+import { from, map } from 'rxjs';
 
 @Component({
   selector: 'app-mv-accessories-input',
@@ -14,7 +15,7 @@ import {ButtonComponent} from "@src/app/components/core/buttons/button/button.co
     CommonModule,
     FormsModule,
     InputComponent,
-    ButtonComponent
+    ButtonComponent,
   ],
   templateUrl: './mv-accessories-input.component.html',
   styleUrls: ['./mv-accessories-input.component.scss'],
@@ -38,10 +39,31 @@ export class MvAccessoriesInputComponent implements OnInit {
     this.isNumeric = true;
   }
 
-  ngOnInit() {}
+  convertValueInputHarga() {
+    this.accessoryService.getAllAccessories().subscribe((res: any[]) => {
+      if (res.length > 0) {
+        const productsObservable = from(res);
+        productsObservable
+          .pipe(
+            map((product) => ({
+              ...product,
+              harga: product.harga.toLocaleString(),
+            }))
+          )
+          .subscribe((newProducts) => (this.inputHargaAcc = newProducts.harga));
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.convertValueInputHarga();
+  }
 
   handleClick(acc_props: string) {
-    const integerValue = parseInt(this.inputHargaAcc.replace(/[^0-9]/g, ''), 10);
+    const integerValue = parseInt(
+      this.inputHargaAcc.replace(/[^0-9]/g, ''),
+      10
+    );
     const data = {
       name: acc_props,
       harga: integerValue,
@@ -75,11 +97,13 @@ export class MvAccessoriesInputComponent implements OnInit {
   replaceUnderscoreWithSpace(accessory: string) {
     const stringWithSpaces = accessory.replace(/_/g, ' ');
     const words = stringWithSpaces.split(' ');
-    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase());
+    const capitalizedWords = words.map(
+      (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+    );
     return capitalizedWords.join(' ');
   }
 
   getFormatInput(inputHargaAcc: string) {
-    console.log(inputHargaAcc)
+    console.log(inputHargaAcc);
   }
 }

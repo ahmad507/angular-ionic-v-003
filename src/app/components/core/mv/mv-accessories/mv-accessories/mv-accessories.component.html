@@ -2,14 +2,15 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="dismissModal()">
-        <!--        <ion-icon class="ml-4" slot="icon-only" name="arrow-back-circle" color="primary"></ion-icon>-->
       </ion-button>
     </ion-buttons>
     <span class="header-name">Aksesoris Kendaraan</span>
   </ion-toolbar>
 </ion-header>
 <ion-content class="ion-padding">
-  <div *ngFor="let accessory of ['KACA_FILM', 'SOUND_SYSTEM', 'KARPET_MOBIL', 'VELG_BAN', 'JOK_MOBIL', 'BODY_KIT', 'LAINNYA']" class="mb-2">
+  <div
+    *ngFor="let accessory of ['KACA_FILM', 'SOUND_SYSTEM', 'KARPET_MOBIL', 'VELG_BAN', 'JOK_MOBIL', 'BODY_KIT', 'LAINNYA']"
+    class="mb-2">
     <ion-item>
       <div class="flex flex-1 flex-row justify-between items-center" (click)="openInputAccModal(accessory)">
         <div>
@@ -18,13 +19,16 @@
         </div>
         <div class="acc-price">Rp {{ getAccessoryDetail(accessory).harga.toLocaleString() }}</div>
       </div>
-      <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)" [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
+      <ion-icon slot="end" [name]="iconName(getAccessoryDetail(accessory).harga)"
+        [color]="iconColor(getAccessoryDetail(accessory).harga)"></ion-icon>
       <ng-container *ngIf="getAccessoryDetail(accessory).harga > 0">
-        <ion-icon slot="end" name="trash" color="danger" (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
+        <ion-icon slot="end" name="trash" color="danger"
+          (click)="deleteAccItem(getAccessoryDetail(accessory).name)"></ion-icon>
       </ng-container>
     </ion-item>
   </div>
-  <div class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
+  <div
+    class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
     <app-spacer SECTION_NAME="Limit Total Harga Aksesoris" />
     <div>
       Rp {{limit_acc.toLocaleString()}}
@@ -34,6 +38,7 @@
     <div class="text-right">Total Harga Aksesoris : Rp {{sum_acc_price.toLocaleString()}}</div>
   </div>
   <div>
-    <app-button (buttonClick)="handleClick()" [ButtonType]="sum_acc_price > limit_acc ? 'danger' : 'primary'"  [ButtonBlock]="true" [ButtonText]="sum_acc_price > limit_acc ? 'Melebihi Limit Total' : 'Tambahkan'"></app-button>
+    <app-button (buttonClick)="handleClick()" [ButtonType]="sum_acc_price > limit_acc ? 'danger' : 'primary'"
+      [ButtonBlock]="true" [ButtonText]="sum_acc_price > limit_acc ? 'Melebihi Limit Total' : 'Tambahkan'"></app-button>
   </div>
 </ion-content>

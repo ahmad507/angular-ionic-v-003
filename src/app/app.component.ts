@@ -1,6 +1,8 @@
-import { Component, OnInit} from '@angular/core';
+import { initialState } from './pages/kendaraan/store-kendaraan/kendaraan.state';
+import { Component, OnInit } from '@angular/core';
 import { register } from 'swiper/element/bundle';
 import { StatusBar, Style } from '@capacitor/status-bar';
+import { Platform } from '@ionic/angular';
 register();
 
 @Component({
@@ -9,11 +11,19 @@ register();
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  constructor() {}
+  constructor(private platform: Platform) {}
+
+  initialize = () => {
+    this.platform.ready().then((res: any) => {
+      console.log('RES PLATFORM', res);
+      if (res !== 'dom') {
+        StatusBar.setOverlaysWebView({ overlay: true });
+        StatusBar.setStyle({ style: Style.Light });
+      }
+    });
+  };
 
   ngOnInit() {
-    StatusBar.setOverlaysWebView({overlay:true})
-    StatusBar.setStyle({ style: Style.Light });
+    this.initialize();
   }
-
 }

@@ -97,5 +97,5 @@ export const initialStateMvInfo: MvInfoDetail = {
   merek: '',
   unit_price_max: 0,
   unit_price: '',
-  unit_price_min: 0
-}
+  unit_price_min: 0,
+};

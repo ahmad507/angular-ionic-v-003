@@ -11,9 +11,7 @@ export class HideHeaderDirective {
   private toolbarHeight = 44;
   private scrollSubject = new Subject<number>();
 
-  constructor(
-    private renderer: Renderer2,
-    private domCtrl: DomController) {}
+  constructor(private renderer: Renderer2, private domCtrl: DomController) {}
 
   @HostListener('ionScroll', ['$event'])
   onContentScroll($event: any) {
@@ -21,19 +19,24 @@ export class HideHeaderDirective {
     this.scrollSubject.next(scrollTop);
 
     this.scrollSubject
-      .pipe(
-        throttleTime(100),
-        distinctUntilChanged()
-      )
+      .pipe(throttleTime(100), distinctUntilChanged())
       .subscribe((scrollTop) => {
         let newPosition = -(scrollTop / 0.1);
         this.domCtrl.write(() => {
           if (newPosition < -this.toolbarHeight) {
-            this.renderer.setStyle(this.toolbar, 'visibility', 'hidden');
-            this.renderer.setStyle(this.toolbar, 'transition', 'transform 0.3s, opacity 0.3s');
-          }else {
-            this.renderer.setStyle(this.toolbar, 'visibility', 'visible');
-            this.renderer.setStyle(this.toolbar, 'transition', 'transform 0.3s, opacity 0.3s');
+            this.renderer.setStyle(this.toolbar, 'opacity', 0);
+            this.renderer.setStyle(
+              this.toolbar,
+              'transition',
+              'transform 0.3s, opacity 0.3s'
+            );
+          } else {
+            this.renderer.setStyle(this.toolbar, 'opacity', 1);
+            this.renderer.setStyle(
+              this.toolbar,
+              'transition',
+              'transform 0.3s, opacity 0.3s'
+            );
           }
         });
       });

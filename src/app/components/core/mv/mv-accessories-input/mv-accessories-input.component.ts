@@ -39,7 +39,7 @@ export class MvAccessoriesInputComponent implements OnInit {
     this.isNumeric = true;
   }
 
-  convertValueInputHarga() {
+  convertValueInputHarga(props: string) {
     this.accessoryService.getAllAccessories().subscribe((res: any[]) => {
       if (res.length > 0) {
         const productsObservable = from(res);
@@ -50,13 +50,19 @@ export class MvAccessoriesInputComponent implements OnInit {
               harga: product.harga.toLocaleString(),
             }))
           )
-          .subscribe((newProducts) => (this.inputHargaAcc = newProducts.harga));
+          .subscribe((newProducts) => {
+            if (newProducts.name !== props) {
+              this.inputHargaAcc = '';
+            } else {
+              this.inputHargaAcc = newProducts.harga;
+            }
+          });
       }
     });
   }
 
   ngOnInit() {
-    this.convertValueInputHarga();
+    this.convertValueInputHarga(this.acc_props);
   }
 
   handleClick(acc_props: string) {
@@ -101,9 +107,5 @@ export class MvAccessoriesInputComponent implements OnInit {
       (word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
     );
     return capitalizedWords.join(' ');
-  }
-
-  getFormatInput(inputHargaAcc: string) {
-    console.log(inputHargaAcc);
   }
 }

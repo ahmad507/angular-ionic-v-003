@@ -5,6 +5,7 @@ import { IonicModule, ModalController } from '@ionic/angular';
 import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
 import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
 import { map, take } from 'rxjs';
+import { SpacerComponent } from '@src/app/components/utils/spacer/spacer/spacer.component';
 
 export interface AdditionalRisk {
   risk_number: string;
@@ -34,10 +35,6 @@ export interface ResponseAdditionalRisk {
   styleUrls: ['./mv-risk.component.scss'],
 })
 export class MvRiskComponent implements OnInit {
-  getStatus(arg0: any) {
-    console.log(arg0);
-    throw new Error('Method not implemented.');
-  }
   @Input() dataRisk: any[] = [];
   @Input() mvType: string = '';
   @Input() mainRisk: string = '';
@@ -93,10 +90,6 @@ export class MvRiskComponent implements OnInit {
         this.addedRiskIndexes = [];
         this.ADDITIONAL_RISK_DATA_SIMULATION = [];
       });
-  }
-
-  setAddRisk(arg0: any) {
-    console.log(arg0);
   }
 
   toggleItem(riskNumber: string): void {

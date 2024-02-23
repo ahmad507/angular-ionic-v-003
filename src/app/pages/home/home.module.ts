@@ -7,18 +7,10 @@ import { SpacerComponent } from '../../components/utils/spacer/spacer/spacer.com
 import { HomePageRoutingModule } from './home-routing.module';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        HomePageRoutingModule,
-    ],
-    schemas: [CUSTOM_ELEMENTS_SCHEMA],
-    exports: [
-        SpacerComponent
-    ],
-    declarations: [HomePage, SpacerComponent]
+  imports: [CommonModule, FormsModule, IonicModule, HomePageRoutingModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [SpacerComponent],
+  declarations: [HomePage, SpacerComponent],
 })
 export class HomePageModule {}

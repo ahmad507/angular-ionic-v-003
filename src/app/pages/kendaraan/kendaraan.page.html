@@ -14,14 +14,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar">
-  <div>
-    <div class="h-[232px] relative w-full bg-blue-400">
+<ion-content [fullscreen]="true" [translate]="true" [scrollEvents]="true" [appHideHeader]="toolbar"
+  [appHideFooter]="footer">
+  <div class="relative mb-[60px]">
+    <div class="h-[232px] w-full bg-blue-400">
       <div class="image-container">
         <img src="assets/compre.jpg" alt="asuransiku.id">
       </div>
     </div>
-    <div class="my-2 z-50 bg-white p-4 rounded-t-[16px]">
+    <div class="my-2 relative bg-white p-4 mt-[-35px] rounded-t-[16px] shadow-2xl h-full">
       <app-spacer SECTION_NAME="Nasabah & Penggunaan"></app-spacer>
       <app-nasabah (setDataTipeNasabah)="getDataNasabah($event)" />
       <app-mv-function (setDataMvFunction)="getDataMvFunction($event)" />
@@ -99,11 +100,19 @@
       </ng-template>
 
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
-      <div class="mx-[16px] flex flex-row justify-between items-center">
+      <!-- <div class="mx-[16px] flex flex-row justify-between items-center">
         <div class="footer-name">Pilihan Jaminan</div>
         <button (click)="getDataMainRisk()" id="search_button"
           class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </ion-content>
+
+<ion-footer style="background: white" #footer>
+  <div class="mx-[16px] flex flex-row justify-between items-center">
+    <div class="footer-name">Pilihan Jaminan</div>
+    <button (click)="getDataMainRisk()" id="search_button"
+      class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
+  </div>
+</ion-footer>

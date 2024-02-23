@@ -5,7 +5,6 @@ import { Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 })
 export class ShowAccessoriesDirective {
   @Input('appShowAccessories') set appShowAccessories(value: boolean) {
-    console.log('VALUE', value);
     if (!value) {
       this.renderer.setStyle(this.el.nativeElement, 'display', 'none');
     } else {

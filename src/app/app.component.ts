@@ -15,7 +15,6 @@ export class AppComponent implements OnInit {
 
   initialize = () => {
     this.platform.ready().then((res: any) => {
-      console.log('RES PLATFORM', res);
       if (res !== 'dom') {
         StatusBar.setOverlaysWebView({ overlay: true });
         StatusBar.setStyle({ style: Style.Light });

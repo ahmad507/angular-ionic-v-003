@@ -10,24 +10,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
 
-import {carInsuranceReducer} from "./pages/kendaraan/store-kendaraan/kendaraan.reducer";
-import {updateMvInfoReducer} from "./pages/kendaraan/store-kendaraan/kendaraan.reducer";
-import {accessoryReducer} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.reducer";
+import { carInsuranceReducer } from './pages/kendaraan/store-kendaraan/kendaraan.reducer';
+import { updateMvInfoReducer } from './pages/kendaraan/store-kendaraan/kendaraan.reducer';
+import { accessoryReducer } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.reducer';
 
-import {StoreModule} from "@ngrx/store";
-import { localStorageSync } from "ngrx-store-localstorage";
-import {StoreDevtoolsModule} from "@ngrx/store-devtools";
-import {environment} from "../environments/environment";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {ReactiveFormsModule} from "@angular/forms";
+import { StoreModule } from '@ngrx/store';
+import { localStorageSync } from 'ngrx-store-localstorage';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ReactiveFormsModule } from '@angular/forms';
 
 const reducers = {
   carInsurance: carInsuranceReducer,
   mvinfoUpdate: updateMvInfoReducer,
-  accessories: accessoryReducer
+  accessories: accessoryReducer,
 };
 
-const keys = ['carInsurance', 'mvinfoUpdate', 'accessories']
+const keys = ['carInsurance', 'mvinfoUpdate', 'accessories'];
 
 export function localStorageSyncReducer(reducer: any) {
   return localStorageSync({ keys: keys, rehydrate: true })(reducer);
@@ -42,7 +42,7 @@ export function localStorageSyncReducer(reducer: any) {
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers,{ metaReducers: [localStorageSyncReducer]}),
+    StoreModule.forRoot(reducers, { metaReducers: [localStorageSyncReducer] }),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states
       logOnly: environment.production, // Restrict extension to log-only mode

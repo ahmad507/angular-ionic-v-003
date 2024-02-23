@@ -1,13 +1,18 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {Camera, CameraResultType, CameraSource, Photo,} from '@capacitor/camera';
-import {Directory, Filesystem} from '@capacitor/filesystem';
-import {LoadingController, Platform, ToastController} from '@ionic/angular';
-import {FileOpener} from '@awesome-cordova-plugins/file-opener/ngx';
-import {HttpClient, HttpEventType} from '@angular/common/http';
-import {GlobalService} from "@src/app/services/utils/global.service";
-import {Banner} from "@src/app/interfaces/global/banner";
-import {MediaPartner} from "@src/app/interfaces/global/media-partner";
-import {Articles} from "@src/app/interfaces/global/articles";
+import { Component, ElementRef, ViewChild } from '@angular/core';
+import {
+  Camera,
+  CameraResultType,
+  CameraSource,
+  Photo,
+} from '@capacitor/camera';
+import { Directory, Filesystem } from '@capacitor/filesystem';
+import { LoadingController, Platform, ToastController } from '@ionic/angular';
+import { FileOpener } from '@awesome-cordova-plugins/file-opener/ngx';
+import { HttpClient, HttpEventType } from '@angular/common/http';
+import { GlobalService } from '@src/app/services/utils/global.service';
+import { Banner } from '@src/app/interfaces/global/banner';
+import { MediaPartner } from '@src/app/interfaces/global/media-partner';
+import { Articles } from '@src/app/interfaces/global/articles';
 
 const IMAGE_DIR = 'stored-images';
 const PDF_DIR = 'stored-pdf';
@@ -313,19 +318,44 @@ export class HomePage {
   }
 
   menuList = [
-    {id:1, icon:'car_icon', name:'Kendaraan', route:'/kendaraan'},
-    {id:2, icon:'home_icon', name:'Properti',route:'/properti'},
-    {id:3, icon:'health_icon', name:'Kesehatan',route:'/kesehatan'},
-    {id:4, icon:'hearth_icon', name:'Jiwa',route:'/jiwa'},
-    {id:5, icon:'medical_icon', name:'Penyakit Kritis',route:'/penyakit-kritis'},
-    {id:6, icon:'virus_icon', name:'Penyakit Tropis',route:'/penyakit-tropis'},
-    {id:7, icon:'travel_icon', name:'Perjalanan',route:'/perjalanan'},
-    {id:8, icon:'santunan_icon', name:'Santunan',route:'/santunan'},
-    {id:9, icon:'pet_icon', name:'Hewan Peliharaan',route:'/hewan-peliharaan'},
-    {id:10, icon:'company_icon', name:'Produk Perusahaan',route:'/produk-perusahaan'},
-    {id:11, icon:'micro_icon', name:'Asuransi Mikro',route:'/asuransi-mikro'},
-    {id:12, icon:'more', name:'Lainya',route:'/lainnya'}
-  ]
+    { id: 1, icon: 'car_icon', name: 'Kendaraan', route: '/kendaraan' },
+    { id: 2, icon: 'home_icon', name: 'Properti', route: '/properti' },
+    { id: 3, icon: 'health_icon', name: 'Kesehatan', route: '/kesehatan' },
+    { id: 4, icon: 'hearth_icon', name: 'Jiwa', route: '/jiwa' },
+    {
+      id: 5,
+      icon: 'medical_icon',
+      name: 'Penyakit Kritis',
+      route: '/penyakit-kritis',
+    },
+    {
+      id: 6,
+      icon: 'virus_icon',
+      name: 'Penyakit Tropis',
+      route: '/penyakit-tropis',
+    },
+    { id: 7, icon: 'travel_icon', name: 'Perjalanan', route: '/perjalanan' },
+    { id: 8, icon: 'santunan_icon', name: 'Santunan', route: '/santunan' },
+    {
+      id: 9,
+      icon: 'pet_icon',
+      name: 'Hewan Peliharaan',
+      route: '/hewan-peliharaan',
+    },
+    {
+      id: 10,
+      icon: 'company_icon',
+      name: 'Produk Perusahaan',
+      route: '/produk-perusahaan',
+    },
+    {
+      id: 11,
+      icon: 'micro_icon',
+      name: 'Asuransi Mikro',
+      route: '/asuransi-mikro',
+    },
+    { id: 12, icon: 'more', name: 'Lainya', route: '/lainnya' },
+  ];
 
   constructor(
     private platform: Platform,
@@ -333,7 +363,7 @@ export class HomePage {
     private toastCtrl: ToastController,
     private http: HttpClient,
     private fileOpener: FileOpener,
-    private globalService: GlobalService,
+    private globalService: GlobalService
   ) {}
 
   ngAfterViewInit(): void {
@@ -375,6 +405,5 @@ export class HomePage {
       .subscribe((data: Articles) => {
         this.articlesNewArray = data.r_data;
       });
-
   }
 }

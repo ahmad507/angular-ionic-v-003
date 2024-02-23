@@ -10,6 +10,7 @@ import { LoadingController, ModalController } from '@ionic/angular';
 import { MvModalComponent } from '@src/app/components/core/mv/mv-modal/mv-modal.component';
 import { MvRisk } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.state';
 import { MvRiskComponent } from '@src/app/components/core/mv/mv-risk/mv-risk.component';
+import { MvDataService } from '../store-kendaraan/mv.data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,7 @@ export class MvRepository {
   constructor(
     private store: Store,
     private modalController: ModalController,
+    private mvDataService: MvDataService,
     private loadingController: LoadingController
   ) {}
 

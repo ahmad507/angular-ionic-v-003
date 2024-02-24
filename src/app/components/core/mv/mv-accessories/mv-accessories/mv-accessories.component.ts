@@ -1,19 +1,23 @@
 import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
-import { AccItems } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
-import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
-import { Store } from '@ngrx/store';
-import { selectAllAccessories } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector';
-import { MvAccessoriesInputComponent } from '@src/app/components/core/mv/mv-accessories-input/mv-accessories-input.component';
+import {IonicModule, ModalController} from '@ionic/angular';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {ButtonComponent} from '@src/app/components/core/buttons/button/button.component';
+import {AccItems} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
+import {AccessoryService} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
+import {Store} from '@ngrx/store';
+import {
+  selectAllAccessories
+} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector';
+import {
+  MvAccessoriesInputComponent
+} from '@src/app/components/core/mv/mv-accessories/mv-accessories-input/mv-accessories-input.component';
 import {updateAccesoriesSi, updateKendaraanData} from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
-import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
-import { take } from 'rxjs';
-import { HomePageModule } from '@src/app/pages/home/home.module';
-import { SharedDirectivesModule } from '@src/app/directives/shared-directives.module';
-import { MvModalComponent } from '@src/app/components/core/mv/mv-modal/mv-modal.component';
+import {MvDataService} from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
+import {take} from 'rxjs';
+import {HomePageModule} from '@src/app/pages/home/home.module';
+import {SharedDirectivesModule} from '@src/app/directives/shared-directives.module';
+import {MvModalComponent} from '@src/app/components/core/mv/mv-modal/mv-modal.component';
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 
 @Component({

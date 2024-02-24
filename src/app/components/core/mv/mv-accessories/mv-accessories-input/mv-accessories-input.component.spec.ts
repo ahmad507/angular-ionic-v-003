@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { MvAccessoriesInputComponent } from './mv-accessories-input.component';
+import {MvAccessoriesInputComponent} from './mv-accessories-input.component';
 
 describe('MvAccessoriesInputComponent', () => {
   let component: MvAccessoriesInputComponent;
@@ -9,7 +9,7 @@ describe('MvAccessoriesInputComponent', () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MvAccessoriesInputComponent ],
+      declarations: [MvAccessoriesInputComponent],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 

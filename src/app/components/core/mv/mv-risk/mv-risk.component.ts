@@ -86,16 +86,17 @@ export class MvRiskComponent implements OnInit {
     private mvDataService: MvDataService,
     private cdRef: ChangeDetectorRef,
     private store: Store
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.initializeRisk();
   }
 
-  private initializeRisk() {
-    this.mainRisk = '1';
+  getAdditionalRisk(risk_number: any) {
+    this.addedRiskIndexes = [];
     const dataObject = {
-      maincover: this.mainRisk,
+      maincover: risk_number,
       vehicletype: this.mvType,
     };
     this.mvDataService
@@ -105,12 +106,14 @@ export class MvRiskComponent implements OnInit {
         map((response: ResponseAdditionalRisk) => response.r_data)
       )
       .subscribe((r_data: AdditionalRisk[]) => {
+        this.DEFAULT_ADD_SI_ALL = this.mainRisk === '1' ? [...this.CO_ADD_SI_ALL] : [...this.TLO_ADD_SI_ALL];
         this.ADDITIONAL_RISK = r_data;
-        console.log(this.ADDITIONAL_RISK);
-        this.addedRiskIndexes = [];
+        this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
         const newData: Partial<CarInsuranceState> = {
+          mainrisk: risk_number,
           addrisk_all: r_data.map((item) => item.risk_number),
-          addrisk: []
+          addrisk: [],
+          addsi: [],
         };
         this.store.dispatch(updateKendaraanData({newData}));
         this.cdRef.markForCheck();
@@ -140,32 +143,6 @@ export class MvRiskComponent implements OnInit {
     } else {
       return 'assets/tlo.jpg';
     }
-  }
-
-  getAdditionalRisk(risk_number: any) {
-    this.addedRiskIndexes = [];
-    const dataObject = {
-      maincover: risk_number,
-      vehicletype: this.mvType,
-    };
-    this.mvDataService
-      .mvAdditionalRisk(dataObject)
-      .pipe(
-        take<any>(1),
-        map((response: ResponseAdditionalRisk) => response.r_data)
-      )
-      .subscribe((r_data: AdditionalRisk[]) => {
-        this.ADDITIONAL_RISK = r_data;
-        const newData: Partial<CarInsuranceState> = {
-          mainrisk: risk_number,
-          addrisk_all: r_data.map((item) => item.risk_number),
-          addrisk: [],
-          addsi: [],
-          addsi_all: risk_number === '1' ? [...this.CO_ADD_SI_ALL] : [...this.TLO_ADD_SI_ALL],
-        };
-        this.store.dispatch(updateKendaraanData({ newData }));
-        this.cdRef.markForCheck();
-      });
   }
 
   async toggleItem(item: any) {
@@ -198,11 +175,26 @@ export class MvRiskComponent implements OnInit {
           backdropDismiss: false,
           cssClass: 'custom-modal-class',
         });
-        return await modal.present();
+        await modal.present();
+        await modal.onDidDismiss().then((res) => {
+          this.DEFAULT_ADD_SI_ALL = [...res.data];
+          this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
+          this.cdRef.markForCheck();
+        })
       }
       this.cdRef.markForCheck();
     }
 
+  }
+
+  getNominalAdditional(ADDITIONAL_RISK: any, DEFAULT_ADD_SI_ALL: any) {
+    for (let i = 0; i < ADDITIONAL_RISK.length; i++) {
+      const riskNumber = ADDITIONAL_RISK[i].risk_number;
+      const defaultAddSI = DEFAULT_ADD_SI_ALL.find((obj: any) => obj.hasOwnProperty(riskNumber));
+      if (defaultAddSI) {
+        ADDITIONAL_RISK[i].nominal = defaultAddSI[riskNumber];
+      }
+    }
   }
 
 
@@ -211,7 +203,7 @@ export class MvRiskComponent implements OnInit {
   }
 
   sortArrayByValue(arr: any[]): any[] {
-    if (arr.length > 0){
+    if (arr.length > 0) {
       return arr.sort((a, b) => a - b);
     } else {
       return arr;
@@ -219,8 +211,33 @@ export class MvRiskComponent implements OnInit {
   }
 
   searchInsurance() {
-    const data = this.sortArrayByValue(this.addedRiskIndexes);
-    console.log(data);
+    // const data = this.sortArrayByValue(this.addedRiskIndexes);
     this.cdRef.markForCheck();
+  }
+
+  private initializeRisk() {
+    this.mainRisk = '1';
+    const dataObject = {
+      maincover: this.mainRisk,
+      vehicletype: this.mvType,
+    };
+    this.mvDataService
+      .mvAdditionalRisk(dataObject)
+      .pipe(
+        take<any>(1),
+        map((response: ResponseAdditionalRisk) => response.r_data)
+      )
+      .subscribe((r_data: AdditionalRisk[]) => {
+        this.DEFAULT_ADD_SI_ALL = this.mainRisk === '1' ? [...this.CO_ADD_SI_ALL] : [...this.TLO_ADD_SI_ALL];
+        this.ADDITIONAL_RISK = r_data;
+        this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
+        this.addedRiskIndexes = [];
+        const newData: Partial<CarInsuranceState> = {
+          addrisk_all: r_data.map((item) => item.risk_number),
+          addrisk: []
+        };
+        this.store.dispatch(updateKendaraanData({newData}));
+        this.cdRef.markForCheck();
+      });
   }
 }

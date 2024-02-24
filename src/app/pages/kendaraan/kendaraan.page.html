@@ -77,7 +77,6 @@
             [(ngModel)]="mv_price" />
         </div>
       </div>
-
       <div *ngIf="isCar === true then this.showAccInput"></div>
       <ng-template #showAccInput>
         <div id="accessories_detail">
@@ -98,13 +97,7 @@
           </div>
         </div>
       </ng-template>
-
       <app-spacer SECTION_NAME="Temukan asuransi terbaik pilihanmu"></app-spacer>
-      <!-- <div class="mx-[16px] flex flex-row justify-between items-center">
-        <div class="footer-name">Pilihan Jaminan</div>
-        <button (click)="getDataMainRisk()" id="search_button"
-          class="my-4 inline bg-blue-600 p-2 w-[50%] h-[46px] rounded-[8px] shadow-lg button-text">Selanjutnya</button>
-      </div> -->
     </div>
   </div>
 </ion-content>

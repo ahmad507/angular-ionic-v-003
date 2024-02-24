@@ -1,19 +1,19 @@
 import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
+  EventEmitter,
   Input,
   OnInit,
-  Output,
-  EventEmitter,
-  ChangeDetectionStrategy,
-  ChangeDetectorRef
+  Output
 } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { InputComponent } from '@src/app/components/core/input/input/input.component';
-import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
-import { from, map } from 'rxjs';
+import {IonicModule, ModalController} from '@ionic/angular';
+import {AccessoryService} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {InputComponent} from '@src/app/components/core/input/input/input.component';
+import {ButtonComponent} from '@src/app/components/core/buttons/button/button.component';
+import {from, map} from 'rxjs';
 
 @Component({
   selector: 'app-mv-accessories-input',

@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {IonicModule, ModalController} from "@ionic/angular";
 import {CommonModule} from "@angular/common";
 import {FormsModule} from "@angular/forms";
@@ -19,13 +19,19 @@ import {ButtonComponent} from "@src/app/components/core/buttons/button/button.co
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MvRiskInputComponent  implements OnInit {
+export class MvRiskInputComponent implements OnInit {
+  @Input() dataItem: any = [];
+  @Input() DEFAULT_ADD_SI_ALL: any = [];
 
   constructor(
     private modalController: ModalController,
-  ) { }
+  ) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('ITEM', this.dataItem);
+    console.log('OTHERS', this.DEFAULT_ADD_SI_ALL);
+  }
 
   async dismissModal() {
     await this.modalController.dismiss();

@@ -43,6 +43,38 @@ export class MvRiskComponent implements OnInit {
   @Input() mvType: string = '';
   @Input() mainRisk: string = '';
 
+  DEFAULT_ADD_SI_ALL: any = [];
+
+  CO_ADD_SI_ALL = [
+    {
+      "7": "10,000,000"
+    },
+    {
+      "8": "10,000,000"
+    },
+    {
+      "9": "10,000,000"
+    },
+    {
+      "10": "10,000,000"
+    }
+  ];
+
+  TLO_ADD_SI_ALL = [
+    {
+      "18": "10,000,000"
+    },
+    {
+      "19": "10,000,000"
+    },
+    {
+      "20": "10,000,000"
+    },
+    {
+      "21": "10,000,000"
+    }
+  ]
+
   showFullText = false;
   ADDITIONAL_RISK: any = [];
   ADDITIONAL_RISK_ALL: any = [];
@@ -126,8 +158,10 @@ export class MvRiskComponent implements OnInit {
         this.ADDITIONAL_RISK = r_data;
         const newData: Partial<CarInsuranceState> = {
           mainrisk: risk_number,
-          addrisk_all: r_data.map((item)=> item.risk_number),
-          addrisk: []
+          addrisk_all: r_data.map((item) => item.risk_number),
+          addrisk: [],
+          addsi: [],
+          addsi_all: risk_number === '1' ? [...this.CO_ADD_SI_ALL] : [...this.TLO_ADD_SI_ALL],
         };
         this.store.dispatch(updateKendaraanData({ newData }));
         this.cdRef.markForCheck();
@@ -152,10 +186,13 @@ export class MvRiskComponent implements OnInit {
         addrisk: [...data],
       };
       this.store.dispatch(updateKendaraanData({newData}));
-      this.cdRef.markForCheck();
       if (parseInt(item.private_si_flags) > 0) {
         const modal = await this.modalController.create({
           component: MvRiskInputComponent,
+          componentProps: {
+            dataItem: item,
+            DEFAULT_ADD_SI_ALL: parseInt(item.main_risk_number) === 1 ? this.CO_ADD_SI_ALL : this.TLO_ADD_SI_ALL
+          },
           initialBreakpoint: 0.75,
           breakpoints: [0, 0.55, 0.5, 0.75],
           backdropDismiss: false,
@@ -163,6 +200,7 @@ export class MvRiskComponent implements OnInit {
         });
         return await modal.present();
       }
+      this.cdRef.markForCheck();
     }
 
   }

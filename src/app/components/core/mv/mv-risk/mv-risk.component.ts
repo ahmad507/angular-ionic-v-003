@@ -5,12 +5,10 @@ import {IonicModule, ModalController} from '@ionic/angular';
 import {ButtonComponent} from '@src/app/components/core/buttons/button/button.component';
 import {MvDataService} from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
 import {map, take} from 'rxjs';
-import {
-  selectAllAccessories
-} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector";
 import {Store} from "@ngrx/store";
 import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
+import {MvRiskInputComponent} from "@src/app/components/core/mv/mv-risk/mv-risk-input/mv-risk-input.component";
 
 export interface AdditionalRisk {
   risk_number: string;
@@ -59,6 +57,10 @@ export class MvRiskComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.initializeRisk();
+  }
+
+  private initializeRisk() {
     this.mainRisk = '1';
     const dataObject = {
       maincover: this.mainRisk,
@@ -72,17 +74,23 @@ export class MvRiskComponent implements OnInit {
       )
       .subscribe((r_data: AdditionalRisk[]) => {
         this.ADDITIONAL_RISK = r_data;
+        console.log(this.ADDITIONAL_RISK);
         this.addedRiskIndexes = [];
         const newData: Partial<CarInsuranceState> = {
-          addrisk_all: r_data.map((item)=> item.risk_number),
+          addrisk_all: r_data.map((item) => item.risk_number),
           addrisk: []
         };
-        this.store.dispatch(updateKendaraanData({ newData }));
+        this.store.dispatch(updateKendaraanData({newData}));
         this.cdRef.markForCheck();
       });
   }
 
   async dismissModal() {
+    const newData: Partial<CarInsuranceState> = {
+      addrisk_all: [],
+      addrisk: []
+    };
+    this.store.dispatch(updateKendaraanData({ newData }));
     await this.modalController.dismiss();
   }
 
@@ -126,24 +134,35 @@ export class MvRiskComponent implements OnInit {
       });
   }
 
-  toggleItem(riskNumber: string): void {
-    const index = this.addedRiskIndexes.indexOf(riskNumber);
+  async toggleItem(item: any) {
+    const index = this.addedRiskIndexes.indexOf(item.risk_number);
+
     if (index !== -1) {
       this.addedRiskIndexes.splice(index, 1); // Hapus nomor risiko dari array jika sudah ada
       const data = this.sortArrayByValue(this.addedRiskIndexes);
       const newData: Partial<CarInsuranceState> = {
         addrisk: [...data],
       };
-      this.store.dispatch(updateKendaraanData({ newData }));
+      this.store.dispatch(updateKendaraanData({newData}));
       this.cdRef.markForCheck();
     } else {
-      this.addedRiskIndexes.push(riskNumber); // Tambahkan nomor risiko ke dalam array jika belum ada
+      this.addedRiskIndexes.push(item.risk_number); // Tambahkan nomor risiko ke dalam array jika belum ada
       const data = this.sortArrayByValue(this.addedRiskIndexes);
       const newData: Partial<CarInsuranceState> = {
         addrisk: [...data],
       };
-      this.store.dispatch(updateKendaraanData({ newData }));
+      this.store.dispatch(updateKendaraanData({newData}));
       this.cdRef.markForCheck();
+      if (parseInt(item.private_si_flags) > 0) {
+        const modal = await this.modalController.create({
+          component: MvRiskInputComponent,
+          initialBreakpoint: 0.75,
+          breakpoints: [0, 0.55, 0.5, 0.75],
+          backdropDismiss: false,
+          cssClass: 'custom-modal-class',
+        });
+        return await modal.present();
+      }
     }
 
   }

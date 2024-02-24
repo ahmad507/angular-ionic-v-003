@@ -12,7 +12,7 @@
   <div class="mx-[8px] p-1">
     <ion-segment mode="ios" value="1" [(ngModel)]="mainRisk">
       <ion-segment-button *ngFor="let item of dataRisk" [value]="item.risk_number"
-        (click)="getAdditionalRisk(mainRisk)">
+                          (click)="getAdditionalRisk(mainRisk)">
         <div class="m-2 p-2">{{getRiskName(item.risk_number)}}</div>
       </ion-segment-button>
     </ion-segment>
@@ -27,11 +27,11 @@
             <img [src]="getImgSrc(item.risk_number)" alt="asuransiku.id">
           </div>
           <div class="text-justify text-custom tracking-tight mb-[16px] p-2"
-            [innerHTML]="showFullText ? item.risk_long_desc : (item.risk_long_desc | slice:0:95) + '...' "></div>
+               [innerHTML]="showFullText ? item.risk_long_desc : (item.risk_long_desc | slice:0:95) + '...' "></div>
           <div class="-mt-[32px] p-2 text-custom flex justify-end text-blue-500" *ngIf="!showFullText"
-            (click)="showFullText = true">Selengkapnya</div>
+               (click)="showFullText = true">Selengkapnya</div>
           <div class="-mt-[32px] p-2 text-custom flex justify-end text-blue-500" *ngIf="showFullText"
-            (click)="showFullText = false">Sembunyikan</div>
+               (click)="showFullText = false">Sembunyikan</div>
         </div>
       </div>
     </section>
@@ -43,15 +43,52 @@
         <ion-icon name="shield-checkmark-outline"></ion-icon>
         <ion-label>
           <div class="text-sm font-bold">Jaminan Perluasan</div>
+          <div class="text-xs text-blue-500">TJH : Tanggung Jawab Hukum</div>
         </ion-label>
       </ion-chip>
     </div>
-    <ion-item *ngFor="let item of ADDITIONAL_RISK; let i = index" (click)="toggleItem(item.risk_number)"
-      [ngClass]="{ 'green-background': addedRiskIndexes.includes(item.risk_number), '': !addedRiskIndexes.includes(item.risk_number) }">
-      <div>{{i+1}} . {{item.risk_description_id}}</div>
-    </ion-item>
+
+    <div *ngFor="let item of ADDITIONAL_RISK; let i = index">
+      <ion-item (click)="toggleItem(item)" [ngClass]="{ 'green-background': addedRiskIndexes.includes(item.risk_number), '': !addedRiskIndexes.includes(item.risk_number) }">
+        <div class="text-xs">{{i+1}} . {{item.risk_description_id}}</div>
+      </ion-item>
+      <!--      <div *ngIf="item.private_si_flags === '1' then this.showTjh else this.noTjh "></div>-->
+      <!--      <div *ngIf="item.risk_code === 'PAP01' then this.showSelectPassengers else this.noSelectPassengers "></div>-->
+    </div>
   </section>
 </ion-content>
+
+<ng-template #showTjh>
+  <div class="my-[8px] border border-red-300 rounded-[8px]">
+    <div class="mx-[16px]">
+      <div class="text-xs text-blue-500">Nilai Pertanggungan</div>
+      <ion-item class="-mt-[4px] mb-[8px]">
+        <div> SHOW TJH</div>
+      </ion-item>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #showSelectPassengers>
+  <div class="my-[8px] border border-red-300 rounded-[8px]">
+    <div class="mx-[16px]">
+      <div class="text-xs text-blue-500">Jumlah Penumpang</div>
+      <ion-item class="-mt-[4px] mb-[8px]">
+        <div> SHOW SELECT PASSENGER</div>
+      </ion-item>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #noTjh>
+  <div></div>
+</ng-template>
+
+<ng-template #noSelectPassengers>
+  <div></div>
+</ng-template>
+
+
 
 <div *ngFor="let item of dataRisk" [ngSwitch]="mainRisk">
   <section *ngSwitchCase="item.risk_number">

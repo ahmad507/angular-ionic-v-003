@@ -11,6 +11,7 @@ import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kend
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {MvRiskInputComponent} from "@src/app/components/core/mv/mv-risk/mv-risk-input/mv-risk-input.component";
 
+
 export interface AdditionalRisk {
   risk_number: string;
   risk_code: string;

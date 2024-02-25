@@ -1,19 +1,24 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { IonicModule, ModalController } from '@ionic/angular';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { ButtonComponent } from '@src/app/components/core/buttons/button/button.component';
-import { AccItems } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
-import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
-import { Store } from '@ngrx/store';
-import { selectAllAccessories } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector';
-import { MvAccessoriesInputComponent } from '@src/app/components/core/mv/mv-accessories-input/mv-accessories-input.component';
-import { updateAccesoriesSi } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
-import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
-import { take } from 'rxjs';
-import { HomePageModule } from '@src/app/pages/home/home.module';
-import { SharedDirectivesModule } from '@src/app/directives/shared-directives.module';
-import { MvModalComponent } from '@src/app/components/core/mv/mv-modal/mv-modal.component';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {IonicModule, ModalController} from '@ionic/angular';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {ButtonComponent} from '@src/app/components/core/buttons/button/button.component';
+import {AccItems} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
+import {AccessoryService} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
+import {Store} from '@ngrx/store';
+import {
+  selectAllAccessories
+} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector';
+import {
+  MvAccessoriesInputComponent
+} from '@src/app/components/core/mv/mv-accessories/mv-accessories-input/mv-accessories-input.component';
+import {updateAccesoriesSi, updateKendaraanData} from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
+import {MvDataService} from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
+import {take} from 'rxjs';
+import {HomePageModule} from '@src/app/pages/home/home.module';
+import {SharedDirectivesModule} from '@src/app/directives/shared-directives.module';
+import {MvModalComponent} from '@src/app/components/core/mv/mv-modal/mv-modal.component';
+import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 
 @Component({
   standalone: true,
@@ -28,13 +33,13 @@ import { MvModalComponent } from '@src/app/components/core/mv/mv-modal/mv-modal.
   selector: 'app-mv-accessories',
   templateUrl: './mv-accessories.component.html',
   styleUrls: ['./mv-accessories.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MvAccessoriesComponent implements OnInit {
   @Input() mv_price: any = '';
   focused = false;
   searchParam = '';
   kacaFilm = false;
-  soundSystem = false;
   isMerekFocused = false;
   isHargaFocused = false;
   inputMerekAcc = '';
@@ -42,13 +47,13 @@ export class MvAccessoriesComponent implements OnInit {
   accessories: AccItems[] = [];
   sum_acc_price: any;
   limit_acc: number = 0;
-  over_limit_acc_price: boolean = false;
 
   constructor(
     private modalController: ModalController,
     private mvDataService: MvDataService, // Inject service
     private accessoryService: AccessoryService,
-    private store: Store
+    private store: Store,
+    private cdRef: ChangeDetectorRef,
   ) {}
 
   ngOnInit() {
@@ -56,6 +61,7 @@ export class MvAccessoriesComponent implements OnInit {
     this.store.select(selectAllAccessories).subscribe((accessories) => {
       this.accessories = accessories;
       this.sum_acc_price = this.calculateTotalPrice(accessories);
+      this.cdRef.markForCheck();
     });
   }
 
@@ -88,6 +94,7 @@ export class MvAccessoriesComponent implements OnInit {
       cssClass: 'custom-modal-class',
     });
     await inputAccModal.present();
+
   }
 
   openInputKacaFilm() {
@@ -121,12 +128,13 @@ export class MvAccessoriesComponent implements OnInit {
         this.sum_acc_price = this.calculateTotalPrice(accessories);
         this.accessoryService.updateAllAccessory(this.accessories);
         if (this.sum_acc_price > this.limit_acc) {
-          // this.over_limit_acc_price = true;
           await this.showOverLimitWarning();
         } else {
-          // this.over_limit_acc_price = false;
-          this.updateKendaraanPayload('accesories_si', this.sum_acc_price);
-          this.updateKendaraanPayload('accesories_detail', accessories);
+          const newData: Partial<CarInsuranceState> = {
+            accesories_si: this.sum_acc_price,
+            accesories_detail: [...accessories]
+          };
+          this.store.dispatch(updateKendaraanData({ newData }));
           await this.modalController.dismiss(this.accessories, 'confirm');
         }
       });

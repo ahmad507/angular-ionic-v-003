@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { MvAccessoriesInputComponent } from './mv-accessories-input.component';
+import { MvRiskInputComponent } from './mv-risk-input.component';
 
-describe('MvAccessoriesInputComponent', () => {
-  let component: MvAccessoriesInputComponent;
-  let fixture: ComponentFixture<MvAccessoriesInputComponent>;
+describe('MvRiskInputComponent', () => {
+  let component: MvRiskInputComponent;
+  let fixture: ComponentFixture<MvRiskInputComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ MvAccessoriesInputComponent ],
+      declarations: [ MvRiskInputComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MvAccessoriesInputComponent);
+    fixture = TestBed.createComponent(MvRiskInputComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

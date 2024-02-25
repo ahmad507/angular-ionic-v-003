@@ -1,0 +1,63 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="end">
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div>Nominal: {{nominal_tjh}}</div>
+  <div
+    *ngIf="RISK_CODE === 'PAP01' || RISK_CODE === 'PAP02' then this.SHOW_NOMINAL_KDP else this.SHOW_NOMINAL_TJH"></div>
+  <div class="p-3">
+    <app-button (click)="dismissModal()" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
+  </div>
+</ion-content>
+
+<ng-template #SHOW_NOMINAL_KDP>
+
+  <div class="custom-container mx-[16px] my-[16px] flex flex-col flex-wrap">
+    <div
+      class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
+      <app-spacer SECTION_NAME="Nominal Pertanggungan"></app-spacer>
+    </div>
+
+    <div class="mx-[12px] mb-[16px] flex flex-row flex-wrap gap-[8px] justify-evenly items-center">
+      <div (click)="toggleSelectionKdp(i)" *ngFor="let item of KDP_NOMINAL; let i = index"
+           [ngClass]="{'text-blue-600': item.selected, 'bg-blue-200': item.selected}"
+           class="p-[8px] w-[90px] h-[42px] border border-blue-600 rounded-[8px] flex flex-row justify-center items-center font-bold  text-sm text-blue-600">
+        <div>Rp {{item.text}} Jt</div>
+      </div>
+    </div>
+
+    <div
+      class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
+      <app-spacer SECTION_NAME="Jumlah Penumpang"></app-spacer>
+    </div>
+    <div class="mx-[12px] mb-[16px] flex flex-row flex-wrap gap-[8px] justify-evenly items-center">
+      <div (click)="toggleSelectionPassenger(i)" *ngFor="let item of PASSENGERS; let i = index"
+           [ngClass]="{'text-blue-600': item.selected, 'bg-blue-200': item.selected}"
+           class="p-[8px] w-[42px] h-[42px] border border-blue-600 rounded-[8px] flex flex-row justify-center items-center font-bold text-blue-600">
+        <div class="text-center">{{item.passenger}}</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #SHOW_NOMINAL_TJH>
+  <div class="custom-container mx-[16px] my-[16px] flex flex-col flex-wrap">
+    <div
+      class="content-center flex flex-row flex-1 gap-2 items-center justify-space-between p-2 mb-2 bg-blue-100 border-l-[3px] h-[36px] border-l-blue-500 font-lato font-bold header-name text-right rounded">
+      <app-spacer SECTION_NAME="Nominal Pertanggungan"></app-spacer>
+    </div>
+
+    <div class="mx-[12px] mb-[16px] flex flex-row flex-wrap gap-[4px] justify-self-start items-center">
+      <div (click)="toggleSelectionTjh(i)" *ngFor="let item of THJ_NOMINAL; let i = index"
+           [ngClass]="{'text-blue-600': item.selected, 'bg-blue-200': item.selected}"
+           class="p-[8px] w-[90px] h-[42px] border border-blue-600 rounded-[8px] flex flex-row justify-center items-center font-bold  text-sm text-blue-600">
+        <div>Rp {{item.text}} Jt</div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+

@@ -8,6 +8,7 @@ import {
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
+  CarInsuranceState,
   MvInfo,
   MvInfoDetail,
   MvRisk,
@@ -16,7 +17,7 @@ import {
 } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.state';
 import {
   resetCarInsuranceData,
-  resetMvInfoDetailData,
+  resetMvInfoDetailData, updateKendaraanData,
 } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
 import { selectKendaraanData } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector';
 import {
@@ -33,6 +34,9 @@ import { MvRepository } from '@src/app/pages/kendaraan/class/mvRepository';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { MvAccessoriesComponent } from '@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component';
 import { AccItems } from './store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
+import {
+  selectAllAccessories
+} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector";
 @Component({
   selector: 'app-kendaraan',
   templateUrl: './kendaraan.page.html',
@@ -65,20 +69,12 @@ export class KendaraanPage implements OnInit {
   ) {
     this.checkPriceInput();
   }
-  private checkPriceInput() {
-    this.inputSubject.pipe(debounceTime(750)).subscribe(async (value) => {
-      await this.checkLimitMvPrice(value);
-    });
-  }
+
   async ngOnInit() {
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
     this.mvRepository.getStoreMvData().subscribe((res) => {
-      if (res.vtype === 'A') {
-        this.isCar = true;
-      } else {
-        this.isCar = false;
-      }
+      this.isCar = res.vtype === 'A';
     });
     this.mvRepository.getStoreMvData().subscribe((data) => {
       this.dataTempMvType = data.vtype;
@@ -93,35 +89,28 @@ export class KendaraanPage implements OnInit {
     this.store.dispatch(resetMvInfoDetailData());
     await this.router.navigate(['/main/home']);
   }
-  updateMvInfoDetail(property: string, value: any) {
-    this.mvDataService.updateMvInfoDetail(property, value);
-    this.accInputService.deleteAccessory();
-  }
-  updateKendaraanPayload(property: string, value: any) {
-    this.mvDataService.updateKendaraanPayload(property, value);
-    this.accInputService.deleteAccessory();
-  }
+
   async getDataNasabah($event: string) {
     this.updateKendaraanPayload('ctype', $event);
   }
+
   async getDataMvFunction($event: string) {
     this.updateKendaraanPayload('vfunction', $event);
   }
+
   async getDataMvType($event: string) {
     this.updateKendaraanPayload('vtype', $event);
     this.dataTempMvType = $event;
     this.mvRepository.getStoreMvData().subscribe((res) => {
-      if (res.vtype === 'A') {
-        this.isCar = true;
-      } else {
-        this.isCar = false;
-      }
+      this.isCar = res.vtype === 'A';
     });
   }
+
   async getDataMvYear($event: number) {
     this.dataTempMvYear = $event;
     this.updateKendaraanPayload('vyear', $event);
   }
+
   async getDataMvLicense($event: any) {
     const dataLicense = [];
     dataLicense.push($event);
@@ -130,6 +119,7 @@ export class KendaraanPage implements OnInit {
       this.updateKendaraanPayload('license_region', res.text);
     });
   }
+
   async getDataMvMerekModel($event: any) {
     this.extractDataMv($event);
     const mvInfo = [];
@@ -140,34 +130,39 @@ export class KendaraanPage implements OnInit {
       this.updateKendaraanPayload('vbrand', res.merek);
     });
   }
-  CheckParamMV() {
-    return this.checkMvParamRangePrice();
-  }
 
-  private checkMvParamRangePrice() {
-    this.mvRepository.getStoreMvDetailData().subscribe((data) => {
-      let temp: any[] = [];
-      temp.push({ ...data });
-      this.MV_INFO_DATA = temp;
+  async openAccModal() {
+    const modalAccMv = await this.modalController.create({
+      component: MvAccessoriesComponent,
+      componentProps: {
+        mv_price: this.mv_price,
+      },
     });
-
-    this.mvRepository.getStoreMvData().subscribe((data) => {
-      this.mv_price = data.mainsi.toString();
-      this.mv_price_acc = data.accesories_si.toLocaleString();
+    await modalAccMv.present();
+    await modalAccMv.onDidDismiss().then((res) => {
+      const totalHarga = res.data.reduce((total: any, res: AccItems) => total + res.harga, 0);
+      this.mv_price_acc = totalHarga.toString().toLocaleString();
+      const accItems: AccItems = res.data;
+      const newData: Partial<CarInsuranceState> = {
+        accesories_si: totalHarga,
+        accesories_detail: [accItems]
+      };
+      this.store.dispatch(updateKendaraanData({ newData }));
+      this.cdRef.markForCheck();
     });
   }
 
-  checkInput($event: any) {
-    const inputValue = $event.target.value;
-    return this.validatePrice(inputValue);
+  async goToPopOver(event: any) {
+    const popOver = await this.popOverController.create({
+      component: PopOverComponent,
+      alignment: 'end',
+      event: event,
+      cssClass: 'custom-pop-over',
+      showBackdrop: false,
+    });
+    await popOver.present();
   }
-  validatePrice(unit_price: any) {
-    this.inputSubject.next(unit_price);
-    let dataPrice = parseInt(unit_price.replace(/,/g, ''), 10);
-    this.mv_price = isNaN(dataPrice) ? unit_price : dataPrice.toLocaleString();
-    this.updateKendaraanPayload('mainsi', this.mv_price);
-    this.updateKendaraanPayload('accesories_si', this.mv_price_acc);
-  }
+
   private extractDataMv($event: MvInfo) {
     const mainsi = parseFloat($event.mainsi.replace(/,/g, ''));
     const unit_price_max = mainsi + mainsi * 0.1;
@@ -189,6 +184,7 @@ export class KendaraanPage implements OnInit {
     this.updateMvInfoDetail('unit_price', dataCarInfo.unit_price);
     this.updateMvInfoDetail('unit_price_min', dataCarInfo.unit_price_min);
   }
+
   private async checkLimitMvPrice(dataPrice: any) {
     let min_mv_price_temp: number = 0;
     let max_mv_price_temp: number = 0;
@@ -208,6 +204,7 @@ export class KendaraanPage implements OnInit {
       await this.toastWarning(message);
     }
   }
+
   private async toastWarning(message: string) {
     const toast = await this.toastController.create({
       message: message,
@@ -218,20 +215,66 @@ export class KendaraanPage implements OnInit {
     });
     await toast.present();
   }
+
+  private checkMvParamRangePrice() {
+    this.mvRepository.getStoreMvDetailData().subscribe((data) => {
+      let temp: any[] = [];
+      temp.push({ ...data });
+      this.MV_INFO_DATA = temp;
+    });
+
+    this.mvRepository.getStoreMvData().subscribe((data) => {
+      this.mv_price = data.mainsi.toString();
+      this.mv_price_acc = data.accesories_si.toLocaleString();
+    });
+  }
+
+  private checkValidationBeforeNext(validator: MvValidator): boolean {
+    for (const key in validator) {
+      if (validator.hasOwnProperty(key)) {
+        const value = validator[key as keyof MvValidator];
+        if (typeof value === 'string' && !value.trim()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  private async openModalMessage() {
+    const message = 'Silahkan untuk melengkapi data terlebih dahulu';
+    const imgSource = 'assets/danger.png';
+    const btnText = 'Close';
+    return this.mvRepository.openModalWarning(message, imgSource, btnText);
+  }
+
+  private async openModalRisk(r_data: MvRisk[]) {
+    await this.mvRepository.openModalMainRisk(r_data, this.dataTempMvType);
+  }
+
+  private checkPriceInput() {
+    this.inputSubject.pipe(debounceTime(750)).subscribe(async (value) => {
+      await this.checkLimitMvPrice(value);
+    });
+  }
+
   checkMvPrice(mv_price: string) {
     const mv_temp_price = parseInt(mv_price);
     return mv_temp_price > 0;
   }
+
   deleteAccData() {
     this.updateKendaraanPayload('accesories_si', 0);
     this.updateKendaraanPayload('accesories_detail', []);
     this.accInputService.removeAccessory([]);
   }
+
   checkAccPrice(mv_price_acc: string) {
     const mv_temp_price_acc = parseInt(mv_price_acc);
 
     return mv_temp_price_acc > 0;
   }
+
   getYearPeriode($event: any) {
     const yearPeriodSelected: string = $event.detail.value;
     this.updateKendaraanPayload('year_period', yearPeriodSelected);
@@ -268,64 +311,14 @@ export class KendaraanPage implements OnInit {
               if (res.r_data.length > 0) {
                 await loading.dismiss();
                 await this.openModalRisk(res.r_data);
+              }else {
+                await loading.dismiss();
               }
             });
         } else {
           await this.openModalMessage();
         }
       });
-  }
-
-  private checkValidationBeforeNext(validator: MvValidator): boolean {
-    for (const key in validator) {
-      if (validator.hasOwnProperty(key)) {
-        const value = validator[key as keyof MvValidator];
-        if (typeof value === 'string' && !value.trim()) {
-          return false;
-        }
-      }
-    }
-    return true;
-  }
-
-  private async openModalMessage() {
-    const message = 'Silahkan untuk melengkapi data terlebih dahulu';
-    const imgSource = 'assets/danger.png';
-    const btnText = 'Close';
-    return this.mvRepository.openModalWarning(message, imgSource, btnText);
-  }
-
-  private async openModalRisk(r_data: MvRisk[]) {
-    return this.mvRepository.openModalMainRisk(r_data, this.dataTempMvType);
-  }
-
-  async openAccModal() {
-    const modalAccMv = await this.modalController.create({
-      component: MvAccessoriesComponent,
-      componentProps: {
-        mv_price: this.mv_price,
-      },
-    });
-    await modalAccMv.present();
-    modalAccMv.onDidDismiss().then((res) => {
-      const totalHarga = res.data.reduce(
-        (total: any, res: AccItems) => total + res.harga,
-        0
-      );
-      this.mv_price_acc = totalHarga.toString().toLocaleString();
-      this.cdRef.markForCheck();
-    });
-  }
-
-  async goToPopOver(event: any) {
-    const popOver = await this.popOverController.create({
-      component: PopOverComponent,
-      alignment: 'end',
-      event: event,
-      cssClass: 'custom-pop-over',
-      showBackdrop: false,
-    });
-    await popOver.present();
   }
 
   checkYearAndType() {
@@ -342,5 +335,32 @@ export class KendaraanPage implements OnInit {
         this.dataTempMvYear = data.vyear;
       });
     return this.dataTempMvYear !== 0;
+  }
+
+  CheckParamMV() {
+    return this.checkMvParamRangePrice();
+  }
+
+  updateMvInfoDetail(property: string, value: any) {
+    this.mvDataService.updateMvInfoDetail(property, value);
+    this.accInputService.deleteAccessory();
+  }
+
+  updateKendaraanPayload(property: string, value: any) {
+    this.mvDataService.updateKendaraanPayload(property, value);
+    this.accInputService.deleteAccessory();
+  }
+
+  checkInput($event: any) {
+    const inputValue = $event.target.value;
+    return this.validatePrice(inputValue);
+  }
+
+  validatePrice(unit_price: any) {
+    this.inputSubject.next(unit_price);
+    let dataPrice = parseInt(unit_price.replace(/,/g, ''), 10);
+    this.mv_price = isNaN(dataPrice) ? unit_price : dataPrice.toLocaleString();
+    this.updateKendaraanPayload('mainsi', this.mv_price);
+    this.updateKendaraanPayload('accesories_si', this.mv_price_acc);
   }
 }

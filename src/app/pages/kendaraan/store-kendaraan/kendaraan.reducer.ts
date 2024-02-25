@@ -25,7 +25,7 @@ export const carInsuranceReducer = createReducer(
       sortby: newData.sortby || state.sortby,
       total_passenger: newData.total_passenger || state.total_passenger,
       addrisk_all: newData.addrisk_all || state.addrisk_all,
-      addsi_all: newData.addsi_all || state.addrisk_all,
+      addsi_all: newData.addsi_all || state.addsi_all,
       addsi: newData.addsi || state.addsi
     };
   }),

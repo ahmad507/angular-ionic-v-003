@@ -11,7 +11,6 @@ import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kend
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {MvRiskInputComponent} from "@src/app/components/core/mv/mv-risk/mv-risk-input/mv-risk-input.component";
 
-
 export interface AdditionalRisk {
   risk_number: string;
   risk_code: string;
@@ -24,7 +23,6 @@ export interface AdditionalRisk {
   type: string;
   private_si_flags: string;
 }
-
 
 export interface ResponseAdditionalRisk {
   r_status: boolean;
@@ -187,7 +185,6 @@ export class MvRiskComponent implements OnInit {
       }
       this.cdRef.markForCheck();
     }
-
   }
 
   getNominalAdditional(ADDITIONAL_RISK: any, DEFAULT_ADD_SI_ALL: any) {

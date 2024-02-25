@@ -25,6 +25,7 @@ export interface AdditionalRisk {
   private_si_flags: string;
 }
 
+
 export interface ResponseAdditionalRisk {
   r_status: boolean;
   r_data: AdditionalRisk[];

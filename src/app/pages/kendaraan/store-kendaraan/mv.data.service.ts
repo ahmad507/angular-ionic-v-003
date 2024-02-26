@@ -1,12 +1,8 @@
 // mv-data.service.ts
-import { Injectable } from '@angular/core';
-import { Store } from "@ngrx/store";
+import {Injectable} from '@angular/core';
+import {Store} from "@ngrx/store";
 import {CarInsuranceState, MvInfoDetail, RESPONSE_RISK} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
-import {
-  updateAccesoriesSi,
-  updateKendaraanData,
-  updateMvInfoDetail
-} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {updateKendaraanData, updateMvInfoDetail} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import apiConfig from "@src/config/apiConfig";
 
@@ -14,7 +10,7 @@ import apiConfig from "@src/config/apiConfig";
   providedIn: 'root',
 })
 export class MvDataService {
-  headers = new HttpHeaders({ 'asri-api-key': apiConfig.apiKey.asri_api_key });
+  headers = new HttpHeaders({'asri-api-key': apiConfig.apiKey.asri_api_key});
   mvRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listMainRisk';
   mvAdditionalRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listAdditionalRisk';
 
@@ -28,10 +24,6 @@ export class MvDataService {
   updateKendaraanPayload(property: string, value: any) {
     const newData = this.mvDataStore(property, value);
     this.store.dispatch(updateKendaraanData({ newData }));
-  }
-
-  updateAccesoriesSiS(newAccesoriesSi:number){
-    this.store.dispatch(updateAccesoriesSi({newAccesoriesSi}))
   }
 
   mvDataStore(property: string, value: any) {

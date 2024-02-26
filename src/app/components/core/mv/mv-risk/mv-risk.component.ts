@@ -44,6 +44,7 @@ export class MvRiskComponent implements OnInit {
   @Input() mvType: string = '';
   @Input() mainRisk: string = '';
 
+  ADD_SI: any = [];
   DEFAULT_ADD_SI_ALL: any = [];
 
   CO_ADD_SI_ALL = [
@@ -88,6 +89,7 @@ export class MvRiskComponent implements OnInit {
     private cdRef: ChangeDetectorRef,
     private store: Store
   ) {
+    this.addedRiskIndexes = [];
   }
 
   ngOnInit() {
@@ -115,6 +117,7 @@ export class MvRiskComponent implements OnInit {
           addrisk_all: r_data.map((item) => item.risk_number),
           addrisk: [],
           addsi: [],
+          addsi_all: [],
         };
         this.store.dispatch(updateKendaraanData({newData}));
         this.cdRef.markForCheck();
@@ -146,9 +149,8 @@ export class MvRiskComponent implements OnInit {
     }
   }
 
-  async toggleItem(item: any) {
+  async toggleItemV01(item: any) {
     const index = this.addedRiskIndexes.indexOf(item.risk_number);
-
     if (index !== -1) {
       this.addedRiskIndexes.splice(index, 1); // Hapus nomor risiko dari array jika sudah ada
       const data = this.sortArrayByValue(this.addedRiskIndexes);
@@ -178,7 +180,8 @@ export class MvRiskComponent implements OnInit {
         });
         await modal.present();
         await modal.onDidDismiss().then((res) => {
-          this.DEFAULT_ADD_SI_ALL = [...res.data];
+          console.log(res.data)
+          this.DEFAULT_ADD_SI_ALL = [...res.data.DEFAULT_ADD_SI_ALL];
           this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
           this.cdRef.markForCheck();
         })
@@ -186,6 +189,44 @@ export class MvRiskComponent implements OnInit {
       this.cdRef.markForCheck();
     }
   }
+
+  async toggleItem(item: any) {
+    const index = this.addedRiskIndexes.indexOf(item.risk_number);
+    if (index !== -1) {
+      this.addedRiskIndexes.splice(index, 1); // Hapus nomor risiko dari array jika sudah ada
+    } else {
+      this.addedRiskIndexes.push(item.risk_number); // Tambahkan nomor risiko ke dalam array jika belum ada
+    }
+    console.log(this.ADD_SI)
+    console.log(this.DEFAULT_ADD_SI_ALL);
+    const data = this.sortArrayByValue(this.addedRiskIndexes);
+    const newData: Partial<CarInsuranceState> = {
+      addrisk: [...data],
+    };
+    this.store.dispatch(updateKendaraanData({newData}));
+
+    if (parseInt(item.private_si_flags) > 0) {
+      const modal = await this.modalController.create({
+        component: MvRiskInputComponent,
+        componentProps: {
+          dataItem: item,
+          DEFAULT_ADD_SI_ALL: parseInt(item.main_risk_number) === 1 ? this.CO_ADD_SI_ALL : this.TLO_ADD_SI_ALL
+        },
+        initialBreakpoint: 0.75,
+        breakpoints: [0, 0.55, 0.5, 0.75],
+        backdropDismiss: false,
+        cssClass: 'custom-modal-class',
+      });
+      await modal.present();
+      const res = await modal.onDidDismiss();
+      console.log(res.data);
+      this.DEFAULT_ADD_SI_ALL = [...res.data.DEFAULT_ADD_SI_ALL];
+      this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
+    }
+
+    this.cdRef.markForCheck();
+  }
+
 
   getNominalAdditional(ADDITIONAL_RISK: any, DEFAULT_ADD_SI_ALL: any) {
     for (let i = 0; i < ADDITIONAL_RISK.length; i++) {
@@ -211,9 +252,67 @@ export class MvRiskComponent implements OnInit {
   }
 
   searchInsurance() {
-    // const data = this.sortArrayByValue(this.addedRiskIndexes);
+    const data = {
+      default_add_si: this.DEFAULT_ADD_SI_ALL,
+      add_si_selected: this.addedRiskIndexes
+    };
+    this.ADD_SI = this.getAddSi(data);
+    if (this.ADD_SI.length === 0) {
+      switch (this.mainRisk) {
+        case '1':
+          this.setAddSiDefaults([
+            {"7": "10,000,000"},
+            {"8": "10,000,000"},
+            {"9": "10,000,000"},
+            {"10": "10,000,000"}
+          ]);
+          break;
+        case '2':
+          this.setAddSiDefaults([
+            {"18": "10,000,000"},
+            {"19": "10,000,000"},
+            {"20": "10,000,000"},
+            {"21": "10,000,000"}
+          ]);
+          break;
+        default:
+          this.setAddSiDefaults([
+            {"7": "10,000,000"},
+            {"8": "10,000,000"},
+            {"9": "10,000,000"},
+            {"10": "10,000,000"}
+          ]);
+      }
+    }
+    const newData: Partial<CarInsuranceState> = {
+      addsi: [...this.ADD_SI],
+      addsi_all: [...this.DEFAULT_ADD_SI_ALL],
+    };
+    this.store.dispatch(updateKendaraanData({newData}));
+
+    console.log(this.ADD_SI);
+    console.log(this.DEFAULT_ADD_SI_ALL);
     this.cdRef.markForCheck();
   }
+
+  private setAddSiDefaults(defaults: { [key: string]: string }[]) {
+    this.DEFAULT_ADD_SI_ALL = defaults.map(obj => ({...obj}));
+    console.log(this.DEFAULT_ADD_SI_ALL);
+  }
+
+  private getAddSi(data: { add_si_selected: string[]; default_add_si: any }) {
+    const value_selected_2: { [key: string]: string }[] = [];
+    data.add_si_selected.forEach((key: string) => {
+      const obj = data.default_add_si.find((item: any) => key in item);
+      if (obj) {
+        const newObj: { [key: string]: string } = {};
+        newObj[key] = obj[key];
+        value_selected_2.push(newObj);
+      }
+    });
+    return value_selected_2;
+  }
+
 
   private initializeRisk() {
     this.mainRisk = '1';
@@ -234,10 +333,13 @@ export class MvRiskComponent implements OnInit {
         this.addedRiskIndexes = [];
         const newData: Partial<CarInsuranceState> = {
           addrisk_all: r_data.map((item) => item.risk_number),
-          addrisk: []
+          addrisk: [],
+          addsi: [],
+          addsi_all: []
         };
         this.store.dispatch(updateKendaraanData({newData}));
         this.cdRef.markForCheck();
       });
   }
+
 }

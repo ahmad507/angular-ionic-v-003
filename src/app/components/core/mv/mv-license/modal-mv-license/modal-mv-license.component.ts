@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AlertController, IonicModule, LoadingController, ModalController} from "@ionic/angular";
 import {DataServiceKendaraan} from "@src/app/components/core/mv/data/mv.data.service";
 import {ButtonComponent} from "@src/app/components/core/buttons/button/button.component";
@@ -42,7 +42,7 @@ export class ModalMvLicenseComponent  implements OnInit {
       spinner: 'circles',
     });
     await loading.present();
-    this.dataServiceKendaraan.getListLicense().pipe().subscribe((res) => {
+    this.dataServiceKendaraan.getListLicense().subscribe((res) => {
       const responseData = res.r_data;
       let arrDataPlat: any = [];
       loading.dismiss();
@@ -55,11 +55,11 @@ export class ModalMvLicenseComponent  implements OnInit {
       });
       this.listMvLicense = arrDataPlat;
       this.filter()
-    }, async (res) => {
+    }, async () => {
       await loading.dismiss();
       const alert = await this.alertController.create({
         message: 'Mohon Maaf Terjadi Kesalahan',
-        buttons:[
+        buttons: [
           {
             text: 'Kembali',
             role: 'confirm',

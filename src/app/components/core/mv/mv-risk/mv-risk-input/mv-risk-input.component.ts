@@ -25,7 +25,9 @@ export class MvRiskInputComponent implements OnInit {
   @Input() dataItem: any = [];
   @Input() DEFAULT_ADD_SI_ALL: any = [];
   @Input() RISK_CODE: string = '';
-  @Input() nominal_tjh: any = (10000000).toLocaleString();
+  @Input() nominal_tjh_kdp: any = (2500000).toLocaleString();
+  @Input() nominal_tjh_normal: any = (10000000).toLocaleString();
+  @Input() nominal_tjh: any = ''
 
   KDP_NOMINAL: any = [
     {id: 0, nominal: 2500000, text: '2,5'},
@@ -66,13 +68,18 @@ export class MvRiskInputComponent implements OnInit {
     this.KDP_NOMINAL = this.KDP_NOMINAL.map((item: any, index: number) => ({text: item.text, selected: index === 0}));
     this.PASSENGERS = this.PASSENGERS.map((item: any, index: number) => ({
       passenger: item.passenger,
-      selected: index === 0
+      selected: index === 3
     }));
   }
 
   async dismissModal() {
-    this.setDataTjh(this.dataItem, this.DEFAULT_ADD_SI_ALL, this.nominal_tjh);
-    await this.modalController.dismiss(this.DEFAULT_ADD_SI_ALL, 'confirm');
+    const selectedPassengers = this.PASSENGERS.filter((item: any) => item.selected === true).map((item: any) => item.passenger);
+    this.setDataTjh(this.dataItem, this.DEFAULT_ADD_SI_ALL, this.nominal_tjh, selectedPassengers[0]);
+    const dataAdditionalRisk = {
+      DEFAULT_ADD_SI_ALL: this.DEFAULT_ADD_SI_ALL,
+      TOTAL_PASSENGER: selectedPassengers
+    }
+    await this.modalController.dismiss(dataAdditionalRisk, 'confirm');
   }
 
   toggleSelectionPassenger(index: number): void {
@@ -111,13 +118,23 @@ export class MvRiskInputComponent implements OnInit {
     this.nominal_tjh = (parseInt(nominal_tjh) * 1000000).toLocaleString();
   }
 
-  private setDataTjh(dataItem: any, DEFAULT_ADD_SI_ALL: any, nominal_tjh: number) {
+  private setDataTjh(dataItem: any, DEFAULT_ADD_SI_ALL: any, nominal_tjh: any, selectedPassengers: any) {
     const {risk_number} = dataItem;
+    if (risk_number === '9' || risk_number === '20') {
+      nominal_tjh = this.nominal_tjh_kdp;
+    } else {
+      nominal_tjh = this.nominal_tjh_normal;
+    }
+    const nominal_tjh2 = parseFloat(nominal_tjh.replace(/,/g, ''));
     for (let i = 0; i < DEFAULT_ADD_SI_ALL.length; i++) {
       const obj = DEFAULT_ADD_SI_ALL[i];
       const key = Object.keys(obj)[0]; // Mendapatkan kunci pertama pada objek
       if (key === risk_number) {
-        obj[key] = nominal_tjh.toString(); // Ubah nilai properti menjadi string
+        if (risk_number === '9' || '20') {
+          obj[key] = (nominal_tjh2 * selectedPassengers).toLocaleString();
+        } else {
+          obj[key] = nominal_tjh.toString(); // Ubah nilai properti menjadi string
+        }
         break;
       }
     }

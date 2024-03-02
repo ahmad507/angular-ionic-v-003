@@ -63,8 +63,9 @@ export class KendaraanPage implements OnInit {
   async ngOnInit() {
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
-    console.log(this.isCar);
-    this.isCar = false;
+    this.mvRepository.getStoreMvData().subscribe((res) => {
+      this.isCar = res.vtype === 'A';
+    });
     this.mvRepository.getStoreMvData().subscribe((data) => {
       this.dataTempMvType = data.vtype;
       this.dataTempMvYear = data.vyear;

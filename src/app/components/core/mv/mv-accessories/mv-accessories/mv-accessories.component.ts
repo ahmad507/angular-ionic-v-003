@@ -125,6 +125,12 @@ export class MvAccessoriesComponent implements OnInit {
       .pipe(take(1))
       .subscribe(async (accessories) => {
         this.accessories = accessories;
+        let accessoriesObject = {}
+        if (accessories.length > 0) {
+          for (let i = 0; i < accessories.length; i++) {
+            accessoriesObject = {...accessories};
+          }
+        }
         this.sum_acc_price = this.calculateTotalPrice(accessories);
         this.accessoryService.updateAllAccessory(this.accessories);
         if (this.sum_acc_price > this.limit_acc) {
@@ -132,9 +138,9 @@ export class MvAccessoriesComponent implements OnInit {
         } else {
           const newData: Partial<CarInsuranceState> = {
             accesories_si: this.sum_acc_price,
-            accesories_detail: [...accessories]
+            accesories_detail: accessories.length > 0 ? {...accessoriesObject} : [...accessories]
           };
-          this.store.dispatch(updateKendaraanData({ newData }));
+          this.store.dispatch(updateKendaraanData({newData}));
           await this.modalController.dismiss(this.accessories, 'confirm');
         }
       });

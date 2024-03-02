@@ -11,7 +11,7 @@ export interface CarInsuranceState {
   year_period: string;
   mainsi: number;
   accesories_si: number;
-  accesories_detail: any[];
+  accesories_detail: any;
   mainrisk: string;
   reg_no: string;
   addrisk: any[];

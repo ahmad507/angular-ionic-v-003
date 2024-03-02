@@ -1,12 +1,6 @@
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit,} from '@angular/core';
+import {Router} from '@angular/router';
+import {Store} from '@ngrx/store';
 import {
   CarInsuranceState,
   MvInfo,
@@ -17,26 +11,22 @@ import {
 } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.state';
 import {
   resetCarInsuranceData,
-  resetMvInfoDetailData, updateKendaraanData,
+  resetMvInfoDetailData,
+  updateKendaraanData,
 } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions';
-import { selectKendaraanData } from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector';
+import {selectKendaraanData} from '@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector';
+import {LoadingController, ModalController, PopoverController, ToastController,} from '@ionic/angular';
+import {MvDataService} from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
+import {AccessoryService} from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
+import {debounceTime, Subject, take, takeUntil} from 'rxjs';
+import {PopOverComponent} from '@src/app/components/utils/pop-over/pop-over.component';
+import {MvRepository} from '@src/app/pages/kendaraan/class/mvRepository';
+import {distinctUntilChanged} from 'rxjs/operators';
 import {
-  PopoverController,
-  ToastController,
-  LoadingController,
-  ModalController,
-} from '@ionic/angular';
-import { MvDataService } from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
-import { AccessoryService } from '@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.service';
-import { debounceTime, Subject, take, takeUntil } from 'rxjs';
-import { PopOverComponent } from '@src/app/components/utils/pop-over/pop-over.component';
-import { MvRepository } from '@src/app/pages/kendaraan/class/mvRepository';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { MvAccessoriesComponent } from '@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component';
-import { AccItems } from './store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
-import {
-  selectAllAccessories
-} from "@src/app/pages/kendaraan/store-kendaraan/store-kendaraan-aksesoris/acc.input.selector";
+  MvAccessoriesComponent
+} from '@src/app/components/core/mv/mv-accessories/mv-accessories/mv-accessories.component';
+import {AccItems} from './store-kendaraan/store-kendaraan-aksesoris/acc.input.state';
+
 @Component({
   selector: 'app-kendaraan',
   templateUrl: './kendaraan.page.html',
@@ -51,7 +41,7 @@ export class KendaraanPage implements OnInit {
   mv_price_max: number = 0;
   inputSubject = new Subject<string>();
   isButtonDisabled: boolean = true;
-  isCar: boolean = true;
+  isCar: boolean = false;
   dataTempMvType: string = '';
   dataTempMvYear: number = 0;
   MV_INFO_DATA: any = [];
@@ -73,9 +63,8 @@ export class KendaraanPage implements OnInit {
   async ngOnInit() {
     this.isButtonDisabled = false;
     this.isButtonDisabled = false;
-    this.mvRepository.getStoreMvData().subscribe((res) => {
-      this.isCar = res.vtype === 'A';
-    });
+    console.log(this.isCar);
+    this.isCar = false;
     this.mvRepository.getStoreMvData().subscribe((data) => {
       this.dataTempMvType = data.vtype;
       this.dataTempMvYear = data.vyear;
@@ -85,6 +74,7 @@ export class KendaraanPage implements OnInit {
   }
 
   async gotoHome() {
+    this.isCar = false;
     this.store.dispatch(resetCarInsuranceData());
     this.store.dispatch(resetMvInfoDetailData());
     await this.router.navigate(['/main/home']);

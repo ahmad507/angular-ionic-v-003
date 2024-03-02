@@ -28,16 +28,11 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
-
 @import '~swiper/swiper-bundle.css';
 
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Fjalla+One&family=Montserrat&display=swap');
 
-//ion-modal {
-//  --border-radius: 16px;
-//  --box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-//}
 
 .custom-modal-class {
   --border-radius: 16px;

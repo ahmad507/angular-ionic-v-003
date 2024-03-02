@@ -61,12 +61,18 @@ export interface MvRisk {
   type: string;
   private_si_flags: string;
 }
+
 export interface RESPONSE_RISK {
   r_status: boolean;
   r_data: MvRisk[];
   r_code: number;
   r_message: string;
 }
+
+export interface RESPONSE_COVERAGES_LIST {
+  mv_coverages_list: []
+}
+
 export const initialState: CarInsuranceState = {
   ctype: '',
   license: '',
@@ -99,3 +105,6 @@ export const initialStateMvInfo: MvInfoDetail = {
   unit_price: '',
   unit_price_min: 0,
 };
+export const initialStateCoverageList: RESPONSE_COVERAGES_LIST = {
+  mv_coverages_list: []
+}

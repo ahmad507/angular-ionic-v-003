@@ -1,6 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
-import {initialState, initialStateMvInfo} from "./kendaraan.state";
+import {initialState, initialStateCoverageList, initialStateMvInfo} from "./kendaraan.state";
 import * as kendaraanAction from "./kendaraan.actions";
+
 export const carInsuranceReducer = createReducer(
   initialState,
   on(kendaraanAction.updateKendaraanData, (state, { newData }) => {
@@ -63,4 +64,13 @@ export const updateMvInfoReducer = createReducer(
     }
   }),
   on(kendaraanAction.resetMvInfoDetailData, () => initialStateMvInfo),
-)
+);
+export const updateCoveragesListReducer = createReducer(
+  initialStateCoverageList,
+  on(kendaraanAction.updateDataCoverageList, (state, {mv_coverages_list}) => {
+    return {
+      ...state,
+      mv_coverages_list: mv_coverages_list
+    }
+  })
+);

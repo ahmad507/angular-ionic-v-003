@@ -5,12 +5,13 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule, ModalController} from '@ionic/angular';
 import {ButtonComponent} from '@src/app/components/core/buttons/button/button.component';
 import {MvDataService} from '@src/app/pages/kendaraan/store-kendaraan/mv.data.service';
-import {map, take} from 'rxjs';
+import {catchError, map, take} from 'rxjs';
 import {Store} from "@ngrx/store";
-import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
+import {updateDataCoverageList, updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {MvRiskInputComponent} from "@src/app/components/core/mv/mv-risk/mv-risk-input/mv-risk-input.component";
 import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
+import {Router} from "@angular/router";
 
 export interface AdditionalRisk {
   risk_number: string;
@@ -88,7 +89,8 @@ export class MvRiskComponent implements OnInit {
     private modalController: ModalController,
     private mvDataService: MvDataService,
     private cdRef: ChangeDetectorRef,
-    private store: Store
+    private store: Store,
+    private router: Router
   ) {
     this.addedRiskIndexes = [];
   }
@@ -293,9 +295,16 @@ export class MvRiskComponent implements OnInit {
     this.store.select(selectKendaraanData).pipe(take(1)).subscribe((res) => {
       const mvObjectRequest = this.createObjectRequest(res);
       this.mvDataService.sendRequestCoverageList(mvObjectRequest).pipe(
-        take(1)
-      ).subscribe((res) => {
-        console.log('RES COVERAGES', res)
+        take(1),
+        map((res: any) => res.r_data),
+        catchError(async error => {
+          console.log('ERROR', error.error.r_data)
+        })
+      ).subscribe(async (res) => {
+        const mv_coverages_list = res;
+        this.store.dispatch(updateDataCoverageList({mv_coverages_list}));
+        await this.modalController.dismiss();
+        await this.router.navigate(['kendaraan/mv-list-insurance']);
       })
     })
     this.cdRef.markForCheck();
@@ -303,7 +312,6 @@ export class MvRiskComponent implements OnInit {
 
   private setAddSiDefaults(defaults: { [key: string]: string }[]) {
     this.DEFAULT_ADD_SI_ALL = defaults.map(obj => ({...obj}));
-    console.log(this.DEFAULT_ADD_SI_ALL);
   }
 
   private getAddSi(data: { add_si_selected: string[]; default_add_si: any }) {
@@ -373,5 +381,9 @@ export class MvRiskComponent implements OnInit {
       addsi_all: res.addrisk_all,
       addsi: res.addsi
     };
+  }
+
+  private handleErrorCoveragesResult(res: CarInsuranceState) {
+    return res;
   }
 }

@@ -127,16 +127,19 @@ export class MvRiskInputComponent implements OnInit {
     }
     const nominal_tjh2 = parseFloat(nominal_tjh.replace(/,/g, ''));
     for (let i = 0; i < DEFAULT_ADD_SI_ALL.length; i++) {
-      const obj = DEFAULT_ADD_SI_ALL[i];
+      const obj = {...DEFAULT_ADD_SI_ALL[i]}; // Buat salinan objek
       const key = Object.keys(obj)[0]; // Mendapatkan kunci pertama pada objek
       if (key === risk_number) {
-        if (risk_number === '9' || '20') {
+        if (risk_number === '9' || risk_number === '20') {
           obj[key] = (nominal_tjh2 * selectedPassengers).toLocaleString();
         } else {
           obj[key] = nominal_tjh.toString(); // Ubah nilai properti menjadi string
         }
+        DEFAULT_ADD_SI_ALL[i] = obj; // Perbarui objek dalam array dengan salinan yang telah dimodifikasi
         break;
       }
     }
   }
+
+
 }

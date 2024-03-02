@@ -81,7 +81,7 @@ export const initialState: CarInsuranceState = {
   mainsi: 0,
   accesories_si: 0,
   accesories_detail: [],
-  mainrisk: '',
+  mainrisk: '1',
   reg_no: '',
   addrisk: [],
   sortby: '',

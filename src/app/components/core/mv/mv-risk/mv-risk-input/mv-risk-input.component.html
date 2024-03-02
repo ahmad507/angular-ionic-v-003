@@ -6,11 +6,14 @@
 </ion-header>
 
 <ion-content>
-  <div>Nominal: {{nominal_tjh}}</div>
   <div
     *ngIf="RISK_CODE === 'PAP01' || RISK_CODE === 'PAP02' then this.SHOW_NOMINAL_KDP else this.SHOW_NOMINAL_TJH"></div>
   <div class="p-3">
     <app-button (click)="dismissModal()" [ButtonBlock]="true" ButtonText="Tambahkan"></app-button>
+    <div class="my-[16px] flex flex-col items-center">
+      <div class="py-[8px] bg-white text-xs absolute">Jaminan Perluasan</div>
+    </div>
+    <div class="border-b-blue-500 border-b-[1px]"></div>
   </div>
 </ion-content>
 

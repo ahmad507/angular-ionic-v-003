@@ -13,6 +13,7 @@ export class MvDataService {
   headers = new HttpHeaders({'asri-api-key': apiConfig.apiKey.asri_api_key});
   mvRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listMainRisk';
   mvAdditionalRiskENDPOINT = '/API_STAGE_1/v01/mv/coverage/listAdditionalRisk';
+  mvCoveragesENDPOINT = '/API_STAGE_1/v01/mv/coverage/list';
 
   constructor(private store: Store, private httpClient: HttpClient) {}
 
@@ -68,12 +69,16 @@ export class MvDataService {
     return dataCarInfo;
   }
 
-  mvMainRisk(){
+  mvMainRisk() {
     return this.httpClient.get<RESPONSE_RISK>(this.mvRiskENDPOINT, {headers: this.headers});
   }
 
-  mvAdditionalRisk(param:any){
-    return this.httpClient.get(this.mvAdditionalRiskENDPOINT,{headers: this.headers, params:param});
+  mvAdditionalRisk(param: any) {
+    return this.httpClient.get(this.mvAdditionalRiskENDPOINT, {headers: this.headers, params: param});
+  }
+
+  sendRequestCoverageList(param: any) {
+    return this.httpClient.post(this.mvCoveragesENDPOINT, param, {headers: this.headers});
   }
 
 }

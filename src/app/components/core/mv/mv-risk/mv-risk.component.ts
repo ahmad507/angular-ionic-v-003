@@ -10,6 +10,7 @@ import {Store} from "@ngrx/store";
 import {updateKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.actions";
 import {CarInsuranceState} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.state";
 import {MvRiskInputComponent} from "@src/app/components/core/mv/mv-risk/mv-risk-input/mv-risk-input.component";
+import {selectKendaraanData} from "@src/app/pages/kendaraan/store-kendaraan/kendaraan.selector";
 
 export interface AdditionalRisk {
   risk_number: string;
@@ -197,14 +198,11 @@ export class MvRiskComponent implements OnInit {
     } else {
       this.addedRiskIndexes.push(item.risk_number); // Tambahkan nomor risiko ke dalam array jika belum ada
     }
-    console.log(this.ADD_SI)
-    console.log(this.DEFAULT_ADD_SI_ALL);
     const data = this.sortArrayByValue(this.addedRiskIndexes);
     const newData: Partial<CarInsuranceState> = {
       addrisk: [...data],
     };
     this.store.dispatch(updateKendaraanData({newData}));
-
     if (parseInt(item.private_si_flags) > 0) {
       const modal = await this.modalController.create({
         component: MvRiskInputComponent,
@@ -218,12 +216,15 @@ export class MvRiskComponent implements OnInit {
         cssClass: 'custom-modal-class',
       });
       await modal.present();
-      const res = await modal.onDidDismiss();
-      console.log(res.data);
-      this.DEFAULT_ADD_SI_ALL = [...res.data.DEFAULT_ADD_SI_ALL];
-      this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
+      await modal.onDidDismiss().then((res) => {
+        this.DEFAULT_ADD_SI_ALL = [...res.data.DEFAULT_ADD_SI_ALL];
+        const newData: Partial<CarInsuranceState> = {
+          total_passenger: res.data.TOTAL_PASSENGER,
+        };
+        this.store.dispatch(updateKendaraanData({newData}));
+        this.getNominalAdditional(this.ADDITIONAL_RISK, this.DEFAULT_ADD_SI_ALL);
+      });
     }
-
     this.cdRef.markForCheck();
   }
 
@@ -289,9 +290,14 @@ export class MvRiskComponent implements OnInit {
       addsi_all: [...this.DEFAULT_ADD_SI_ALL],
     };
     this.store.dispatch(updateKendaraanData({newData}));
-
-    console.log(this.ADD_SI);
-    console.log(this.DEFAULT_ADD_SI_ALL);
+    this.store.select(selectKendaraanData).pipe(take(1)).subscribe((res) => {
+      const mvObjectRequest = this.createObjectRequest(res);
+      this.mvDataService.sendRequestCoverageList(mvObjectRequest).pipe(
+        take(1)
+      ).subscribe((res) => {
+        console.log('RES COVERAGES', res)
+      })
+    })
     this.cdRef.markForCheck();
   }
 
@@ -342,4 +348,30 @@ export class MvRiskComponent implements OnInit {
       });
   }
 
+  private createObjectRequest(res: CarInsuranceState) {
+    const tahunSekarang = new Date().getFullYear();
+    const v_year = tahunSekarang - res.vyear;
+    return {
+      ctype: res.ctype,
+      license: res.license,
+      vfunction: res.vfunction,
+      vtype: res.vtype,
+      vyear: v_year,
+      vcode: res.vcode,
+      vmodel: res.vmodel,
+      vbrand: res.vbrand,
+      year_period: res.year_period,
+      mainsi: res.mainsi,
+      accesories_si: res.accesories_si,
+      accesories_detail: res.accesories_detail,
+      mainrisk: res.mainrisk,
+      reg_no: "y/NjxXjn1UkFwAeru6kpc7hSeOGuTkvoQd2NMm92AyKmYdp3ccidCxOKMtK0ghDRahD9jgf3nvo/URbpDGXU6g==",
+      addrisk: res.addrisk,
+      sortby: "",
+      total_passenger: res.vtype === 'A' ? res.total_passenger[0] : '1',
+      addrisk_all: res.addrisk_all,
+      addsi_all: res.addrisk_all,
+      addsi: res.addsi
+    };
+  }
 }
